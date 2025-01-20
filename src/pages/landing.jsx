@@ -60,6 +60,21 @@ const LandingPage = () => {
         />
       </div>
 
+
+      <div>
+        <div className="w-full flex flex-col items-center mt-10">
+          <h2 className="text-2xl font-extrabold mb-4 text-white border-b pb-2">
+            Who Can Use It?
+          </h2>
+          <img
+            src="wcu.gif"
+            alt="Who Can Use It"
+            className="pointer-events-none w-[70rem]"
+          />
+        </div>
+        <br />
+      </div>
+
       <br />
       <br />
 
@@ -117,7 +132,7 @@ const LandingPage = () => {
             <iframe
               width="100%"
               height="100%"
-              src="https://www.youtube.com/embed/YOUR_VIDEO_ID"
+              src="https://www.youtube.com/embed/8uv3gl80Ztw?si=MPnEjbC6Ux_rg39F"
               title="LOL URL Demonstration"
               frameBorder="0"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"

@@ -18,7 +18,8 @@ const Header = () => {
   return (
     <nav className="p-4 flex justify-between items-center max-w-7xl mx-auto">
       <Link to="/">
-        <img src="/logo.png" className="h-20" alt="LOL URL LOGO" />
+        <img src="/logo.gif" className="h-20 pointer-events-none" alt="LOL URL LOGO" />
+        
       </Link>
 
       <div>
