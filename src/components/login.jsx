@@ -48,8 +48,14 @@ const Login = () => {
             })
             await schema.validate(FormData, {abortEarly: false});
 
-            
-        } catch (e) {}
+            //api call
+        } catch (e) {
+            const newErrors = {}
+            e?.inner?.forEach((err)=> {
+                newErrors [err. path] = err.message;
+            });
+            setErrors(newErrors);
+        }
     }
     
   return (
@@ -64,14 +70,14 @@ const Login = () => {
 
            {/* <Input name="email" type="emial" placeholder="Enter your Email" /> */}
            <Input className="rounded" name="email" type="emial" placeholder="Enter your Email" onChange={handleInputChange}/>
-           <Error message={"error"} />
+           {errors.email && <Error message={error.email} /> }
 
         </div>
         <div className="space-y-2 ">
 
            {/* <Input name="email" type="emial" placeholder="Enter your Email" /> */}
            <Input className="rounded" name="password" type="password" placeholder="Enter your Password" onChange={handleInputChange}/>
-           <Error message={"error"} />
+           {errors.password && <Error message={error.password} /> }
 
         </div>
       </CardContent>
