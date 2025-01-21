@@ -104,14 +104,14 @@ const Login = () => {
         <div className="space-y-2 ">
 
            {/* <Input name="email" type="emial" placeholder="Enter your Email" /> */}
-           <Input className="rounded" name="email" type="emial" placeholder="Enter your Email" onChange={handleInputChange}/>
+           <Input className="rounded" name="email" type="emial" placeholder="Enter Email" onChange={handleInputChange}/>
            {errors.email && <Error message={errors.email} />}
 
         </div>
         <div className="space-y-2 ">
 
            {/* <Input name="email" type="emial" placeholder="Enter your Email" /> */}
-           <Input className="rounded" name="password" type="password" placeholder="Enter your Password" onChange={handleInputChange}/>
+           <Input className="rounded" name="password" type="password" placeholder="Enter Password" onChange={handleInputChange}/>
            {errors.password && <Error message={errors.password} />}
 
         </div>

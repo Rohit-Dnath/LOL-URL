@@ -8,7 +8,7 @@ import Signup from "@/components/signup";
 const Auth = () => {
   const [SearchParams] = useSearchParams();
   return (
-    <div className="mt-36 flex flex-col items-center gap-10">
+    <div className="mt-24 flex flex-col items-center gap-10">
       <h1 className="text-5xl font-extrabold">
         {SearchParams.get("createNew")
           ? "Hold up! Lets's Login first"

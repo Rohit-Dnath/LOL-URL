@@ -92,6 +92,7 @@ const Signup = () => {
             name="name"
             type="text"
             placeholder="Enter Name"
+            className="rounded"
             onChange={handleInputChange}
           />
         </div>
@@ -101,6 +102,7 @@ const Signup = () => {
             name="email"
             type="email"
             placeholder="Enter Email"
+            className="rounded"
             onChange={handleInputChange}
           />
         </div>
@@ -110,6 +112,7 @@ const Signup = () => {
             name="password"
             type="password"
             placeholder="Enter Password"
+            className="rounded"
             onChange={handleInputChange}
           />
         </div>
@@ -125,7 +128,7 @@ const Signup = () => {
         {errors.profile_pic && <Error message={errors.profile_pic} />}
       </CardContent>
       <CardFooter>
-        <Button onClick={handleSignup}>
+        <Button className="rounded" onClick={handleSignup}>
           {loading ? (
             <BeatLoader size={10} color="#36d7b7" />
           ) : (
