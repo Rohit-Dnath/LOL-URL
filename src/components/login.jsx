@@ -50,7 +50,7 @@ const Login = () => {
 
             //api call
         } catch (e) {
-            const newErrors = {}
+            const newErrors = {};
             e?.inner?.forEach((err)=> {
                 newErrors [err. path] = err.message;
             });
@@ -70,19 +70,19 @@ const Login = () => {
 
            {/* <Input name="email" type="emial" placeholder="Enter your Email" /> */}
            <Input className="rounded" name="email" type="emial" placeholder="Enter your Email" onChange={handleInputChange}/>
-           {errors.email && <Error message={error.email} /> }
+           {errors.email && <Error message={errors.email} />}
 
         </div>
         <div className="space-y-2 ">
 
            {/* <Input name="email" type="emial" placeholder="Enter your Email" /> */}
            <Input className="rounded" name="password" type="password" placeholder="Enter your Password" onChange={handleInputChange}/>
-           {errors.password && <Error message={error.password} /> }
+           {errors.password && <Error message={errors.password} />}
 
         </div>
       </CardContent>
       <CardFooter>
-        <Button className="rounded ">
+        <Button className="rounded" onClick={handleLogin}  >
             {true? <BeatLoader color="#36d7b7" size={8} /> : "Login"}
         </Button>
       </CardFooter>
