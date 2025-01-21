@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+
 import {
   Accordion,
   AccordionContent,
@@ -73,7 +74,12 @@ const LandingPage = () => {
           />
         </div>
         <br />
+
+        {/* testimonials */}
       </div>
+
+      
+      
 
       <br />
       <br />
@@ -96,7 +102,7 @@ const LandingPage = () => {
             <AccordionItem value="item-3" className="border-b border-gray-700">
               <AccordionTrigger>Is LOL URL free to use?</AccordionTrigger>
               <AccordionContent>
-                Yes! LOL URL offers free link shortening and basic analytics. For advanced features, you can explore our premium options.
+                Yes! LOL URL offers free link shortening and basic analytics.
               </AccordionContent>
             </AccordionItem>
 
@@ -132,7 +138,7 @@ const LandingPage = () => {
             <iframe
               width="100%"
               height="100%"
-              src="https://www.youtube.com/embed/8uv3gl80Ztw?si=MPnEjbC6Ux_rg39F"
+              src="https://www.youtube.com/embed/id"
               title="LOL URL Demonstration"
               frameBorder="0"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
