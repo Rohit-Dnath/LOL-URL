@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Card,
   CardContent,
@@ -13,9 +13,15 @@ import { BeatLoader } from "react-spinners";
 import Error from "./error";
 import { IconPassword } from "@tabler/icons-react";
 import * as Yup from "yup";
+import useFetch from "@/hooks/use-fetch";
+import { login } from "@/db/apiAuth";
+import { useNavigate, useSearchParams } from "react-router-dom";
+import { UrlState } from "@/context";
 
 
 const Login = () => {
+
+    
     
 
 
@@ -28,6 +34,10 @@ const Login = () => {
         
     })
 
+    const navigate = useNavigate();
+    let [SearchParams] =useSearchParams();
+    const longLink = SearchParams.get( "createNew");
+
 
     const handleInputChange = (e) => {
         const {name, value} = e.target;
@@ -36,6 +46,25 @@ const Login = () => {
             [name]: value
         }))
     }
+
+    const{data, error, loading, fn:fnlogin} =useFetch(login, FormData);
+    const {fetchUser} =UrlState();
+
+
+    useEffect(() => {
+
+        console.log(data)
+
+        if(error==null && data){
+
+            navigate(`/dashboard?${longLink ? `createNew=${longLink}` : ""}`);
+            fetchUser();
+
+
+        }
+    
+    }, [data, error, ]); 
+    
 
 
     const handleLogin = async (e) => {
@@ -48,7 +77,13 @@ const Login = () => {
             })
             await schema.validate(FormData, {abortEarly: false});
 
-            //api call
+            //api calllll
+            await fnlogin();
+
+
+
+
+
         } catch (e) {
             const newErrors = {};
             e?.inner?.forEach((err)=> {
@@ -62,9 +97,9 @@ const Login = () => {
     <Card>
       <CardHeader>
         <CardTitle>Login</CardTitle>
-        <CardDescription>to your account if you already have one</CardDescription>
+        <CardDescription className="m-0">to your account if you already have one</CardDescription>
       </CardHeader>
-      <Error message={"error"} />
+      {error && <Error message={error.message} />}
       <CardContent className="space-y-2">
         <div className="space-y-2 ">
 
@@ -83,7 +118,9 @@ const Login = () => {
       </CardContent>
       <CardFooter>
         <Button className="rounded" onClick={handleLogin}  >
-            {true? <BeatLoader color="#36d7b7" size={8} /> : "Login"}
+            {loading? <BeatLoader color="#36d7b7" size={8} /> : "Login"}
+
+            {/* <BeatLoader color="#36d7b7" size={8} /> : "Login"} */}
         </Button>
       </CardFooter>
     </Card>
