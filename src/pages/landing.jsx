@@ -47,7 +47,7 @@ const LandingPage = () => {
 
           className="rounded h-full flex-1 py-4 px-4"
         />
-        <Button className="rounded h-full  " type="submit" variant="destructive">
+        <Button className="rounded h-full  " type="submit" variant="">
           Shorten!
         </Button>
       </form>
