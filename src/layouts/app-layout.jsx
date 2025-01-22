@@ -5,7 +5,7 @@ import { Outlet } from 'react-router-dom'
 const AppLayout = () => {
 return (
     <div>
-            <main className='min-h-screen container'>
+            <main className='min-h-screen mx-auto max-w-6xl px-2'>
                     {/* Header*/}
                     <Header />
                     <Outlet />
@@ -16,7 +16,7 @@ return (
                     Made with ❤️ Rohit Debnath
             </div>
 
-            <div className='hidden sm:block' style={{ position: 'fixed', bottom: '50px', left: '10px', margin: '5px' }}>
+            {/* <div className='hidden sm:block' style={{ position: 'fixed', bottom: '50px', left: '10px', margin: '5px' }}>
                     <img href="https://rohitdebnath.com" className='cursor-pointer '
                             src="./egg.gif" 
                             alt="Easter Egg" 
@@ -26,7 +26,7 @@ return (
                             onMouseOver={(e) => e.currentTarget.style.transform = 'scale(1.2)'} 
                             onMouseOut={(e) => e.currentTarget.style.transform = 'scale(1)'} 
                     />
-            </div>
+            </div> */}
             
     </div>
 )
