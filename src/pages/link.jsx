@@ -130,7 +130,7 @@ const LinkPage = () => {
 
         <Card className="sm:w-3/5">
           <CardHeader>
-            <CardTitle className="text-4xl font-extrabold">Stats</CardTitle>
+            <CardTitle className="text-4xl font-extrabold">Statistics</CardTitle>
           </CardHeader>
           {stats && stats.length ? (
             <CardContent className="flex flex-col gap-6">

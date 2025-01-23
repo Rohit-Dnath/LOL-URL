@@ -30,7 +30,7 @@ const LandingPage = () => {
 
   return (
     <div className="flex flex-col items-center ">
-      <h2 className="my-10 sm:my-16 text-3xl sm:text-6xl lg:text-7xl text-white text-center font-extrabold">
+      <h2 className=" sm:my-16 text-3xl sm:text-6xl lg:text-7xl text-white text-center font-extrabold">
         Your Shortcut to Smart Links
         <br />
         and Insights! 👇
