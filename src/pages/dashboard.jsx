@@ -3,6 +3,7 @@ import LinkCard from "@/components/link-card";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
+import { ScrollProgress } from "@/components/ui/scroll-progress";
 import { UrlState } from "@/context";
 import { getClicksForUrls } from "@/db/apiClicks";
 import { getUrls } from "@/db/apiUrls";
@@ -38,6 +39,7 @@ const Dashboard = () => {
   }, [urls?.length]);
 
   return (
+    
     <div className="flex flex-col gap-4 max-w-7xl mx-auto">
       {loading || loadingClicks && <BarLoader className=" mb-4" width={"100%"} color="#36d7b7" />}
       <div className="grid grid-cols-2 gap-4 ">
@@ -49,6 +51,7 @@ const Dashboard = () => {
             <p>{urls?.length}</p>
           </CardContent>
         </Card>
+        <ScrollProgress className="w-full" />
         <Card className=" rounded">
           <CardHeader>
             <CardTitle>Total Clicks</CardTitle>
@@ -58,6 +61,7 @@ const Dashboard = () => {
           </CardContent>
         </Card>
       </div>
+     
 
       <div className="flex justify-between items-center">
         <h1 className=" text-4xl font-extrabold">My Links</h1>

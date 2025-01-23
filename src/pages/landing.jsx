@@ -3,7 +3,9 @@ import { Input } from "@/components/ui/input";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Spotlight } from "@/components/ui/spotlight";
+import HeroVideoDialog from "@/components/ui/hero-video-dialog";
 import { AnimatedTestimonials } from "@/components/ui/animated-testimonials";
+
 import {
   Accordion,
   AccordionContent,
@@ -11,6 +13,11 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { PlaceholdersAndVanishInput } from "@/components/ui/placeholders-and-vanish-input";
+import { FeaturesSectionDemo } from "@/components/ui/feature-_sec";
+import { VelocityScroll } from "@/components/ui/scroll-based-velocity";
+import { SparklesText } from "@/components/ui/sparkles-text";
+import { ScrollProgress } from "@/components/ui/scroll-progress";
+import { Globe } from "@/components/ui/globe";
 
 const LandingPage = () => {
   const [longurl, setLongUrl] = useState();
@@ -56,8 +63,6 @@ const LandingPage = () => {
       src: "./subinoy.png",
     },
   ];
-  
-  
 
   return (
     <div className="flex flex-col items-center  ">
@@ -65,11 +70,18 @@ const LandingPage = () => {
         className="-top-40 left-0 md:left-60 md:-top-20"
         fill="white"
       />
+
       <h2 className="my-10 sm:my-16 text-3xl sm:text-6xl lg:text-7xl text-white text-center font-extrabold">
-        Your Shortcut to Smart Links
-        <br />
-        and Insights! 👇
+        <span className="inline">Your Shortcut to </span>
+        <span className="inline">
+          <SparklesText
+            className="inline sm:text-6xl text-white font-extrabold"
+            text="Smart Links"
+          />
+        </span>
+        <span className="inline"> and Insights! 👇</span>
       </h2>
+      <ScrollProgress className="w-full" />
 
       <PlaceholdersAndVanishInput
         placeholders={placeholders}
@@ -83,16 +95,41 @@ const LandingPage = () => {
       <br />
       <br />
 
+      <div className="relative flex w-full max-w-full items-center justify-center overflow-hidden rounded-lg border bg-background bg-opacity-80 px-8 pb-32 pt-16 md:pb-60 md:pt-32 md:shadow-xl">
+        <span className="pointer-events-none whitespace-pre-wrap bg-gradient-to-b from-black to-white bg-clip-text text-center text-4xl font-semibold leading-none text-transparent dark:to-slate-900/10">
+          Track Your Smart Links Globally
+        </span>
+        <Globe className="top-28 mt-8 w-128 h-128 md:w-160 md:h-160" />{" "}
+        {/* Added mt-8 for gap and increased globe size */}
+        <div className="pointer-events-none absolute inset-0 h-full bg-[radial-gradient(circle_at_50%_200%,rgba(0,0,0,0.2),rgba(255,255,255,0))]" />
+      </div>
+
       <br />
       <br />
-      <h2 className="text-2xl font-extrabold mb-4 text-white border-b pb-2">
-        Testimonial
+      <br />
+
+      <h2 className="text-4xl font-extrabold mb-4 text-white border-b pb-2 zindex-100">
+        Features
       </h2>
-      <AnimatedTestimonials testimonials={testimonials} className="start"/>
+      <FeaturesSectionDemo className="grid" />
+
+      <br />
+      <br />
+
+      <h2 className="text-3xl font-extrabold mb-4 text-white border-b pb-2 zindex-100">
+        Testimonials
+      </h2>
+      <AnimatedTestimonials testimonials={testimonials} className="start" />
+      <br />
+      <br />
+
+      <VelocityScroll>LOL THE URL •</VelocityScroll>
+
       <br />
       <br />
       <br />
       <br />
+
       {/* FAQS and Video Section */}
       <div className="w-full flex flex-col md:flex-row gap-8 px-4 md:px-11">
         {/* FAQs Section */}
@@ -162,16 +199,20 @@ const LandingPage = () => {
             See How It Works
           </h2>
           <div className="h-[316px] rounded-lg overflow-hidden shadow-xl">
-            <iframe
-              width="100%"
-              height="100%"
-              src="https://www.youtube.com/embed/id"
-              title="LOL URL Demonstration"
-              frameBorder="0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowFullScreen
-              className="rounded-lg"
-            ></iframe>
+            <HeroVideoDialog
+              className="dark:hidden block z-index-10000000"
+              animationStyle="from-center"
+              videoSrc="https://www.youtube.com/embed/qh3NGpYRG3I?si=4rb-zSdDkVK9qxxb"
+              thumbnailSrc="https://startup-template-sage.vercel.app/hero-light.png"
+              thumbnailAlt="Hero Video"
+            />
+            <HeroVideoDialog
+              className="hidden dark:block z-index-10000000"
+              animationStyle="from-center"
+              videoSrc="https://www.youtube.com/embed/qh3NGpYRG3I?si=4rb-zSdDkVK9qxxb"
+              thumbnailSrc="https://startup-template-sage.vercel.app/hero-dark.png"
+              thumbnailAlt="Hero Video"
+            />
           </div>
         </div>
       </div>

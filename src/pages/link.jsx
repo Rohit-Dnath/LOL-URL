@@ -2,6 +2,7 @@ import DeviceStats from "@/components/device-stats";
 import Location from "@/components/location-stats";
 import {Button} from "@/components/ui/button";
 import {Card, CardContent, CardHeader, CardTitle} from "@/components/ui/card";
+import { ScrollProgress } from "@/components/ui/scroll-progress";
 import {UrlState} from "@/context";
 import {getClicksForUrl} from "@/db/apiClicks";
 import {deleteUrl, getUrl} from "@/db/apiUrls";
@@ -142,6 +143,7 @@ const LinkPage = () => {
                   <p>{stats?.length}</p>
                 </CardContent>
               </Card>
+              <ScrollProgress className="w-full" />
 
               <CardTitle>Location Data</CardTitle>
               <Location stats={stats} />
