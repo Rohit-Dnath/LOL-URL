@@ -29,8 +29,9 @@ const Dashboard = () => {
   }, []);
 
   const filteredUrls = urls?.filter((url) =>
-    url.title.toLowerCase().includes(searchQuery.toLowerCase())
+    url.title.toLowerCase().includes((searchQuery || "").toLowerCase())
   );
+
 
   useEffect(() => {
     if (urls?.length) fnClicks();
@@ -68,7 +69,7 @@ const Dashboard = () => {
           type="text"
           placeholder="Filter Links...."
           value={searchQuery}
-          onChange={setSearchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
           className="mt-2 rounded h-full flex-1    "
         />
         <Filter className="absolute top-2 right-2 p-1 mt-2" />
