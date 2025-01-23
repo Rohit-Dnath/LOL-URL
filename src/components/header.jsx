@@ -25,7 +25,8 @@ const Header = () => {
     <>
       <nav className="p-4 flex justify-between items-center ">
         <Link to="/">
-          <img src="/logo.gif" className="h-16" alt="LOGO" />
+          <img src="/logo.png" className="h-16" alt="LOGO" />
+   
         </Link>
         <div className="flex gap-4">
           {!user ? (
