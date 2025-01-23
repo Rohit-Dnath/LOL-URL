@@ -48,29 +48,9 @@ const LandingPage = () => {
       />
       <br />
 
-      <div className="flex w-full justify-center items-center">
-        <img
-          src="banner.gif"
-          alt="LOL LOL LOL LOL"
-          className="pointer-events-none w-[70rem] "
-        />
-      </div>
+      
 
-      <div>
-        <div className="w-full flex flex-col items-center mt-10">
-          <h2 className="text-2xl font-extrabold mb-4 text-white border-b pb-2">
-            Who Can Use It?
-          </h2>
-          <img
-            src="wcu.gif"
-            alt="Who Can Use It"
-            className="pointer-events-none w-[70rem]"
-          />
-        </div>
-        <br />
-
-        {/* testimonials */}
-      </div>
+     
 
       <br />
       <br />
