@@ -4,8 +4,8 @@ import { Outlet } from 'react-router-dom'
 
 const AppLayout = () => {
 return (
-    <div>
-            <main className='min-h-screen mx-auto max-w-6xl px-2'>
+    <div className='bg-grid-white/[0.05]'>
+            <main className='min-h-screen mx-auto max-w-6xl px-2 '>
                     {/* Header*/}
                     <Header />
                     <Outlet />
