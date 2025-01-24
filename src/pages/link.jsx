@@ -105,62 +105,66 @@ const LinkPage = () => {
         <BarLoader className="mb-4" width={"100%"} color="#36d7b7" />
       )}
       <br />
-      <div className="flex flex-col gap-8 sm:flex-row justify-between">
-        <div className="flex flex-col items-start gap-8 rounded-lg sm:w-2/5">
-          <span className="text-6xl font-extrabold hover:underline cursor-pointer">
-            {url?.title}
-          </span>
-          <a
-            href={`https://urll.lol/${link}`}
-            target="_blank"
-            className="text-3xl sm:text-4xl text-blue-400 font-bold hover:underline cursor-pointer"
-          >
-            https://urll.lol/{link}
-          </a>
-          <a
-            href={url?.original_url}
-            target="_blank"
-            className="flex items-center gap-1 hover:underline cursor-pointer"
-          >
-            <LinkIcon className="p-1" />
-            {url?.original_url}
-          </a>
-          <span className="flex items-end font-extralight text-sm">
-            {new Date(url?.created_at).toLocaleString()}
-          </span>
-          <div className="flex gap-2">
-            <Button variant="ghost" onClick={handleCopy}>
-              <Copy />
-            </Button>
-            <Button variant="ghost" onClick={downloadImage}>
-              <Download />
-            </Button>
-            <Button
-              variant="ghost"
-              onClick={handleDelete}
-              disable={loadingDelete}
+      <div className="flex flex-col gap-8">
+        <div className="flex flex-col sm:flex-row justify-between items-start gap-8">
+          <div className="flex flex-col items-start gap-8 sm:w-3/5">
+            <span className="text-6xl font-extrabold hover:underline cursor-pointer">
+              {url?.title}
+            </span>
+            <a
+              href={`https://urll.lol/${link}`}
+              target="_blank"
+              className="text-3xl sm:text-4xl text-blue-400 font-bold hover:underline cursor-pointer"
             >
-              {loadingDelete ? (
-                <BeatLoader size={5} color="white" />
-              ) : (
-                <Trash />
-              )}
-            </Button>
+              https://urll.lol/{link}
+            </a>
+            <a
+              href={url?.original_url}
+              target="_blank"
+              className="flex items-center gap-1 hover:underline cursor-pointer"
+            >
+              <LinkIcon className="p-1" />
+              {url?.original_url}
+            </a>
+            <span className="flex items-end font-extralight text-sm">
+              {new Date(url?.created_at).toLocaleString()}
+            </span>
           </div>
-          <img
-            src={qrCodeUrl}
-            className="w-full self-center sm:self-start ring ring-blue-500 p-1 object-contain"
-            alt="qr code"
-          />
+          <div className="flex flex-col items-center">
+            <img
+              src={qrCodeUrl}
+              className="w-32 h-32 sm:w-40 sm:h-40 ring ring-blue-500 p-1 object-contain"
+              alt="qr code"
+            />
+            <div className="flex gap-2 mt-4">
+              <Button variant="ghost" onClick={handleCopy}>
+                <Copy />
+              </Button>
+              <Button variant="ghost" onClick={downloadImage}>
+                <Download />
+              </Button>
+              <Button
+                variant="ghost"
+                onClick={handleDelete}
+                disable={loadingDelete}
+              >
+                {loadingDelete ? (
+                  <BeatLoader size={5} color="white" />
+                ) : (
+                  <Trash />
+                )}
+              </Button>
+            </div>
+          </div>
         </div>
 
-        <Card className="sm:w-3/5">
-          <CardHeader>
+        <Card className="rounded bg-background">
+          <CardHeader >
             <CardTitle className="text-4xl font-extrabold">Statistics</CardTitle>
           </CardHeader>
           {stats && stats.length ? (
             <CardContent className="flex flex-col gap-6">
-              <Card>
+              <Card className="bg-background rounded">
                 <CardHeader>
                   <CardTitle>Total Clicks</CardTitle>
                 </CardHeader>
