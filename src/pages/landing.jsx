@@ -18,6 +18,7 @@ import { VelocityScroll } from "@/components/ui/scroll-based-velocity";
 import { SparklesText } from "@/components/ui/sparkles-text";
 import { ScrollProgress } from "@/components/ui/scroll-progress";
 import { Globe } from "@/components/ui/globe";
+import { Tweet } from "react-tweet";
 
 const LandingPage = () => {
   const [longurl, setLongUrl] = useState();
@@ -65,7 +66,7 @@ const LandingPage = () => {
   ];
 
   return (
-    <div className="flex flex-col items-center  ">
+    <div className="flex flex-col items-center">
       <Spotlight
         className="-top-40 left-0 md:left-60 md:-top-20"
         fill="white"
@@ -130,90 +131,83 @@ const LandingPage = () => {
       <br />
       <br />
 
-      {/* FAQS and Video Section */}
+      {/* FAQS and tweet */}
       <div className="w-full flex flex-col md:flex-row gap-8 px-4 md:px-11">
         {/* FAQs Section */}
-        <div className="w-full md:w-1/2 h-[500px] overflow-y-auto ">
+        <div className="w-full md:w-1/2 h-[600px] overflow-y-auto rounded-lg   p-4">
           <h2 className="text-2xl font-extrabold mb-4 text-white border-b pb-2">
             Frequently Asked Questions
           </h2>
           <Accordion
-            type="multiple"
-            collapsible
-            className="bg-gray-900/50 rounded-lg p-4"
-          >
-            <AccordionItem value="item-2" className="border-b border-gray-700">
-              <AccordionTrigger>
-                What is LOL URL, and how does it work?
-              </AccordionTrigger>
-              <AccordionContent>
-                LOL URL is a fun and easy-to-use URL-shortening service that
-                lets you create short links, download QR codes, and track link
-                analytics, including clicks and regional insights. Simply paste
-                your long URL, hit shorten, and you're good to go!
-              </AccordionContent>
-            </AccordionItem>
+  type="multiple"
+  collapsible
+  className="bg-gray-900/50 rounded-lg p-4 scrollbar-hide"
+>
+  <AccordionItem value="item-1" className="border-b border-gray-700">
+    <AccordionTrigger>What is LOL URL?</AccordionTrigger>
+    <AccordionContent>
+      LOL URL is a tool to shorten links, generate QR codes, and track link performance like clicks, devices, and locations.
+    </AccordionContent>
+  </AccordionItem>
 
-            <AccordionItem value="item-3" className="border-b border-gray-700">
-              <AccordionTrigger>Is LOL URL free to use?</AccordionTrigger>
-              <AccordionContent>
-                Yes! LOL URL offers free link shortening and basic analytics.
-              </AccordionContent>
-            </AccordionItem>
+  <AccordionItem value="item-2" className="border-b border-gray-700">
+    <AccordionTrigger>How do I shorten a link?</AccordionTrigger>
+    <AccordionContent>
+      Simply paste your long URL into the input box, click "Shorten," and get a clean, shareable link instantly.
+    </AccordionContent>
+  </AccordionItem>
 
-            <AccordionItem value="item-4" className="border-b border-gray-700">
-              <AccordionTrigger>
-                How can I track the performance of my shortened links?
-              </AccordionTrigger>
-              <AccordionContent>
-                Every link comes with a detailed analytics dashboard where you
-                can view click counts, regions of visitors, and more in
-                real-time.
-              </AccordionContent>
-            </AccordionItem>
+  <AccordionItem value="item-3" className="border-b border-gray-700">
+    <AccordionTrigger>Can I track my shortened links?</AccordionTrigger>
+    <AccordionContent>
+      Yes! Each link includes a dashboard to monitor clicks, visitor locations, and devices in real-time.
+    </AccordionContent>
+  </AccordionItem>
 
-            <AccordionItem value="item-5" className="border-b border-gray-700">
-              <AccordionTrigger>
-                What formats are the QR codes available in?
-              </AccordionTrigger>
-              <AccordionContent>
-                You can download your QR codes in high-quality PNG or SVG
-                formats, making them perfect for digital and print use.
-              </AccordionContent>
-            </AccordionItem>
+  <AccordionItem value="item-4" className="border-b border-gray-700">
+    <AccordionTrigger>Can I customize my links?</AccordionTrigger>
+    <AccordionContent>
+      Yes, you can create personalized URLs that match your branding or campaigns.
+    </AccordionContent>
+  </AccordionItem>
 
-            <AccordionItem value="item-6">
-              <AccordionTrigger>Is my data safe with LOL URL?</AccordionTrigger>
-              <AccordionContent>
-                Absolutely! We prioritize your privacy and ensure your data is
-                secure. Your links and analytics are only accessible to you
-                unless you choose to share them.
-              </AccordionContent>
-            </AccordionItem>
-          </Accordion>
+  <AccordionItem value="item-5" className="border-b border-gray-700">
+    <AccordionTrigger>What formats are the QR codes available in?</AccordionTrigger>
+    <AccordionContent>
+      QR codes can be downloaded in high-quality PNG or SVG formats for digital and print use.
+    </AccordionContent>
+  </AccordionItem>
+
+  
+
+  <AccordionItem value="item-7" className="border-b border-gray-700">
+    <AccordionTrigger>Is my data safe with LOL URL?</AccordionTrigger>
+    <AccordionContent>
+      Absolutely! We prioritize privacy and ensure your data is secure and accessible only to you.
+    </AccordionContent>
+  </AccordionItem>
+
+  <AccordionItem value="item-8" className="border-b border-gray-700">
+    <AccordionTrigger>Is LOL URL free to use?</AccordionTrigger>
+    <AccordionContent>
+      Yes! LOL URL offers free link shortening and basic analytics.
+    </AccordionContent>
+  </AccordionItem>
+
+  <AccordionItem value="item-9" className="border-b border-gray-700">
+    <AccordionTrigger>Does LOL URL work globally?</AccordionTrigger>
+    <AccordionContent>
+      Yes, LOL URL is accessible worldwide, and you can track clicks from any location.
+    </AccordionContent>
+  </AccordionItem>
+</Accordion>
+
         </div>
 
-        {/* Video Section */}
-        <div className="w-full md:w-1/2">
-          <h2 className="text-2xl font-extrabold mb-4 text-white border-b pb-2">
-            See How It Works
-          </h2>
-          <div className="h-[316px] rounded-lg overflow-hidden shadow-xl">
-            <HeroVideoDialog
-              className="dark:hidden block z-index-10000000"
-              animationStyle="from-center"
-              videoSrc="https://www.youtube.com/embed/qh3NGpYRG3I?si=4rb-zSdDkVK9qxxb"
-              thumbnailSrc="https://startup-template-sage.vercel.app/hero-light.png"
-              thumbnailAlt="Hero Video"
-            />
-            <HeroVideoDialog
-              className="hidden dark:block z-index-10000000"
-              animationStyle="from-center"
-              videoSrc="https://www.youtube.com/embed/qh3NGpYRG3I?si=4rb-zSdDkVK9qxxb"
-              thumbnailSrc="https://startup-template-sage.vercel.app/hero-dark.png"
-              thumbnailAlt="Hero Video"
-            />
-          </div>
+        {/* tweet Section */}
+        <div className="w-full md:w-1/2 h-[600px] flex flex-col gap-1">
+        
+          <Tweet className="h-full rounded overflow-hidden shadow-xl" id="1875067876257956171" />
         </div>
       </div>
     </div>

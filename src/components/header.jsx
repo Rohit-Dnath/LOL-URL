@@ -25,15 +25,16 @@ const Header = () => {
     <>
       <nav className="p-4 flex justify-between items-center ">
         <Link to="/">
-          <img src="/logo.png" className="h-16" alt="LOGO" />
+          {/* <img src="/logo.png" className="inline-block h-16" alt="LOGO" /> */}
+          <h1 className="text-2xl font-sans font-extrabold">Urll.lol</h1>  
    
         </Link>
         <div className="flex gap-4">
           {!user ? (
             <Button onClick={() => navigate("/auth")}>Login</Button>
           ) : (
-            <DropdownMenu>
-              <DropdownMenuTrigger className="w-10 rounded-full overflow-hidden">
+            <DropdownMenu >
+              <DropdownMenuTrigger className="w-10 rounded-full overflow-hidden ">
                 <Avatar>
                   <AvatarImage src={user?.user_metadata?.profile_pic} />
                   <AvatarFallback>🫵</AvatarFallback>
@@ -44,7 +45,7 @@ const Header = () => {
                   {user?.user_metadata?.name}
                 </DropdownMenuLabel>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem>
+                <DropdownMenuItem >
                   <Link to="/dashboard" className="flex">
                     <LinkIcon className="mr-2 h-4 w-4" />
                     My Links
