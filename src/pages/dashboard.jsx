@@ -79,14 +79,11 @@ const Dashboard = () => {
         <Filter className="absolute top-2 right-2 p-1 mt-2" />
       </div>
       {error && <Error message={error?.message} />}
-      <div className="grid grid-col-2 gap-2">
-        
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {(filteredUrls || []).map((url, i) => {
+          return <LinkCard key={i} url={url} fetchUrls={fnUrls} />
+        })}
       </div>
-      {(filteredUrls || []).map((url, i) => {
-        return <LinkCard key={i} url={url} fetchUrls={fnUrls} />
-        // return url.title; 
-        
-      })}
     </div>
   );
 };
