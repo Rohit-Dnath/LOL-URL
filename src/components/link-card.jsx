@@ -43,13 +43,22 @@ const LinkCard = ({ url, fetchUrls }) => {
     });
   };
 
-  const handleDelete = () => {
-    fnDelete().then(() => {
+  const handleDelete = async (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    const confirmDelete = window.confirm("Are you sure you want to delete this URL?");
+    if (!confirmDelete) return;
+    try {
+      await fnDelete();
       fetchUrls();
       toast.success("URL deleted successfully!", {
         position: "top-right",
       });
-    });
+    } catch (error) {
+      toast.error("Failed to delete URL.", {
+        position: "top-right",
+      });
+    }
   };
 
   return (
@@ -90,7 +99,7 @@ const LinkCard = ({ url, fetchUrls }) => {
               onClick={(e) => {
                 e.preventDefault();
                 e.stopPropagation();
-                handleDelete();
+                handleDelete(e);
               }}
               disable={loadingDelete}
             >
