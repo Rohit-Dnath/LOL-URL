@@ -5,7 +5,7 @@ import { Button } from "./ui/button";
 import { deleteUrl } from "@/db/apiUrls";
 import { BeatLoader } from "react-spinners";
 import useFetch from "@/hooks/use-fetch";
-import { toast } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const LinkCard = ({ url, fetchUrls }) => {
@@ -22,6 +22,10 @@ const LinkCard = ({ url, fetchUrls }) => {
     anchor.click();
 
     document.body.removeChild(anchor);
+
+    toast.success("Image downloaded successfully!", {
+      position: "top-right",
+    });
   };
   const { loading: loadingDelete, fn: fnDelete } = useFetch(deleteUrl, url.id);
 
@@ -32,52 +36,65 @@ const LinkCard = ({ url, fetchUrls }) => {
     });
   };
 
-  return (
-    <div className="flex flex-col gap-2 border p-4 bg-gray-800 rounded-xl shadow-lg w-full h-96 hover:shadow-2xl transition-shadow duration-300">
-      <div className="flex justify-between w-full">
-        <img
-          src={url?.qr}
-          className="h-32 w-32 object-contain ring ring-blue-500 self-start rounded-lg"
-          alt="qr code"
-        />
-        <div className="flex gap-2">
-          <Button
-            variant="ghost"
-            className="rounded"
-            onClick={handleCopy}
-          >
-            <Copy className="text-white" />
-          </Button>
-          <Button variant="ghost" className="rounded" onClick={downloadImage}>
-            <Download className="text-white" />
-          </Button>
-          <Button
-            variant="ghost"
-            className="rounded"
-            onClick={() => fnDelete().then(() => fetchUrls())}
-            disable={loadingDelete}
-          >
-            {loadingDelete ? <BeatLoader size={5} color="white" /> : <Trash className="text-white" />}
-          </Button>
-        </div>
-      </div>
-      <Link to={`/link/${url?.id}`} className="flex flex-col flex-1 mt-2">
-        <span className="text-lg font-extrabold hover:underline cursor-pointer text-white mt-1">
-          {url?.title}
-        </span>
-        <span className="text-md text-blue-400 font-bold hover:underline cursor-pointer mt-1">
-          {DOMAIN}/{url?.custom_url ? url?.custom_url : url.short_url}
-        </span>
-        <span className="flex items-center gap-1 hover:underline cursor-pointer text-gray-400 mt-1">
-          <LinkIcon className="p-1" />
-          {url?.original_url}
-        </span>
+  const handleDelete = () => {
+    fnDelete().then(() => {
+      fetchUrls();
+      toast.success("URL deleted successfully!", {
+        position: "top-right",
+      });
+    });
+  };
 
-        <span className="flex items-end font-extralight text-sm flex-1 text-gray-500 mt-1">
-          {new Date(url?.created_at).toLocaleString()}
-        </span>
-      </Link>
+  return (
+    <div className="relative">
+      <div className="flex flex-col gap-2 border p-4 bg-background rounded-xl shadow-lg w-full h-96 hover:shadow-2xl transition-transform duration-300 transform hover:scale-105">
+        <div className="flex justify-between w-full">
+          <img
+            src={url?.qr}
+            className="h-32 w-32 object-contain ring ring-blue-500 self-start rounded-lg"
+            alt="qr code"
+          />
+          <div className="flex gap-2">
+            <Button
+              variant="ghost"
+              className="rounded"
+              onClick={handleCopy}
+            >
+              <Copy className="text-white" />
+            </Button>
+            <Button variant="ghost" className="rounded" onClick={downloadImage}>
+              <Download className="text-white" />
+            </Button>
+            <Button
+              variant="ghost"
+              className="rounded"
+              onClick={handleDelete}
+              disable={loadingDelete}
+            >
+              {loadingDelete ? <BeatLoader size={5} color="white" /> : <Trash className="text-white" />}
+            </Button>
+          </div>
+        </div>
+        <Link to={`/link/${url?.id}`} className="flex flex-col flex-1 mt-2">
+          <span className="text-lg font-extrabold hover:underline cursor-pointer text-white mt-1">
+            {url?.title}
+          </span>
+          <span className="text-md text-blue-400 font-bold  cursor-pointer mt-1">
+            {DOMAIN}/{url?.custom_url ? url?.custom_url : url.short_url}
+          </span>
+          <span className="flex items-center gap-1  cursor-pointer text-gray-400 mt-1">
+            <LinkIcon className="p-1" />
+            {url?.original_url}
+          </span>
+
+          <span className="flex items-end font-extralight text-sm flex-1 text-gray-500 mt-1">
+            {new Date(url?.created_at).toLocaleString()}
+          </span>
+        </Link>
+      </div>
+      <ToastContainer position="top-right" autoClose={5000} hideProgressBar={false} newestOnTop={false} closeOnClick rtl={false} pauseOnFocusLoss draggable pauseOnHover style={{ zIndex: 9999 }} />
     </div>
   );
 };
+
 export default LinkCard;

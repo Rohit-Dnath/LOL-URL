@@ -90,16 +90,17 @@ export function CreateLink() {
       defaultOpen={longLink}
       onOpenChange={(res) => {
         if (!res) setSearchParams({});
+        
       }}
     >
       <DialogTrigger asChild>
         <Button variant="" className="rounded">Create New Link</Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-md">
+      <DialogContent className="sm:max-w-md rounded">
         <DialogHeader>
           <DialogTitle className="font-bold text-2xl">Create New</DialogTitle>
         </DialogHeader>
-        //Todo: Add Short url QR Code not long one ***
+        
         {formValues?.longUrl && (
           <QRCode ref={ref} size={250} value={formValues?.longUrl} />
         )}
@@ -121,7 +122,7 @@ export function CreateLink() {
         />
         {errors.longUrl && <Error message={errors.longUrl} />}
         <div className="flex items-center gap-2">
-          <Card className="p-2">urll.lol</Card> /
+          <Card className="p-2 rounded">urll.lol</Card> /
           <Input
             id="customUrl"
             placeholder="Custom Link (optional)"

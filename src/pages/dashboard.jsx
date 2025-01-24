@@ -43,16 +43,16 @@ const Dashboard = () => {
     <div className="flex flex-col gap-4 max-w-7xl mx-auto">
       {loading || loadingClicks && <BarLoader className=" mb-4" width={"100%"} color="#36d7b7" />}
       <div className="grid grid-cols-2 gap-4 ">
-        <Card className=" rounded">
+        <Card className="bg-background rounded">
           <CardHeader>
-            <CardTitle>Links Created</CardTitle>
+            <CardTitle >Links Created</CardTitle>
           </CardHeader>
           <CardContent>
             <p>{urls?.length}</p>
           </CardContent>
         </Card>
-        <ScrollProgress className="w-full" />
-        <Card className=" rounded">
+        <ScrollProgress className=" w-full" />
+        <Card className="bg-background rounded">
           <CardHeader>
             <CardTitle>Total Clicks</CardTitle>
           </CardHeader>
@@ -64,8 +64,8 @@ const Dashboard = () => {
      
 
       <div className="flex justify-between items-center">
-        <h1 className=" text-4xl font-extrabold">My Links</h1>
-        <CreateLink />
+        <h1 className=" text-4xl font-extrabold ">My Links</h1>
+        <CreateLink  className="rounded"/>
       </div>
 
       <div className="relative ">
