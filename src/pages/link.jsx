@@ -11,26 +11,56 @@ import {Copy, Download, LinkIcon, Trash} from "lucide-react";
 import {useEffect} from "react";
 import {useNavigate, useParams} from "react-router-dom";
 import {BarLoader, BeatLoader} from "react-spinners";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const LinkPage = () => {
-  const downloadImage = () => {
+  const downloadImage = async () => {
     const imageUrl = url?.qr;
-    const fileName = url?.title;
+    const fileName = `${url?.title}_qr`;
 
-    // Create an anchor element
+    const response = await fetch(imageUrl);
+    const blob = await response.blob();
+    const objectUrl = URL.createObjectURL(blob);
+
     const anchor = document.createElement("a");
-    anchor.href = imageUrl;
+    anchor.href = objectUrl;
     anchor.download = fileName;
 
-    // Append the anchor to the body
     document.body.appendChild(anchor);
-
-    // Trigger the download by simulating a click event
     anchor.click();
-
-    // Remove the anchor from the document
     document.body.removeChild(anchor);
+
+    URL.revokeObjectURL(objectUrl);
+
+    toast.success("Image downloaded successfully!", {
+      position: "top-right",
+    });
   };
+
+  const handleCopy = () => {
+    navigator.clipboard.writeText(`https://urll.lol/${link}`);
+    toast.success("URL copied to clipboard!", {
+      position: "top-right",
+    });
+  };
+
+  const handleDelete = async () => {
+    const confirmDelete = window.confirm("Are you sure you want to delete this URL?");
+    if (!confirmDelete) return;
+    try {
+      await fnDelete();
+      navigate("/dashboard");
+      toast.success("URL deleted successfully!", {
+        position: "top-right",
+      });
+    } catch (error) {
+      toast.error("Failed to delete URL.", {
+        position: "top-right",
+      });
+    }
+  };
+
   const navigate = useNavigate();
   const {user} = UrlState();
   const {id} = useParams();
@@ -66,8 +96,11 @@ const LinkPage = () => {
     link = url?.custom_url ? url?.custom_url : url.short_url;
   }
 
+  const qrCodeUrl = url?.qr || "fallback-image-url"; // Add a fallback image URL if needed
+
   return (
     <>
+      <ToastContainer position="bottom-right" autoClose={5000} hideProgressBar={false} newestOnTop={false} closeOnClick rtl={false} pauseOnFocusLoss draggable pauseOnHover style={{ zIndex: 9999 }} />
       {(loading || loadingStats) && (
         <BarLoader className="mb-4" width={"100%"} color="#36d7b7" />
       )}
@@ -96,12 +129,7 @@ const LinkPage = () => {
             {new Date(url?.created_at).toLocaleString()}
           </span>
           <div className="flex gap-2">
-            <Button
-              variant="ghost"
-              onClick={() =>
-                navigator.clipboard.writeText(`https://urll.lol/${link}`)
-              }
-            >
+            <Button variant="ghost" onClick={handleCopy}>
               <Copy />
             </Button>
             <Button variant="ghost" onClick={downloadImage}>
@@ -109,11 +137,7 @@ const LinkPage = () => {
             </Button>
             <Button
               variant="ghost"
-              onClick={() =>
-                fnDelete().then(() => {
-                  navigate("/dashboard");
-                })
-              }
+              onClick={handleDelete}
               disable={loadingDelete}
             >
               {loadingDelete ? (
@@ -124,7 +148,7 @@ const LinkPage = () => {
             </Button>
           </div>
           <img
-            src={url?.qr}
+            src={qrCodeUrl}
             className="w-full self-center sm:self-start ring ring-blue-500 p-1 object-contain"
             alt="qr code"
           />
