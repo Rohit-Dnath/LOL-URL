@@ -20,6 +20,7 @@ import {UrlState} from "@/context";
 import {QRCode} from "react-qrcode-logo";
 
 export function CreateLink() {
+  const DOMAIN = import.meta.env.VITE_YOUR_DOMAIN;
   const {user} = UrlState();
 
   const navigate = useNavigate();
@@ -92,6 +93,7 @@ export function CreateLink() {
         if (!res) setSearchParams({});
         
       }}
+      
     >
       <DialogTrigger asChild>
         <Button variant="" className="rounded">Create New Link</Button>
@@ -147,3 +149,6 @@ export function CreateLink() {
     </Dialog>
   );
 }
+
+export default CreateLink;
+

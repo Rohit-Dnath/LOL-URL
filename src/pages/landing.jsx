@@ -76,7 +76,7 @@ const LandingPage = () => {
         <span className="inline">Your Shortcut to </span>
         <span className="inline">
           <SparklesText
-            className="inline sm:text-6xl text-white font-extrabold"
+            className="inline sm:text-6xl text-3xl text-white font-extrabold"
             text="Smart Links"
           />
         </span>
@@ -205,9 +205,9 @@ const LandingPage = () => {
         </div>
 
         {/* tweet Section */}
-        <div className="w-full md:w-1/2 h-[600px] flex flex-col gap-1">
+        <div className="w-full md:w-1/2 h-[600px] flex flex-col gap-1 ">
         
-          <Tweet className="h-full rounded overflow-hidden shadow-xl" id="1875067876257956171" />
+          <Tweet className="h-full rounded overflow-hidden shadow-xl " id="1875067876257956171" />
         </div>
       </div>
     </div>

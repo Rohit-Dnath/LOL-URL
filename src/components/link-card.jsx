@@ -37,7 +37,8 @@ const LinkCard = ({ url, fetchUrls }) => {
   const { loading: loadingDelete, fn: fnDelete } = useFetch(deleteUrl, url.id);
 
   const handleCopy = () => {
-    navigator.clipboard.writeText(`${DOMAIN}/${url?.short_url}`);
+    const link = `${DOMAIN}/${url?.custom_url ? url?.custom_url : url?.short_url}`;
+    navigator.clipboard.writeText(link);
     toast.success("URL copied to clipboard!", {
       position: "top-right",
     });
