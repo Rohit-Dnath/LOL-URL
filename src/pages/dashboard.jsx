@@ -42,6 +42,7 @@ const Dashboard = () => {
     
     <div className="flex flex-col gap-4 max-w-7xl mx-auto">
       {loading || loadingClicks && <BarLoader className=" mb-4" width={"100%"} color="#36d7b7" />}
+      <br />
       <div className="grid grid-cols-2 gap-4 ">
         <Card className="bg-background rounded">
           <CardHeader>
@@ -74,11 +75,13 @@ const Dashboard = () => {
           placeholder="Filter Links...."
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
-          className="mt-2 rounded h-full flex-1    "
+          className="mt-2 rounded h-full flex-1 p-2" 
         />
         <Filter className="absolute top-2 right-2 p-1 mt-2" />
       </div>
       {error && <Error message={error?.message} />}
+
+      
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {(filteredUrls || []).map((url, i) => {
           return <LinkCard key={i} url={url} fetchUrls={fnUrls} />

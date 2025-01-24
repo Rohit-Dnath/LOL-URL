@@ -10,18 +10,25 @@ import "react-toastify/dist/ReactToastify.css";
 
 const LinkCard = ({ url, fetchUrls }) => {
   const DOMAIN = import.meta.env.VITE_YOUR_DOMAIN;
-  const downloadImage = () => {
+  const downloadImage = async (e) => {
+    e.preventDefault(); // Prevent default behavior
+
     const imageUrl = url?.qr;
-    const fileName = url?.title;
+    const fileName = `${url?.title}_qr`; // Add "qr" to the file name
+
+    const response = await fetch(imageUrl);
+    const blob = await response.blob();
+    const objectUrl = URL.createObjectURL(blob);
 
     const anchor = document.createElement("a");
-    anchor.href = imageUrl;
+    anchor.href = objectUrl;
     anchor.download = fileName;
 
     document.body.appendChild(anchor);
     anchor.click();
-
     document.body.removeChild(anchor);
+
+    URL.revokeObjectURL(objectUrl);
 
     toast.success("Image downloaded successfully!", {
       position: "top-right",
@@ -51,7 +58,7 @@ const LinkCard = ({ url, fetchUrls }) => {
         <div className="flex justify-between w-full">
           <img
             src={url?.qr}
-            className="h-32 w-32 object-contain ring ring-blue-500 self-start rounded-lg"
+            className="h-32 w-32 object-contain  self-start rounded"
             alt="qr code"
           />
           <div className="flex gap-2">
@@ -92,7 +99,7 @@ const LinkCard = ({ url, fetchUrls }) => {
           </span>
         </Link>
       </div>
-      <ToastContainer position="top-right" autoClose={5000} hideProgressBar={false} newestOnTop={false} closeOnClick rtl={false} pauseOnFocusLoss draggable pauseOnHover style={{ zIndex: 9999 }} />
+      <ToastContainer position="bottom-right" autoClose={5000} hideProgressBar={false} newestOnTop={false} closeOnClick rtl={false} pauseOnFocusLoss draggable pauseOnHover style={{ zIndex: 9999 }} />
     </div>
   );
 };
