@@ -54,51 +54,66 @@ const LinkCard = ({ url, fetchUrls }) => {
 
   return (
     <div className="relative">
-      <div className="flex flex-col gap-2 border p-4 bg-background rounded-xl shadow-lg w-full h-96 hover:shadow-2xl transition-transform duration-300 transform hover:scale-105">
+      <Link to={`/link/${url?.id}`} className="flex flex-col gap-2 border p-4 bg-background rounded-xl shadow-lg w-full h-96 hover:shadow-2xl transition-transform duration-300 transform hover:scale-105">
         <div className="flex justify-between w-full">
           <img
             src={url?.qr}
-            className="h-32 w-32 object-contain  self-start rounded"
+            className="h-32 w-32 object-contain self-start rounded"
             alt="qr code"
           />
           <div className="flex gap-2">
             <Button
               variant="ghost"
               className="rounded"
-              onClick={handleCopy}
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                handleCopy();
+              }}
             >
               <Copy className="text-white" />
             </Button>
-            <Button variant="ghost" className="rounded" onClick={downloadImage}>
+            <Button
+              variant="ghost"
+              className="rounded"
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                downloadImage(e);
+              }}
+            >
               <Download className="text-white" />
             </Button>
             <Button
               variant="ghost"
               className="rounded"
-              onClick={handleDelete}
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                handleDelete();
+              }}
               disable={loadingDelete}
             >
               {loadingDelete ? <BeatLoader size={5} color="white" /> : <Trash className="text-white" />}
             </Button>
           </div>
         </div>
-        <Link to={`/link/${url?.id}`} className="flex flex-col flex-1 mt-2">
+        <div className="flex flex-col flex-1 mt-2">
           <span className="text-lg font-extrabold hover:underline cursor-pointer text-white mt-1">
             {url?.title}
           </span>
-          <span className="text-md text-blue-400 font-bold  cursor-pointer mt-1">
+          <span className="text-md text-blue-400 font-bold cursor-pointer mt-1">
             {DOMAIN}/{url?.custom_url ? url?.custom_url : url.short_url}
           </span>
-          <span className="flex items-center gap-1  cursor-pointer text-gray-400 mt-1">
+          <span className="flex items-center gap-1 cursor-pointer text-gray-400 mt-1">
             <LinkIcon className="p-1" />
             {url?.original_url}
           </span>
-
           <span className="flex items-end font-extralight text-sm flex-1 text-gray-500 mt-1">
             {new Date(url?.created_at).toLocaleString()}
           </span>
-        </Link>
-      </div>
+        </div>
+      </Link>
       <ToastContainer position="bottom-right" autoClose={5000} hideProgressBar={false} newestOnTop={false} closeOnClick rtl={false} pauseOnFocusLoss draggable pauseOnHover style={{ zIndex: 9999 }} />
     </div>
   );
