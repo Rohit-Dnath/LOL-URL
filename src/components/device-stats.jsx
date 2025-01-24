@@ -25,7 +25,9 @@ export default function App({stats}) {
             data={result}
             labelLine={false}
             label={({device, percent}) =>
-              `${device}: ${(percent * 100).toFixed(0)}%`
+              // 
+            `${(percent * 100).toFixed(0)}%`
+            
             }
             dataKey="count"
           >

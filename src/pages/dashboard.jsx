@@ -75,7 +75,7 @@ const Dashboard = () => {
           placeholder="Filter Links...."
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
-          className="mt-2 rounded h-full flex-1 p-2" 
+          className="mt-2 rounded h-full flex-1 p-2 mb-4  "
         />
         <Filter className="absolute top-2 right-2 p-1 mt-2" />
       </div>

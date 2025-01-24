@@ -174,10 +174,26 @@ const LinkPage = () => {
               </Card>
               <ScrollProgress className="w-full" />
 
-              <CardTitle>Location Data</CardTitle>
-              <Location stats={stats} />
-              <CardTitle>Device Info</CardTitle>
-              <DeviceStats stats={stats} />
+              <div className="flex flex-col sm:flex-row gap-8">
+                <div className="sm:w-1/2 border p-4 rounded">
+                  <CardTitle className="mb-10">Location Data</CardTitle>
+                  <Location stats={stats} />
+                </div>
+                <div className="sm:w-1/2 border p-4 rounded">
+                  <CardTitle className="mb-3">Device Info</CardTitle>
+                  <div className="flex items-center gap-4">
+                    <div className="flex items-center gap-2">
+                      <div className="w-4 h-4 bg-blue-500"></div>
+                      <span>Desktop</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <div className="w-4 h-4 bg-green-500"></div>
+                      <span>Mobile</span>
+                    </div>
+                  </div>
+                  <DeviceStats stats={stats} className="text-sm"/>
+                </div>
+              </div>
             </CardContent>
           ) : (
             <CardContent>
