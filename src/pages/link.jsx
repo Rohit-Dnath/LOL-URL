@@ -117,62 +117,61 @@ const LinkPage = () => {
       {(loading || loadingStats) && (
         <BarLoader className="mb-4" width={"100%"} color="#8884d8" />
       )}
-      <Confetti />
       <br />
       <br />
-      <div className="flex flex-col gap-8">
-        <div className="flex flex-col sm:flex-row justify-between items-start gap-8">
-          <div className="flex flex-col items-start gap-8 sm:w-3/5">
-            <span className="text-6xl font-extrabold hover:underline cursor-pointer">
-              {url?.title}
-            </span>
-            <a
-              href={`${DOMAIN}/${link}`}
-              target="_blank"
-              className="text-3xl sm:text-4xl text-blue-400 font-bold hover:underline cursor-pointer"
-            >
-              {DOMAIN}/{link}
-            </a>
-            <a
-              href={url?.original_url}
-              target="_blank"
-              className="flex items-center gap-1 hover:underline cursor-pointer"
-            >
-              <LinkIcon className="p-1" />
-              {url?.original_url}
-            </a>
-            <span className="flex items-end font-extralight text-sm">
-              {new Date(url?.created_at).toLocaleString()}
-            </span>
-          </div>
-          <div className="flex flex-col items-center">
-            <img
-              src={qrCodeUrl}
-              className="w-32 h-32 sm:w-40 sm:h-40 ring ring-blue-500 p-1 object-contain"
-              alt="qr code"
-            />
-            <div className="flex gap-2 mt-4 ">
-              <Button variant="ghost" onClick={handleCopy}>
-                <Copy  />
-              </Button>
-              <Button variant="ghost" onClick={downloadImage}>
-                <Download />
-              </Button>
-              <Button
-                variant="ghost"
-                onClick={handleDelete}
-                disable={loadingDelete}
-              >
-                {loadingDelete ? (
-                  <BeatLoader size={5} color="white" />
-                ) : (
-                  <Trash />
-                )}
-              </Button>
+      <br />
+      
+      <div className="flex flex-col gap-4">
+        {/* Combined Card for Title, Links, QR and Date */}
+        <Card className="bg-background p-6">
+          <CardContent>
+            <div className="flex flex-col sm:flex-row justify-between items-start gap-8">
+              <div className="flex flex-col items-start gap-6 sm:w-3/5">
+                <span className="text-6xl font-extrabold hover:underline cursor-pointer">
+                  {url?.title}
+                </span>
+                <a
+                  href={`${DOMAIN}/${link}`}
+                  target="_blank"
+                  className="text-3xl sm:text-4xl text-blue-400 font-bold hover:underline cursor-pointer"
+                >
+                  {DOMAIN}/{link}
+                </a>
+                <a
+                  href={url?.original_url}
+                  target="_blank"
+                  className="flex items-center gap-1 hover:underline cursor-pointer"
+                >
+                  <LinkIcon className="p-1" />
+                  {url?.original_url}
+                </a>
+                <span className="flex items-end font-extralight text-sm">
+                  {new Date(url?.created_at).toLocaleString()}
+                </span>
+              </div>
+              <div className="flex flex-col items-center">
+                <img
+                  src={qrCodeUrl}
+                  className="w-32 h-32 sm:w-40 sm:h-40   p-1 object-contain"
+                  alt="qr code"
+                />
+                <div className="flex gap-2 mt-4">
+                  <Button variant="ghost" onClick={handleCopy}>
+                    <Copy />
+                  </Button>
+                  <Button variant="ghost" onClick={downloadImage}>
+                    <Download />
+                  </Button>
+                  <Button variant="ghost" onClick={handleDelete} disable={loadingDelete}>
+                    {loadingDelete ? <BeatLoader size={5} color="white" /> : <Trash />}
+                  </Button>
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
+          </CardContent>
+        </Card>
 
+        {/* Statistics Card */}
         <Card className="rounded bg-background">
           <CardHeader >
             <CardTitle className="text-4xl font-extrabold">Statistics</CardTitle>
@@ -194,7 +193,7 @@ const LinkPage = () => {
                   <CardTitle className="mb-10">Location Data</CardTitle>
                   <Location stats={stats} />
                 </div>
-                <div className="sm:w-1/2 border p-4 rounded">
+                <div className="sm:w-1/2 border p-4 rounded pointer-events-none">
                   <CardTitle className="mb-3">Device Info</CardTitle>
                   <div className="flex items-center gap-4">
                     <div className="flex items-center gap-2">
@@ -210,7 +209,7 @@ const LinkPage = () => {
                 </div>
               </div>
               <div className="w-full border p-4 rounded ">
-                <CardTitle className="mb-6">Engagement</CardTitle>
+                <CardTitle className="mb-8">Engagement Timings</CardTitle>
                 <div className="w-full overflow-x-auto">
                   <LineChart
                     width={Math.max(window.innerWidth - 64, 500)} // Ensure minimum width of 500
