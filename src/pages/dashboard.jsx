@@ -58,65 +58,72 @@ const Dashboard = () => {
   }, [urls?.length]);
 
   return (
-    <div className="flex flex-col gap-4 max-w-7xl mx-auto">
-      {loading || loadingClicks && <BarLoader className=" mb-4" width={"100%"} color="#8884d8" />}
+    <div className="flex flex-col gap-4 max-w-7xl mx-auto p-4">
+      {loading || loadingClicks && <BarLoader className="mb-4" width={"100%"} color="#8884d8" />}
       <br />
-      <div className="flex justify-between">
-        <div className="flex flex-col gap-4" style={{  width: '48%' }}>
-          <Card className="bg-background rounded" style={{ flex: 1 }}>
-            <CardHeader>
-              <CardTitle className="text-2xl">Links Created</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p className="text-2xl">{urls?.length}</p>
-            </CardContent>
-          </Card>
-          <ScrollProgress className="w-full" />
-          <Card className="bg-background rounded" style={{ flex: 1 }}>
-            <CardHeader>
-              <CardTitle className="text-2xl">Total Clicks</CardTitle>
-            </CardHeader>
-            
-            <CardContent>
-              <p className="text-2xl">{clicks?.length}</p>
-            </CardContent>
-          </Card>
-        </div>
-        <div style={{ width: '50%', pointerEvents: 'none' }}>
-          <Card className="bg-background rounded">
-            <CardHeader>
-              <CardTitle className="text-2xl">Top Clicked Links</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <ResponsiveContainer width="100%" height={350}>
+      
+      {/* Stats Cards */}
+      <div className="grid grid-cols-2 gap-4">
+        <Card className="bg-background rounded">
+          <CardHeader>
+            <CardTitle className="text-2xl md:text-2xl text-lg">Links Created</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <p className="text-xl md:text-2xl">{urls?.length}</p>
+          </CardContent>
+        </Card>
+        
+        <Card className="bg-background rounded">
+          <CardHeader>
+            <CardTitle className="text-2xl md:text-2xl text-lg">Total Clicks</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <p className="text-xl md:text-2xl">{clicks?.length}</p>
+          </CardContent>
+        </Card>
+      </div>
+
+      {/* Graph Card */}
+      <div className="w-full mt-4 pointer-events-none">
+        <Card className="bg-background rounded">
+          <CardHeader>
+            <CardTitle className="text-2xl md:text-2xl text-lg">Top Clicked Links</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="w-full h-[300px] md:h-[350px]">
+              <ResponsiveContainer width="100%" height="100%">
                 <BarChart data={topClickedLinksData}>
-                  <XAxis dataKey="link" />
-                  <YAxis />
+                  <XAxis dataKey="link" tick={{ fontSize: 12 }} />
+                  <YAxis tick={{ fontSize: 12 }} />
                   <Tooltip cursor={{fill: 'none'}} />
                   <Legend />
                   <Bar dataKey="clicks" fill="#8884d8" isAnimationActive={false} />
                 </BarChart>
               </ResponsiveContainer>
-            </CardContent>
-          </Card>
-        </div>
+            </div>
+          </CardContent>
+        </Card>
       </div>
-      <div className="flex justify-between items-center">
-        <h1 className=" text-4xl font-extrabold ">My Links</h1>
+
+      {/* Modified My Links section */}
+      <div className="flex flex-row justify-between items-center w-full">
+        <h1 className="text-2xl md:text-4xl font-extrabold">My Links</h1>
         <CreateLink className="rounded" />
       </div>
-      <div className="relative ">
+
+      <div className="relative">
         <Input
           type="text"
           placeholder="Filter Links...."
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
-          className="mt-2 rounded h-full flex-1 p-2 mb-4  "
+          className="mt-2 rounded h-full flex-1 p-2 mb-4"
         />
         <Filter className="absolute top-2 right-2 p-1 mt-2" />
       </div>
+
       {error && <Error message={error?.message} />}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
         {(filteredUrls || []).map((url, i) => {
           return <LinkCard key={i} url={url} fetchUrls={fnUrls} />
         })}
