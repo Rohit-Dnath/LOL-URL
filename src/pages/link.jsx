@@ -15,6 +15,7 @@ import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const LinkPage = () => {
+  const DOMAIN = import.meta.env.VITE_YOUR_DOMAIN;
   const downloadImage = async () => {
     const imageUrl = url?.qr;
     const fileName = `${url?.title}_qr`;
@@ -112,11 +113,11 @@ const LinkPage = () => {
               {url?.title}
             </span>
             <a
-              href={`https://urll.lol/${link}`}
+              href={`${DOMAIN}/${link}`}
               target="_blank"
               className="text-3xl sm:text-4xl text-blue-400 font-bold hover:underline cursor-pointer"
             >
-              https://urll.lol/{link}
+              {DOMAIN}/{link}
             </a>
             <a
               href={url?.original_url}
