@@ -73,14 +73,14 @@ const LandingPage = () => {
       />
 
       <h2 className="my-10 sm:my-16 text-3xl sm:text-6xl lg:text-7xl text-white text-center font-extrabold">
-        <span className="inline">Your Shortcut to </span>
+        <span className="inline">Your Shortcut to Smart </span>
         <span className="inline">
           <SparklesText
-            className="inline sm:text-6xl text-3xl text-white font-extrabold"
-            text="Smart Links"
+            className="inline sm:text-6xl text-7xl text-white font-extrabold"
+            text="LOL Urls"
           />
         </span>
-        <span className="inline"> and Insights! 👇</span>
+        <span className="inline"> and Insights ▼</span>
       </h2>
       <ScrollProgress className="w-full" />
 
