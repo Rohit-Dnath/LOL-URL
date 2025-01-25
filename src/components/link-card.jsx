@@ -5,8 +5,9 @@ import { Button } from "./ui/button";
 import { deleteUrl } from "@/db/apiUrls";
 import { BeatLoader } from "react-spinners";
 import useFetch from "@/hooks/use-fetch";
-import { toast, ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { toastConfig } from "@/utils/toastConfig";
 
 const LinkCard = ({ url, fetchUrls }) => {
   const DOMAIN = import.meta.env.VITE_YOUR_DOMAIN;
@@ -30,18 +31,14 @@ const LinkCard = ({ url, fetchUrls }) => {
 
     URL.revokeObjectURL(objectUrl);
 
-    toast.success("Image downloaded successfully!", {
-      position: "top-right",
-    });
+    toast.success("Image downloaded successfully!", toastConfig);
   };
   const { loading: loadingDelete, fn: fnDelete } = useFetch(deleteUrl, url.id);
 
   const handleCopy = () => {
     const link = `${DOMAIN}/${url?.custom_url ? url?.custom_url : url?.short_url}`;
     navigator.clipboard.writeText(link);
-    toast.success("URL copied to clipboard!", {
-      position: "top-right",
-    });
+    toast.success("URL copied to clipboard!", toastConfig);
   };
 
   const handleDelete = async (e) => {
@@ -56,9 +53,7 @@ const LinkCard = ({ url, fetchUrls }) => {
       //   position: "top-right",
       // });
     } catch (error) {
-      toast.error("Failed to delete URL.", {
-        position: "top-right",
-      });
+      toast.error("Failed to delete URL.", toastConfig);
     }
   };
 
@@ -108,23 +103,24 @@ const LinkCard = ({ url, fetchUrls }) => {
             </Button>
           </div>
         </div>
-        <div className="flex flex-col flex-1 mt-2">
-          <span className="text-lg font-extrabold hover:underline cursor-pointer text-white mt-1">
+        <div className="flex flex-col flex-1 mt-2 overflow-hidden">
+          <h3 className="text-lg font-extrabold hover:underline cursor-pointer text-white mt-1 break-words">
             {url?.title}
-          </span>
-          <span className="text-md text-blue-400 font-bold cursor-pointer mt-1">
+          </h3>
+          <span className="text-md text-blue-400 font-bold cursor-pointer mt-1 break-all">
             {DOMAIN}/{url?.custom_url ? url?.custom_url : url.short_url}
           </span>
-          <span className="flex items-center gap-1 cursor-pointer text-gray-400 mt-1">
-            <LinkIcon className="p-1" />
-            {url?.original_url}
-          </span>
-          <span className="flex items-end font-extralight text-sm flex-1 text-gray-500 mt-1">
+          <div className="flex items-start gap-2 cursor-pointer text-gray-400 mt-1 break-all">
+            <LinkIcon className="min-w-[16px] h-4 mt-1" />
+            <span className="line-clamp-3 hover:line-clamp-none transition-all duration-300">
+              {url?.original_url}
+            </span>
+          </div>
+          <span className="flex items-end font-extralight text-sm text-gray-500 mt-auto pt-2">
             {new Date(url?.created_at).toLocaleString()}
           </span>
         </div>
       </Link>
-      <ToastContainer position="bottom-right" autoClose={5000} hideProgressBar={false} newestOnTop={false} closeOnClick rtl={false} pauseOnFocusLoss draggable pauseOnHover style={{ zIndex: 9999 }} />
     </div>
   );
 };

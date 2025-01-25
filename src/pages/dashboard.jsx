@@ -12,6 +12,8 @@ import { Filter } from "lucide-react";
 import React, { useEffect, useState } from "react";
 import { BarLoader } from "react-spinners";
 import { BarChart, Bar, XAxis, YAxis, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import { ToastContainer } from "react-toastify";
+import { toastConfig } from "@/utils/toastConfig";
 
 const Dashboard = () => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -128,6 +130,8 @@ const Dashboard = () => {
           return <LinkCard key={i} url={url} fetchUrls={fnUrls} />
         })}
       </div>
+
+      <ToastContainer {...toastConfig} />
     </div>
   );
 };
