@@ -9,11 +9,14 @@ import {deleteUrl, getUrl} from "@/db/apiUrls";
 import useFetch from "@/hooks/use-fetch";
 import {Copy, Download, LinkIcon, Trash} from "lucide-react";
 import {useEffect} from "react";
-import {useNavigate, useParams} from "react-router-dom";
+import {useNavigate, useParams, useSearchParams} from "react-router-dom";
 import {BarLoader, BeatLoader} from "react-spinners";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
+import confetti from "canvas-confetti";
+import { Confetti } from "@/components/ui/confetti";
+import { AutoConfetti } from "@/components/ui/auto-confetti";
 
 const LinkPage = () => {
   const DOMAIN = import.meta.env.VITE_YOUR_DOMAIN;
@@ -66,6 +69,8 @@ const LinkPage = () => {
   const navigate = useNavigate();
   const {user} = UrlState();
   const {id} = useParams();
+  const [searchParams] = useSearchParams();
+  const isNewLink = searchParams.get('new') === 'true';
   const {
     loading,
     data: url,
@@ -107,10 +112,12 @@ const LinkPage = () => {
 
   return (
     <>
+      {isNewLink && <AutoConfetti />}
       <ToastContainer position="bottom-right" autoClose={5000} hideProgressBar={false} newestOnTop={false} closeOnClick rtl={false} pauseOnFocusLoss draggable pauseOnHover style={{ zIndex: 9999 }} />
       {(loading || loadingStats) && (
         <BarLoader className="mb-4" width={"100%"} color="#8884d8" />
       )}
+      <Confetti />
       <br />
       <br />
       <div className="flex flex-col gap-8">
