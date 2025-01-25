@@ -112,6 +112,7 @@ const LinkPage = () => {
         <BarLoader className="mb-4" width={"100%"} color="#8884d8" />
       )}
       <br />
+      <br />
       <div className="flex flex-col gap-8">
         <div className="flex flex-col sm:flex-row justify-between items-start gap-8">
           <div className="flex flex-col items-start gap-8 sm:w-3/5">
