@@ -124,6 +124,26 @@ export function CreateLink() {
     }
   };
 
+  const [urlAvailable, setUrlAvailable] = useState(null);
+
+  const checkUrlAvailability = async (url) => {
+    if (!url) return;
+    try {
+      const exists = await checkCustomUrlExists(url);
+      setUrlAvailable(!exists);
+    } catch (error) {
+      console.error("Error checking URL availability:", error);
+    }
+  };
+
+  useEffect(() => {
+    const delayDebounceFn = setTimeout(() => {
+      checkUrlAvailability(formValues.customUrl);
+    }, 500);
+
+    return () => clearTimeout(delayDebounceFn);
+  }, [formValues.customUrl]);
+
   return (
     <Dialog
       defaultOpen={longLink}
@@ -140,7 +160,7 @@ export function CreateLink() {
       </DialogTrigger>
       <DialogContent className="sm:max-w-md rounded bg-background ">
         <DialogHeader>
-          <DialogTitle className="font-bold text-2xl">Create New</DialogTitle>
+          <DialogTitle className="font-bold text-2xl">Create New Link</DialogTitle>
         </DialogHeader>
         
         {formValues?.customUrl && (
@@ -170,9 +190,22 @@ export function CreateLink() {
             placeholder="xyz.."
             value={formValues.customUrl}
             onChange={handleChange}
-            className="rounded"
+            className={`rounded ${
+              urlAvailable === null
+                ? ""
+                : urlAvailable
+                ? "border-green-500 focus-visible:ring-green-500"
+                : "border-red-500 focus-visible:ring-red-500"
+            }`}
           />
         </div>
+        {formValues.customUrl && (
+          <p className={`text-sm mt-1 ${
+            urlAvailable ? "text-green-500" : "text-red-500"
+          }`}>
+            {urlAvailable ? "✓ URL is available" : "✗ URL is not available"}
+          </p>
+        )}
         {errors.customUrl && <Error message={errors.customUrl} />}
         {error && <Error message={errors.message} />}
         <DialogFooter className="sm:justify-start">
