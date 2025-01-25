@@ -24,11 +24,11 @@ export default function App({stats}) {
           <Pie
             data={result}
             labelLine={false}
-            label={({device, percent}) =>
-              // 
-            `${(percent * 100).toFixed(0)}%`
+            // label={({device, percent}) =>
+            //   // 
+            // `${(percent * 100).toFixed(0)}%`
             
-            }
+            // }
             dataKey="count"
           >
             {result.map((entry, index) => (

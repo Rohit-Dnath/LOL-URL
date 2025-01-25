@@ -119,40 +119,39 @@ const LinkPage = () => {
       )}
       <br />
       <br />
-      <br />
+
       
-      <div className="flex flex-col gap-4">
-        {/* Combined Card for Title, Links, QR and Date */}
-        <Card className="bg-background p-6">
+      <div className="flex flex-col gap-4 max-w-full">
+        <Card className="bg-background p-4 sm:p-6">
           <CardContent>
-            <div className="flex flex-col sm:flex-row justify-between items-start gap-8">
-              <div className="flex flex-col items-start gap-6 sm:w-3/5">
-                <span className="text-6xl font-extrabold hover:underline cursor-pointer">
+            <div className="flex flex-col sm:flex-row justify-between items-start gap-6 sm:gap-8">
+              <div className="flex flex-col items-start gap-4 sm:gap-6 w-full sm:w-3/5">
+                <span className="text-3xl sm:text-4xl md:text-6xl font-extrabold hover:underline cursor-pointer break-words w-full">
                   {url?.title}
                 </span>
                 <a
                   href={`${DOMAIN}/${link}`}
                   target="_blank"
-                  className="text-3xl sm:text-4xl text-blue-400 font-bold hover:underline cursor-pointer"
+                  className="text-xl sm:text-2xl md:text-3xl text-blue-400 font-bold hover:underline cursor-pointer break-all w-full"
                 >
                   {DOMAIN}/{link}
                 </a>
                 <a
                   href={url?.original_url}
                   target="_blank"
-                  className="flex items-center gap-1 hover:underline cursor-pointer"
+                  className="flex items-start gap-1 hover:underline cursor-pointer break-all w-full"
                 >
-                  <LinkIcon className="p-1" />
-                  {url?.original_url}
+                  <LinkIcon className="p-1 min-w-[24px]" />
+                  <span className="break-all">{url?.original_url}</span>
                 </a>
-                <span className="flex items-end font-extralight text-sm">
+                <span className="flex items-end font-extralight text-sm w-full break-words">
                   {new Date(url?.created_at).toLocaleString()}
                 </span>
               </div>
-              <div className="flex flex-col items-center">
+              <div className="flex flex-col items-center self-center sm:self-start mt-4 sm:mt-0">
                 <img
                   src={qrCodeUrl}
-                  className="w-32 h-32 sm:w-40 sm:h-40   p-1 object-contain"
+                  className="w-32 h-32 sm:w-40 sm:h-40 p-1 object-contain"
                   alt="qr code"
                 />
                 <div className="flex gap-2 mt-4">
@@ -171,13 +170,12 @@ const LinkPage = () => {
           </CardContent>
         </Card>
 
-        {/* Statistics Card */}
         <Card className="rounded bg-background">
-          <CardHeader >
-            <CardTitle className="text-4xl font-extrabold">Statistics</CardTitle>
+          <CardHeader className="p-4 sm:p-6">
+            <CardTitle className="text-2xl sm:text-4xl font-extrabold break-words">Statistics</CardTitle>
           </CardHeader>
           {stats && stats.length ? (
-            <CardContent className="flex flex-col gap-6">
+            <CardContent className="flex flex-col gap-4 sm:gap-6 p-4 sm:p-6">
               <Card className="bg-background rounded">
                 <CardHeader>
                   <CardTitle>Total Clicks</CardTitle>
@@ -230,7 +228,7 @@ const LinkPage = () => {
               </div>
             </CardContent>
           ) : (
-            <CardContent>
+            <CardContent className="p-4 sm:p-6">
               {loadingStats === false
                 ? "No Statistics yet"
                 : "Loading Statistics.."}
