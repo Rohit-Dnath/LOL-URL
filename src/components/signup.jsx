@@ -84,7 +84,7 @@ const Signup = () => {
   };
 
   return (
-    <Card>
+    <Card className="bg-background">
       <CardHeader>
         <CardTitle>Signup</CardTitle>
         <CardDescription>

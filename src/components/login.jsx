@@ -94,7 +94,7 @@ const Login = () => {
     }
     
   return (
-    <Card>
+    <Card className="bg-background">
       <CardHeader>
         <CardTitle>Login</CardTitle>
         <CardDescription className="m-0">to your account if you already have one</CardDescription>

@@ -30,9 +30,19 @@ const Auth = () => {
           : "Login / Signup"}
       </h1>
       <Tabs defaultValue="login" className="w-full max-w-[400px]">
-        <TabsList className="grid w-full grid-cols-2 rounded">
-          <TabsTrigger value="login" className="rounded text-sm md:text-base">Login</TabsTrigger>
-          <TabsTrigger value="signup" className="rounded text-sm md:text-base">Signup</TabsTrigger>
+        <TabsList className="grid w-full grid-cols-2 p-0 rounded-lg">
+          <TabsTrigger 
+            value="login" 
+            className="rounded-r-none data-[state=active]:rounded-r-none text-sm md:text-base"
+          >
+            Login
+          </TabsTrigger>
+          <TabsTrigger 
+            value="signup" 
+            className="rounded-l-none data-[state=active]:rounded-l-none text-sm md:text-base"
+          >
+            Signup
+          </TabsTrigger>
         </TabsList>
         <TabsContent value="login">
           <Login />
