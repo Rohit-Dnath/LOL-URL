@@ -52,9 +52,9 @@ const LinkCard = ({ url, fetchUrls }) => {
     try {
       await fnDelete();
       fetchUrls();
-      toast.success("URL deleted successfully!", {
-        position: "top-right",
-      });
+      // toast.success("URL deleted successfully!", {
+      //   position: "top-right",
+      // });
     } catch (error) {
       toast.error("Failed to delete URL.", {
         position: "top-right",
