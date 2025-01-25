@@ -133,11 +133,12 @@ export function CreateLink() {
           await resetFormValues();
         }
       }}
+      
     >
       <DialogTrigger asChild>
         <Button variant="" className="rounded">Create New Link</Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-md rounded bg-[#020617]">
+      <DialogContent className="sm:max-w-md rounded bg-background ">
         <DialogHeader>
           <DialogTitle className="font-bold text-2xl">Create New</DialogTitle>
         </DialogHeader>
@@ -163,7 +164,7 @@ export function CreateLink() {
         />
         {errors.longUrl && <Error message={errors.longUrl} />}
         <div className="flex items-center gap-2">
-          <Card className="p-2 rounded">urll.lol</Card> /
+          <Card className="p-2 rounded">lolurl.site</Card> /
           <Input
             id="customUrl"
             placeholder="xyz.."

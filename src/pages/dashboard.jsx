@@ -61,6 +61,7 @@ const Dashboard = () => {
 
   return (
     <div className="flex flex-col gap-4 max-w-7xl mx-auto p-4">
+      <ScrollProgress />
       {loading || loadingClicks && <BarLoader className="mb-4" width={"100%"} color="#8884d8" />}
       <br />
       
