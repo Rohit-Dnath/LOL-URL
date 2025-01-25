@@ -89,3 +89,18 @@ export async function deleteUrl(id) {
 
   return data;
 }
+
+export async function checkCustomUrlExists(customUrl) {
+  const {data, error} = await supabase
+    .from("urls")
+    .select("custom_url")
+    .eq("custom_url", customUrl)
+    .single();
+
+  if (error && error.code !== "PGRST116") {
+    console.error(error);
+    throw new Error("Error checking custom URL");
+  }
+
+  return data !== null;
+}

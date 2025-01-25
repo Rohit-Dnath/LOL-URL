@@ -14,7 +14,7 @@ import {useEffect, useRef, useState} from "react";
 import Error from "./error";
 import * as yup from "yup";
 import useFetch from "@/hooks/use-fetch";
-import {createUrl} from "@/db/apiUrls";
+import {createUrl, checkCustomUrlExists} from "@/db/apiUrls";
 import {BeatLoader} from "react-spinners";
 import {UrlState} from "@/context";
 import {QRCode} from "react-qrcode-logo";
@@ -35,19 +35,36 @@ export function CreateLink() {
     return Math.random().toString(36).substring(2, 2 + length);
   };
 
+  const generateUniqueRandomString = async (length) => {
+    let randomString;
+    let exists = true;
+
+    while (exists) {
+      randomString = Math.random().toString(36).substring(2, 2 + length);
+      exists = await checkCustomUrlExists(randomString);
+    }
+
+    return randomString;
+  };
+
   const [formValues, setFormValues] = useState({
     title: "",
     longUrl: longLink ? longLink : "",
     customUrl: generateRandomString(5),
   });
 
-  const resetFormValues = () => {
+  const resetFormValues = async () => {
+    const uniqueCustomUrl = await generateUniqueRandomString(5);
     setFormValues({
       title: "",
       longUrl: longLink ? longLink : "",
-      customUrl: generateRandomString(5),
+      customUrl: uniqueCustomUrl,
     });
   };
+
+  useEffect(() => {
+    resetFormValues();
+  }, []);
 
   const schema = yup.object().shape({
     title: yup.string().required("Title is required"),
@@ -84,9 +101,13 @@ export function CreateLink() {
     try {
       await schema.validate(formValues, {abortEarly: false});
 
-      const link = formValues.customUrl
-        ? `${DOMAIN}/${formValues.customUrl}`
-        : `${DOMAIN}/${Math.random().toString(36).substring(2, 6)}`;
+      const customUrlExists = await checkCustomUrlExists(formValues.customUrl);
+      if (customUrlExists) {
+        setErrors({customUrl: "URL already exists"});
+        return;
+      }
+
+      const link = `${DOMAIN}/${formValues.customUrl}`;
 
       const canvas = ref.current.canvasRef.current;
       const blob = await new Promise((resolve) => canvas.toBlob(resolve));
@@ -106,10 +127,10 @@ export function CreateLink() {
   return (
     <Dialog
       defaultOpen={longLink}
-      onOpenChange={(res) => {
+      onOpenChange={async (res) => {
         if (!res) {
           setSearchParams({});
-          resetFormValues();
+          await resetFormValues();
         }
       }}
     >
