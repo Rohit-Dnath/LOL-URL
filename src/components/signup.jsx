@@ -15,6 +15,7 @@ import {useNavigate, useSearchParams} from "react-router-dom";
 import {signup} from "@/db/apiAuth";
 import {BeatLoader} from "react-spinners";
 import useFetch from "@/hooks/use-fetch";
+import defaultProfilePic from "@/assets/profile_img.jpg";
 
 const Signup = () => {
   let [searchParams] = useSearchParams();
@@ -27,7 +28,7 @@ const Signup = () => {
     name: "",
     email: "",
     password: "",
-    profile_pic: null,
+    profile_pic: "",
   });
 
   const handleInputChange = (e) => {
@@ -58,10 +59,15 @@ const Signup = () => {
         password: Yup.string()
           .min(6, "Password must be at least 6 characters")
           .required("Password is required"),
-        profile_pic: Yup.mixed().required("Profile picture is required"),
+        profile_pic: Yup.mixed(),
       });
 
       await schema.validate(formData, {abortEarly: false});
+
+      if (!formData.profile_pic) {
+        formData.profile_pic = defaultProfilePic;
+      }
+
       await fnSignup();
     } catch (error) {
       const newErrors = {};

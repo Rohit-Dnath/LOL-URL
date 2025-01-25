@@ -26,7 +26,7 @@ const Header = () => {
       <nav className="p-4 flex justify-between items-center ">
         <Link to="/">
           {/* <img src="/logo.png" className="inline-block h-16" alt="LOGO" /> */}
-          <h1 className="text-2xl font-sans font-extrabold">Urll.lol</h1>  
+          <h1 className="text-3xl font-sans font-extrabold">Urll.lol</h1>  
    
         </Link>
         <div className="flex gap-4">
@@ -37,7 +37,7 @@ const Header = () => {
               <DropdownMenuTrigger className="w-10 rounded-full overflow-hidden ">
                 <Avatar>
                   <AvatarImage src={user?.user_metadata?.profile_pic} />
-                  <AvatarFallback>🫵</AvatarFallback>
+                  <AvatarFallback className="text-3xl bg-gray-300 rounded-full w-10 h-10 flex items-center justify-center">👦🏻</AvatarFallback>
                 </Avatar>
               </DropdownMenuTrigger>
               <DropdownMenuContent>
