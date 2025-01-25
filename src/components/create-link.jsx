@@ -30,11 +30,24 @@ export function CreateLink() {
   const longLink = searchParams.get("createNew");
 
   const [errors, setErrors] = useState({});
+
+  const generateRandomString = (length) => {
+    return Math.random().toString(36).substring(2, 2 + length);
+  };
+
   const [formValues, setFormValues] = useState({
     title: "",
     longUrl: longLink ? longLink : "",
-    customUrl: "",
+    customUrl: generateRandomString(5),
   });
+
+  const resetFormValues = () => {
+    setFormValues({
+      title: "",
+      longUrl: longLink ? longLink : "",
+      customUrl: generateRandomString(5),
+    });
+  };
 
   const schema = yup.object().shape({
     title: yup.string().required("Title is required"),
@@ -42,7 +55,7 @@ export function CreateLink() {
       .string()
       .url("Must be a valid URL")
       .required("Long URL is required"),
-    customUrl: yup.string(),
+    customUrl: yup.string().required("URL is required"),
   });
 
   const handleChange = (e) => {
@@ -71,10 +84,14 @@ export function CreateLink() {
     try {
       await schema.validate(formValues, {abortEarly: false});
 
+      const link = formValues.customUrl
+        ? `${DOMAIN}/${formValues.customUrl}`
+        : `${DOMAIN}/${Math.random().toString(36).substring(2, 6)}`;
+
       const canvas = ref.current.canvasRef.current;
       const blob = await new Promise((resolve) => canvas.toBlob(resolve));
 
-      await fnCreateUrl(blob);
+      await fnCreateUrl(blob, link);
     } catch (e) {
       const newErrors = {};
 
@@ -90,21 +107,22 @@ export function CreateLink() {
     <Dialog
       defaultOpen={longLink}
       onOpenChange={(res) => {
-        if (!res) setSearchParams({});
-        
+        if (!res) {
+          setSearchParams({});
+          resetFormValues();
+        }
       }}
-      
     >
       <DialogTrigger asChild>
         <Button variant="" className="rounded">Create New Link</Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-md rounded">
+      <DialogContent className="sm:max-w-md rounded bg-[#020617]">
         <DialogHeader>
           <DialogTitle className="font-bold text-2xl">Create New</DialogTitle>
         </DialogHeader>
         
-        {formValues?.longUrl && (
-          <QRCode ref={ref} size={250} value={formValues?.longUrl} />
+        {formValues?.customUrl && (
+          <QRCode ref={ref} size={250} value={`${DOMAIN}/${formValues.customUrl}`} />
         )}
 
         <Input
@@ -127,12 +145,13 @@ export function CreateLink() {
           <Card className="p-2 rounded">urll.lol</Card> /
           <Input
             id="customUrl"
-            placeholder="Custom Link (optional)"
+            placeholder="xyz.."
             value={formValues.customUrl}
             onChange={handleChange}
             className="rounded"
           />
         </div>
+        {errors.customUrl && <Error message={errors.customUrl} />}
         {error && <Error message={errors.message} />}
         <DialogFooter className="sm:justify-start">
           <Button

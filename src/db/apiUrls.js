@@ -47,7 +47,7 @@ export async function getLongUrl(id) {
 
 export async function createUrl({title, longUrl, customUrl, user_id}, qrcode) {
   const short_url = Math.random().toString(36).substring(2, 6);
-  const fileName = `qr-${short_url}`;
+  const fileName = `qr-${customUrl || short_url}`;
 
   const {error: storageError} = await supabase.storage
     .from("qrs")
