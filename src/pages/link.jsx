@@ -13,6 +13,7 @@ import {useNavigate, useParams} from "react-router-dom";
 import {BarLoader, BeatLoader} from "react-spinners";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
 
 const LinkPage = () => {
   const DOMAIN = import.meta.env.VITE_YOUR_DOMAIN;
@@ -40,7 +41,7 @@ const LinkPage = () => {
   };
 
   const handleCopy = () => {
-    navigator.clipboard.writeText(`https://urll.lol/${link}`);
+    navigator.clipboard.writeText(`${DOMAIN}/${link}`);
     toast.success("URL copied to clipboard!", {
       position: "top-right",
     });
@@ -99,11 +100,16 @@ const LinkPage = () => {
 
   const qrCodeUrl = url?.qr || "fallback-image-url"; // Add a fallback image URL if needed
 
+  const engagementData = stats?.map(stat => ({
+    time: new Date(stat.created_at).toLocaleTimeString(),
+    clicks: 1,
+  }));
+
   return (
     <>
       <ToastContainer position="bottom-right" autoClose={5000} hideProgressBar={false} newestOnTop={false} closeOnClick rtl={false} pauseOnFocusLoss draggable pauseOnHover style={{ zIndex: 9999 }} />
       {(loading || loadingStats) && (
-        <BarLoader className="mb-4" width={"100%"} color="#36d7b7" />
+        <BarLoader className="mb-4" width={"100%"} color="#8884d8" />
       )}
       <br />
       <div className="flex flex-col gap-8">
@@ -137,9 +143,9 @@ const LinkPage = () => {
               className="w-32 h-32 sm:w-40 sm:h-40 ring ring-blue-500 p-1 object-contain"
               alt="qr code"
             />
-            <div className="flex gap-2 mt-4">
+            <div className="flex gap-2 mt-4 ">
               <Button variant="ghost" onClick={handleCopy}>
-                <Copy />
+                <Copy  />
               </Button>
               <Button variant="ghost" onClick={downloadImage}>
                 <Download />
@@ -192,7 +198,27 @@ const LinkPage = () => {
                       <span>Mobile</span>
                     </div>
                   </div>
-                  <DeviceStats stats={stats} className="text-sm"/>
+                  <DeviceStats stats={stats} className="text-sm "/>
+                </div>
+              </div>
+              <div className="w-full border p-4 rounded ">
+                <CardTitle className="mb-6">Engagement</CardTitle>
+                <div className="w-full overflow-x-auto">
+                  <LineChart
+                    width={Math.max(window.innerWidth - 64, 500)} // Ensure minimum width of 500
+                    height={300}
+                    data={engagementData}
+                    margin={{
+                      top: 5, right: 30, left: 20, bottom: 5,
+                    }}
+                  >
+                    <CartesianGrid strokeDasharray="3 3" />
+                    <XAxis dataKey="time" />
+                    <YAxis />
+                    <Tooltip />
+                    <Legend />
+                    <Line type="monotone" dataKey="clicks" stroke="#8884d8" activeDot={{ r: 8 }} />
+                  </LineChart>
                 </div>
               </div>
             </CardContent>

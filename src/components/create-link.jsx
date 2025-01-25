@@ -182,7 +182,7 @@ export function CreateLink() {
             disabled={loading}
             className="rounded"
           >
-            {loading ? <BeatLoader size={10} color="#36d7b7" /> : "Create"}
+            {loading ? <BeatLoader size={10} color="#8884d8" /> : "Create"}
           </Button>
         </DialogFooter>
       </DialogContent>

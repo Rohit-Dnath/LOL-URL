@@ -59,7 +59,7 @@ const Dashboard = () => {
 
   return (
     <div className="flex flex-col gap-4 max-w-7xl mx-auto">
-      {loading || loadingClicks && <BarLoader className=" mb-4" width={"100%"} color="#36d7b7" />}
+      {loading || loadingClicks && <BarLoader className=" mb-4" width={"100%"} color="#8884d8" />}
       <br />
       <div className="flex justify-between">
         <div className="flex flex-col gap-4" style={{  width: '48%' }}>

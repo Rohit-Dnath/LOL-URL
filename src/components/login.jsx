@@ -118,9 +118,9 @@ const Login = () => {
       </CardContent>
       <CardFooter>
         <Button className="rounded" onClick={handleLogin}  >
-            {loading? <BeatLoader color="#36d7b7" size={8} /> : "Login"}
+            {loading? <BeatLoader color="#8884d8" size={8} /> : "Login"}
 
-            {/* <BeatLoader color="#36d7b7" size={8} /> : "Login"} */}
+            {/* <BeatLoader color="#8884d8" size={8} /> : "Login"} */}
         </Button>
       </CardFooter>
     </Card>
