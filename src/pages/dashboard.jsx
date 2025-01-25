@@ -92,17 +92,27 @@ const Dashboard = () => {
             <CardTitle className="text-2xl md:text-2xl text-lg">Top Clicked Links</CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="w-full h-[300px] md:h-[350px]">
-              <ResponsiveContainer width="100%" height="100%">
-                <BarChart data={topClickedLinksData}>
-                  <XAxis dataKey="link" tick={{ fontSize: 12 }} />
-                  <YAxis tick={{ fontSize: 12 }} />
-                  <Tooltip cursor={{fill: 'none'}} />
-                  <Legend />
-                  <Bar dataKey="clicks" fill="#8884d8" isAnimationActive={false} />
-                </BarChart>
-              </ResponsiveContainer>
-            </div>
+            {urls?.length === 0 ? (
+              <div className="w-full h-[150px] flex items-center justify-center">
+                <p className="text-lg text-gray-500">Create a link first to see analytics</p>
+              </div>
+            ) : !clicks?.length ? (
+              <div className="w-full h-[150px] flex items-center justify-center">
+                <p className="text-lg text-gray-500">No data yet</p>
+              </div>
+            ) : (
+              <div className="w-full h-[300px] md:h-[350px]">
+                <ResponsiveContainer width="100%" height="100%">
+                  <BarChart data={topClickedLinksData}>
+                    <XAxis dataKey="link" tick={{ fontSize: 12 }} />
+                    <YAxis tick={{ fontSize: 12 }} />
+                    <Tooltip cursor={{fill: 'none'}} />
+                    <Legend />
+                    <Bar dataKey="clicks" fill="#8884d8" isAnimationActive={false} />
+                  </BarChart>
+                </ResponsiveContainer>
+              </div>
+            )}
           </CardContent>
         </Card>
       </div>
