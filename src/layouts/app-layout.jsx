@@ -10,24 +10,22 @@ return (
                     <Header />
                     <Outlet />
             </main>
+            <br />
 
-            <div className='bg-gray-800 text-white text-center p-4 mt-10'>
-                    {/* Footer */}
-                    Made with ❤️ Rohit Debnath
-            </div>
-
-            {/* <div className='hidden sm:block' style={{ position: 'fixed', bottom: '50px', left: '10px', margin: '5px' }}>
-                    <img href="https://rohitdebnath.com" className='cursor-pointer '
-                            src="./egg.gif" 
-                            alt="Easter Egg" 
-                            width="75" 
-                            height="75" 
-                            style={{ transition: 'transform 0.3s' }} 
-                            onMouseOver={(e) => e.currentTarget.style.transform = 'scale(1.2)'} 
-                            onMouseOut={(e) => e.currentTarget.style.transform = 'scale(1)'} 
-                    />
-            </div> */}
-            
+            <a 
+                href="https://rohitdebnath.me" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                className='fixed bottom-4 right-4 flex items-center gap-1 bg-black/70 backdrop-blur-sm px-3 py-1.5 rounded-full hover:bg-black/80 transition-all hover:scale-105 duration-200 z-50'
+                
+            >
+                <span className='text-white text-xs'>Made with ❤️ by Rohit</span>
+                <img 
+                    src="https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExaHE5N2J4Ym0ybmhwbGlmbjlzMWQ2Z2RvMmw5dHd1MWR3ZjYwZ2N1NyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/Oc8lIQHZsXqDu/giphy.gif"
+                    alt="Hamster"
+                    className='w-6 h-6 hover:scale-110 transition-transform duration-200 rounded-full'
+                />
+            </a>
     </div>
 )
 }
