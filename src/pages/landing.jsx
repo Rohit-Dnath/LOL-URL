@@ -3,7 +3,6 @@ import { Input } from "@/components/ui/input";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Spotlight } from "@/components/ui/spotlight";
-import HeroVideoDialog from "@/components/ui/hero-video-dialog";
 import { AnimatedTestimonials } from "@/components/ui/animated-testimonials";
 
 import {
@@ -64,7 +63,6 @@ const LandingPage = () => {
       src: "./subinoy.png",
     },
   ];
-  
 
   return (
     <div className="flex flex-col items-center">
@@ -73,16 +71,16 @@ const LandingPage = () => {
         fill="white"
       />
 
-<h2 className="my-10 sm:my-16 text-3xl sm:text-6xl lg:text-7xl text-white text-center font-extrabold">
-  <span className="inline">Your Shortcut to Smart </span>
-  <span className="inline">
-    <SparklesText
-      className={`inline text-3xl sm:text-6xl lg:text-7xl text-white font-extrabold`}
-      text="LOL Urls"
-    />
-  </span>
-  <span className="inline"> and Insights ▼</span>
-</h2>
+      <h2 className="my-10 sm:my-16 text-3xl sm:text-6xl lg:text-7xl text-white text-center font-extrabold">
+        <span className="inline">Your Shortcut to Smart </span>
+        <span className="inline">
+          <SparklesText
+            className={`inline text-3xl sm:text-6xl lg:text-7xl text-white font-extrabold`}
+            text="LOL Urls"
+          />
+        </span>
+        <span className="inline"> and Insights ▼</span>
+      </h2>
 
       <ScrollProgress className="w-full" />
 
@@ -124,7 +122,10 @@ const LandingPage = () => {
       <h2 className="text-3xl font-extrabold mb-4 text-white border-b pb-2 z-40">
         Testimonials
       </h2>
-      <AnimatedTestimonials testimonials={testimonials} className="start z-40" />
+      <AnimatedTestimonials
+        testimonials={testimonials}
+        className="start z-40"
+      />
       <br />
       <br />
 
@@ -143,74 +144,85 @@ const LandingPage = () => {
             Frequently Asked Questions
           </h2>
           <Accordion
-  type="multiple"
-  collapsible
-  className="bg-gray-900/50 rounded-lg p-4 scrollbar-hide"
->
-  <AccordionItem value="item-1" className="border-b border-gray-700">
-    <AccordionTrigger>What is LOL URL?</AccordionTrigger>
-    <AccordionContent>
-      LOL URL is a tool to shorten links, generate QR codes, and track link performance like clicks, devices, and locations.
-    </AccordionContent>
-  </AccordionItem>
+            type="multiple"
+            collapsible
+            className="bg-gray-900/50 rounded-lg p-4 scrollbar-hide"
+          >
+            <AccordionItem value="item-1" className="border-b border-gray-700">
+              <AccordionTrigger>What is LOL URL?</AccordionTrigger>
+              <AccordionContent>
+                LOL URL is a tool to shorten links, generate QR codes, and track
+                link performance like clicks, devices, and locations.
+              </AccordionContent>
+            </AccordionItem>
 
-  <AccordionItem value="item-2" className="border-b border-gray-700">
-    <AccordionTrigger>How do I shorten a link?</AccordionTrigger>
-    <AccordionContent>
-      Simply paste your long URL into the input box, click "Shorten," and get a clean, shareable link instantly.
-    </AccordionContent>
-  </AccordionItem>
+            <AccordionItem value="item-2" className="border-b border-gray-700">
+              <AccordionTrigger>How do I shorten a link?</AccordionTrigger>
+              <AccordionContent>
+                Simply paste your long URL into the input box, click "Shorten,"
+                and get a clean, shareable link instantly.
+              </AccordionContent>
+            </AccordionItem>
 
-  <AccordionItem value="item-3" className="border-b border-gray-700">
-    <AccordionTrigger>Can I track my shortened links?</AccordionTrigger>
-    <AccordionContent>
-      Yes! Each link includes a dashboard to monitor clicks, visitor locations, and devices in real-time.
-    </AccordionContent>
-  </AccordionItem>
+            <AccordionItem value="item-3" className="border-b border-gray-700">
+              <AccordionTrigger>
+                Can I track my shortened links?
+              </AccordionTrigger>
+              <AccordionContent>
+                Yes! Each link includes a dashboard to monitor clicks, visitor
+                locations, and devices in real-time.
+              </AccordionContent>
+            </AccordionItem>
 
-  <AccordionItem value="item-4" className="border-b border-gray-700">
-    <AccordionTrigger>Can I customize my links?</AccordionTrigger>
-    <AccordionContent>
-      Yes, you can create personalized URLs that match your branding or campaigns.
-    </AccordionContent>
-  </AccordionItem>
+            <AccordionItem value="item-4" className="border-b border-gray-700">
+              <AccordionTrigger>Can I customize my links?</AccordionTrigger>
+              <AccordionContent>
+                Yes, you can create personalized URLs that match your branding
+                or campaigns.
+              </AccordionContent>
+            </AccordionItem>
 
-  <AccordionItem value="item-5" className="border-b border-gray-700">
-    <AccordionTrigger>What formats are the QR codes available in?</AccordionTrigger>
-    <AccordionContent>
-      QR codes can be downloaded in high-quality PNG or SVG formats for digital and print use.
-    </AccordionContent>
-  </AccordionItem>
+            <AccordionItem value="item-5" className="border-b border-gray-700">
+              <AccordionTrigger>
+                What formats are the QR codes available in?
+              </AccordionTrigger>
+              <AccordionContent>
+                QR codes can be downloaded in high-quality PNG or SVG formats
+                for digital and print use.
+              </AccordionContent>
+            </AccordionItem>
 
-  
+            <AccordionItem value="item-7" className="border-b border-gray-700">
+              <AccordionTrigger>Is my data safe with LOL URL?</AccordionTrigger>
+              <AccordionContent>
+                Absolutely! We prioritize privacy and ensure your data is secure
+                and accessible only to you.
+              </AccordionContent>
+            </AccordionItem>
 
-  <AccordionItem value="item-7" className="border-b border-gray-700">
-    <AccordionTrigger>Is my data safe with LOL URL?</AccordionTrigger>
-    <AccordionContent>
-      Absolutely! We prioritize privacy and ensure your data is secure and accessible only to you.
-    </AccordionContent>
-  </AccordionItem>
+            <AccordionItem value="item-8" className="border-b border-gray-700">
+              <AccordionTrigger>Is LOL URL free to use?</AccordionTrigger>
+              <AccordionContent>
+                Yes! LOL URL offers free link shortening and basic analytics.
+              </AccordionContent>
+            </AccordionItem>
 
-  <AccordionItem value="item-8" className="border-b border-gray-700">
-    <AccordionTrigger>Is LOL URL free to use?</AccordionTrigger>
-    <AccordionContent>
-      Yes! LOL URL offers free link shortening and basic analytics.
-    </AccordionContent>
-  </AccordionItem>
-
-  <AccordionItem value="item-9" className="border-b border-gray-700">
-    <AccordionTrigger>Does LOL URL work globally?</AccordionTrigger>
-    <AccordionContent>
-      Yes, LOL URL is accessible worldwide, and you can track clicks from any location.
-    </AccordionContent>
-  </AccordionItem>
-</Accordion>
-
+            <AccordionItem value="item-9" className="border-b border-gray-700">
+              <AccordionTrigger>Does LOL URL work globally?</AccordionTrigger>
+              <AccordionContent>
+                Yes, LOL URL is accessible worldwide, and you can track clicks
+                from any location.
+              </AccordionContent>
+            </AccordionItem>
+          </Accordion>
         </div>
 
         {/* tweet Section */}
         <div className="w-full md:w-[35%] h-[600px] flex flex-col justify-center">
-          <Tweet className="h-full overflow-hidden shadow-xl" id="1875067876257956171" />
+          <Tweet
+            className="h-full overflow-hidden shadow-xl"
+            id="1875067876257956171"
+          />
         </div>
       </div>
     </div>
