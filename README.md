@@ -15,14 +15,6 @@ LOL URL is a modern and playful URL-shortening website that lets you shrink long
 
 ---
 
-## Tech Stack
-
-- **Frontend:** React.js, Tailwind CSS, Sadcan UI
-- **Backend:** Node.js, Express.js
-- **Database & Auth:** Supabase
-
----
-
 ## Installation
 
 Follow these steps to set up the project locally:
