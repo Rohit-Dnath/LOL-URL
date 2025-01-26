@@ -37,33 +37,34 @@ const LandingPage = () => {
   const testimonials = [
     {
       quote:
-        "LOL URL has been a game-changer for our community events. Tracking clicks, devices, and locations has allowed us to optimize our outreach and improve member engagement.",
+        "lolurl.site has been a game-changer for our community events. Tracking clicks, devices, and locations has allowed us to optimize our outreach and improve member engagement.",
       name: "Souradip Pal",
-      designation: "Intern @ISRO and Founder of DEV DOT COM Community",
+      designation: "Intern @ ISRO and Founder of DEV DOT COM Community",
       src: "https://media.licdn.com/dms/image/v2/D5603AQGLkU9jK4qPzw/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1692735696303?e=1743033600&v=beta&t=Hk-99ss4lmtAsdtUr33lkw9fO0vJTq1Y6zubQ4Ke8GA",
     },
     {
       quote:
-        "Using LOL URL has made sharing and managing links so simple. The analytics are super helpful for understanding how our links are performing.",
+        "Using lolurl.site has made sharing and managing links so simple. The analytics are super helpful for understanding how our links are performing.",
       name: "Subhadip Saha",
-      designation: "Intern @ISRO and Game Developer",
+      designation: "Intern @ ISRO and Game Developer",
       src: "https://media.licdn.com/dms/image/v2/D5603AQFw6_WaZHprJg/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1731342122024?e=1743033600&v=beta&t=2ztJi_FyS3CcJbLr4UNBY2Kslz-9jrrQJ8Vr5PYldas",
     },
     {
       quote:
-        "LOL URL’s intuitive design makes it perfect for students like us. Shortening and tracking links has never been this straightforward.",
+        "lolurl.site’s intuitive design makes it perfect for students like us. Shortening and tracking links has never been this straightforward.",
       name: "Ayush Dhua",
-      designation: "Ex. Intern @Goldman Sachs",
+      designation: "Ex. Intern @ Goldman Sachs",
       src: "https://media.licdn.com/dms/image/v2/D5603AQEe4gNcGNgwDQ/profile-displayphoto-shrink_400_400/B56ZOvMfApGwAk-/0/1733811107135?e=1743033600&v=beta&t=j9Y6npQTna2NbU6SFIrQRMhaTPUiGKrbOqKNvOmS-iM",
     },
     {
       quote:
-        "The simplicity and smart features of LOL URL make it an essential tool for students. It’s easy to use and incredibly effective.",
+        "The simplicity and smart features of lolurl.site make it an essential tool for students. It’s easy to use and incredibly effective.",
       name: "Subinoy Biswas",
-      designation: "Intern @ISRO and SIH Winner",
+      designation: "Intern @ ISRO and SIH Winner",
       src: "./subinoy.png",
     },
   ];
+  
 
   return (
     <div className="flex flex-col items-center">
@@ -132,9 +133,9 @@ const LandingPage = () => {
       <br />
 
       {/* FAQS and tweet */}
-      <div className="w-full flex flex-col md:flex-row gap-8 px-4 md:px-11">
+      <div className="w-full flex flex-col md:flex-row gap-8 px-4 md:px-11 items-center justify-center">
         {/* FAQs Section */}
-        <div className="w-full md:w-1/2 h-[600px] overflow-y-auto rounded-lg   p-4">
+        <div className="w-full md:w-1/2 h-[600px] overflow-y-auto rounded-lg p-4">
           <h2 className="text-2xl font-extrabold mb-4 text-white border-b pb-2">
             Frequently Asked Questions
           </h2>
@@ -205,9 +206,8 @@ const LandingPage = () => {
         </div>
 
         {/* tweet Section */}
-        <div className="w-full md:w-1/2 h-[600px] flex flex-col gap-1 ">
-        
-          <Tweet className="h-full rounded overflow-hidden shadow-xl " id="1875067876257956171" />
+        <div className="w-full md:w-[35%] h-[600px] flex flex-col justify-center">
+          <Tweet className="h-full overflow-hidden shadow-xl" id="1875067876257956171" />
         </div>
       </div>
     </div>
