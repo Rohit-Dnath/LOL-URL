@@ -29,8 +29,8 @@ Follow these steps to set up the project locally:
 
 1. **Clone the repository:**
    ```bash
-   git clone https://github.com/rohit-dnath/lol-url.git
-   cd lol-url
+   git clone https://github.com/Rohit-Dnath/LOL-URL.git
+   cd LOL-URL
    ```
 
 2. **Install dependencies:**
@@ -43,7 +43,7 @@ Follow these steps to set up the project locally:
 
 4. **Run the development server:**
    ```bash
-   npm start
+   npm run dev
    ```
 
 5. Open [http://localhost:3000](http://localhost:5000) in your browser to view the app.
@@ -80,7 +80,7 @@ Special thanks to the open-source community for providing the tools and librarie
 
 ## Contact
 
-For any inquiries or suggestions, feel free to reach out at **debnathrohit97@gmail.com**.
+For any inquiries or suggestions, feel free to reach out at **debnathrohit97@gmail.com** or visit **rohitdebnath.me** .
 
 ---
 
