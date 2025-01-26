@@ -80,7 +80,7 @@ Special thanks to the open-source community for providing the tools and librarie
 
 ## Contact
 
-For any inquiries or suggestions, feel free to reach out at **debnathrohit97@gmail.com** or visit **rohitdebnath.me** .
+For any inquiries or suggestions, feel free to reach out at **debnathrohit97@gmail.com** or visit [rohitdebnath.me](https://www.rohitdebnath.me/) .
 
 ---
 
