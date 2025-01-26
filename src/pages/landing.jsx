@@ -98,7 +98,7 @@ const LandingPage = () => {
 
       <div className="relative flex w-full max-w-full items-center justify-center overflow-hidden rounded-lg border bg-background bg-opacity-80 px-8 pb-32 pt-16 md:pb-60 md:pt-32 md:shadow-xl">
         <span className="pointer-events-none whitespace-pre-wrap bg-gradient-to-b from-black to-white bg-clip-text text-center text-4xl font-semibold leading-none text-transparent dark:to-slate-900/10">
-          Track Your Smart Links Globally
+          Track Your Smart Links Globallyyyy
         </span>
         <Globe className="top-28 mt-8 w-128 h-128 md:w-160 md:h-160" />{" "}
         {/* Added mt-8 for gap and increased globe size */}
