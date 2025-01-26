@@ -4,7 +4,6 @@ import useFetch from "@/hooks/use-fetch";
 import {useEffect} from "react";
 import {useParams} from "react-router-dom";
 import {BarLoader} from "react-spinners";
-import paperPlaneGif from "@/assets/paper_plane.gif";
 import React from 'react';
 import { DotLottieReact } from '@lottiefiles/dotlottie-react';
 
