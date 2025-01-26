@@ -32,9 +32,11 @@ const Dashboard = () => {
     fnUrls();
   }, []);
 
-  const filteredUrls = urls?.filter((url) =>
-    url.title.toLowerCase().includes((searchQuery || "").toLowerCase())
-  );
+  const filteredUrls = urls
+    ?.filter((url) =>
+      url.title.toLowerCase().includes((searchQuery || "").toLowerCase())
+    )
+    .sort((a, b) => new Date(b.created_at) - new Date(a.created_at)); // Sort by new links first
 
   const topClickedLinks = clicks?.reduce((acc, click) => {
     const url = urls.find(url => url.id === click.url_id);
