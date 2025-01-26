@@ -110,18 +110,20 @@ const LandingPage = () => {
       <br />
       <br />
 
-      <h2 className="text-4xl font-extrabold mb-4 text-white border-b pb-2 zindex-100">
+      <h2 className="text-4xl font-extrabold mb-8 text-white border-b pb-2 zindex-100">
         Features
       </h2>
-      <FeaturesSectionDemo className="grid" />
+      <div className="w-full max-w-4xl mx-auto px-4">
+        <FeaturesSectionDemo />
+      </div>
 
       <br />
       <br />
 
-      <h2 className="text-3xl font-extrabold mb-4 text-white border-b pb-2 zindex-100">
+      <h2 className="text-3xl font-extrabold mb-4 text-white border-b pb-2 z-40">
         Testimonials
       </h2>
-      <AnimatedTestimonials testimonials={testimonials} className="start" />
+      <AnimatedTestimonials testimonials={testimonials} className="start z-40" />
       <br />
       <br />
 
