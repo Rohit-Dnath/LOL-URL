@@ -73,16 +73,17 @@ const LandingPage = () => {
         fill="white"
       />
 
-      <h2 className="my-10 sm:my-16 text-3xl sm:text-6xl lg:text-7xl text-white text-center font-extrabold">
-        <span className="inline">Your Shortcut to Smart </span>
-        <span className="inline">
-          <SparklesText
-            className="inline sm:text-6xl text-7xl text-white font-extrabold"
-            text="LOL Urls"
-          />
-        </span>
-        <span className="inline"> and Insights ▼</span>
-      </h2>
+<h2 className="my-10 sm:my-16 text-3xl sm:text-6xl lg:text-7xl text-white text-center font-extrabold">
+  <span className="inline">Your Shortcut to Smart </span>
+  <span className="inline">
+    <SparklesText
+      className={`inline text-3xl sm:text-6xl lg:text-7xl text-white font-extrabold`}
+      text="LOL Urls"
+    />
+  </span>
+  <span className="inline"> and Insights ▼</span>
+</h2>
+
       <ScrollProgress className="w-full" />
 
       <PlaceholdersAndVanishInput
