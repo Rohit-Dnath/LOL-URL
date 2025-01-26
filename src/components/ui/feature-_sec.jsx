@@ -1,22 +1,9 @@
 import { cn } from "@/lib/utils";
 import {
-  IconAdjustmentsBolt,
-  IconChartLine,
-  IconCloud,
-  IconCurrencyDollar,
-  IconEaseInOut,
-  IconEdit,
-  IconFlask,
-  IconFlask2,
-  IconGraph,
-  IconHeart,
-  IconHelp,
   IconLink,
-  IconRouteAltLeft,
-  IconShieldCheck,
+  IconChartLine,
+  IconEdit,
   IconTargetArrow,
-  IconTerminal2,
-  IconTrash,
 } from "@tabler/icons-react";
 
 export function FeaturesSectionDemo() {
@@ -30,7 +17,7 @@ export function FeaturesSectionDemo() {
     {
       title: "Real-Time Analytics",
       description:
-        "Track clicks, locations, and devices in real-time to gain actionable insights.",
+        "Track clicks, locations, engagement and devices in real-time to gain actionable insights.",
       icon: <IconChartLine />,
     },
     {
@@ -40,40 +27,15 @@ export function FeaturesSectionDemo() {
       icon: <IconEdit />,
     },
     {
-      title: "Secure and Reliable",
-      description: "Enjoy a secure platform with 100% uptime for your links.",
-      icon: <IconShieldCheck />,
-    },
-    {
       title: "Campaign Tracking",
       description:
         "Track the performance of marketing campaigns effortlessly with detailed metrics.",
       icon: <IconTargetArrow />,
     },
-    {
-      title: "Advanced Insights",
-      description:
-        "Go beyond basic analytics with advanced insights into user behavior.",
-      icon: <IconGraph />,
-    },
-    {
-      title: "Link Deletion",
-      description:
-        "Easily delete links when they are no longer needed, maintaining control over your content.",
-      icon: <IconTrash />,
-    },
-    {
-      title: "A/B Testing",
-      description:
-        "Optimize your campaigns with A/B testing to determine the most effective links and strategies.",
-      icon: <IconFlask2  />,
-    },
   ];
-  
-  
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4  relative z-10 py-10 max-w-7xl mx-auto">
+    <div className="grid grid-cols-2 gap-4 relative z-10 py-10 max-w-4xl mx-auto px-4">
       {features.map((feature, index) => (
         <Feature key={feature.title} {...feature} index={index} />
       ))}

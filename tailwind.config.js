@@ -107,6 +107,14 @@ export default {
   				'30%, 60%': {
   					'background-position': 'calc(100% + var(--shiny-width)) 0'
   				}
+  			},
+  			orbit: {
+  				'0%': {
+  					transform: 'rotate(calc(var(--angle) * 1deg)) translateY(calc(var(--radius) * 1px)) rotate(calc(var(--angle) * -1deg))'
+  				},
+  				'100%': {
+  					transform: 'rotate(calc(var(--angle) * 1deg + 360deg)) translateY(calc(var(--radius) * 1px)) rotate(calc((var(--angle) * -1deg) - 360deg))'
+  				}
   			}
   		},
   		animation: {
@@ -114,7 +122,8 @@ export default {
   			'accordion-up': 'accordion-up 0.2s ease-out',
   			spotlight: 'spotlight 2s ease .75s 1 forwards',
   			gradient: 'gradient 8s linear infinite',
-  			'shiny-text': 'shiny-text 8s infinite'
+  			'shiny-text': 'shiny-text 8s infinite',
+  			orbit: 'orbit calc(var(--duration)*1s) linear infinite'
   		}
   	}
   },
