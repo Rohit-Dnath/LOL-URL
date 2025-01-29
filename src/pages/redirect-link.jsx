@@ -14,7 +14,8 @@ import { DotLottieReact } from '@lottiefiles/dotlottie-react';
 
 
 const RedirectLink = () => {
-  const {id} = useParams();
+  const params = new URLSearchParams(window.location.search);
+  const id = params.get('c');
 
   const {loading, data, fn} = useFetch(getLongUrl, id);
 
