@@ -11,7 +11,7 @@ import { toastConfig } from "@/utils/toastConfig";
 
 
 const LinkCard = ({ url, fetchUrls }) => {
-  const DOMAIN = import.meta.env.VITE_YOUR_DOMAIN;
+  const DOMAIN = window.location.origin;
   const downloadImage = async (e) => {
     e.preventDefault(); // Prevent default behavior
 
@@ -37,7 +37,7 @@ const LinkCard = ({ url, fetchUrls }) => {
   const { loading: loadingDelete, fn: fnDelete } = useFetch(deleteUrl, url.id);
 
   const handleCopy = () => {
-    const link = `${DOMAIN}/${url?.custom_url ? url?.custom_url : url?.short_url}`;
+    const link = `${window.location.origin}/${url?.custom_url ? url?.custom_url : url?.short_url}`;
     navigator.clipboard.writeText(link);
     toast.success("URL copied to clipboard!", toastConfig);
   };
@@ -109,7 +109,7 @@ const LinkCard = ({ url, fetchUrls }) => {
             {url?.title}
           </h3>
           <span className="text-md text-blue-400 font-bold cursor-pointer mt-1 break-all">
-            {DOMAIN}/{url?.custom_url ? url?.custom_url : url.short_url}
+            {window.location.origin}/{url?.custom_url ? url?.custom_url : url.short_url}
           </span>
           <div className="flex items-start gap-2 cursor-pointer text-gray-400 mt-1 break-all">
             <LinkIcon className="min-w-[16px] h-4 mt-1" />

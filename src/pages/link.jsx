@@ -19,7 +19,7 @@ import { Confetti } from "@/components/ui/confetti";
 import { AutoConfetti } from "@/components/ui/auto-confetti";
 
 const LinkPage = () => {
-  const DOMAIN = import.meta.env.VITE_YOUR_DOMAIN;
+  const DOMAIN = window.location.origin;
   const downloadImage = async () => {
     const imageUrl = url?.qr;
     const fileName = `${url?.title}_qr`;
@@ -44,7 +44,7 @@ const LinkPage = () => {
   };
 
   const handleCopy = () => {
-    navigator.clipboard.writeText(`${DOMAIN}/${link}`);
+    navigator.clipboard.writeText(`${window.location.origin}/${link}`);
     toast.success("URL copied to clipboard!", {
       position: "top-right",
     });
@@ -130,11 +130,11 @@ const LinkPage = () => {
                   {url?.title}
                 </span>
                 <a
-                  href={`${DOMAIN}/${link}`}
+                  href={`${window.location.origin}/${link}`}
                   target="_blank"
                   className="text-xl sm:text-2xl md:text-3xl text-blue-400 font-bold hover:underline cursor-pointer break-all w-full"
                 >
-                  {DOMAIN}/{link}
+                  {window.location.origin}/{link}
                 </a>
                 <a
                   href={url?.original_url}
