@@ -39,7 +39,7 @@ const LinkPage = () => {
   };
 
   const handleCopy = () => {
-    navigator.clipboard.writeText(`https://urll.lol/${link}`);
+    navigator.clipboard.writeText(`${window.location.origin}/${link}`);
     toast.success("URL copied to clipboard!", {
       position: "top-right",
     });
@@ -112,11 +112,11 @@ const LinkPage = () => {
               {url?.title}
             </span>
             <a
-              href={`https://urll.lol/${link}`}
+              href={`${window.location.origin}/${link}`}
               target="_blank"
               className="text-3xl sm:text-4xl text-blue-400 font-bold hover:underline cursor-pointer"
             >
-              https://urll.lol/{link}
+              {window.location.origin}/{link}
             </a>
             <a
               href={url?.original_url}

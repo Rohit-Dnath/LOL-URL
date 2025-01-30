@@ -100,7 +100,7 @@ const LandingPage = () => {
         <span className="pointer-events-none whitespace-pre-wrap bg-gradient-to-b from-black to-white bg-clip-text text-center text-4xl font-semibold leading-none text-transparent dark:to-slate-900/10">
           Track Your Smart Links Globally
         </span>
-        <Globe className="top-28 mt-8 w-128 h-128 md:w-160 md:h-160" />{" "}
+        {/* <Globe className="top-28 mt-8 w-128 h-128 md:w-160 md:h-160" />{" "} */}
         {/* Added mt-8 for gap and increased globe size */}
         <div className="pointer-events-none absolute inset-0 h-full bg-[radial-gradient(circle_at_50%_200%,rgba(0,0,0,0.2),rgba(255,255,255,0))]" />
       </div>
@@ -124,7 +124,7 @@ const LandingPage = () => {
       <br />
       <br />
 
-      <VelocityScroll>LOL THE URL •</VelocityScroll>
+      {/* <VelocityScroll>LOL THE URL •</VelocityScroll> */}
 
       <br />
       <br />

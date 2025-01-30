@@ -9,7 +9,7 @@ import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const LinkCard = ({ url, fetchUrls }) => {
-  const DOMAIN = import.meta.env.VITE_YOUR_DOMAIN;
+  const DOMAIN = window.location.origin;
   const downloadImage = async (e) => {
     e.preventDefault(); // Prevent default behavior
 
