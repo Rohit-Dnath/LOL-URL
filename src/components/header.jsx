@@ -21,6 +21,9 @@ const Header = () => {
 
   const { user, fetchUser } = UrlState();
 
+  const emojis = ["🐸", "🦊", "🐻", "🐹", "🐷", "🐱", "🐯", "🐶", "🐵"];
+  const randomEmoji = emojis[Math.floor(Math.random() * emojis.length)];
+
   return (
     <>
       <nav className="p-4 flex justify-between items-center ">
@@ -37,7 +40,9 @@ const Header = () => {
               <DropdownMenuTrigger className="w-10 rounded-full overflow-hidden ">
                 <Avatar>
                   <AvatarImage src={user?.user_metadata?.profile_pic} />
-                  <AvatarFallback className="text-3xl bg-gray-300 rounded-full w-10 h-10 flex items-center justify-center">👦🏻</AvatarFallback>
+                  <AvatarFallback className="text-3xl bg-gray-200 rounded-full w-10 h-10 flex items-center justify-center">
+                    {randomEmoji}
+                  </AvatarFallback>
                 </Avatar>
               </DropdownMenuTrigger>
               <DropdownMenuContent>
