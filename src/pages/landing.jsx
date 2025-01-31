@@ -137,16 +137,16 @@ const LandingPage = () => {
       <br />
 
       {/* FAQS and tweet */}
-      <div className="w-full flex flex-col md:flex-row gap-8 px-4 md:px-11 items-center justify-center">
+      <div className="w-full flex flex-col md:flex-row gap-8 px-4 md:px-8 items-start justify-center max-w-[100vw] overflow-x-hidden">
         {/* FAQs Section */}
-        <div className="w-full md:w-1/2 h-[600px] overflow-y-auto rounded-lg p-4">
+        <div className="w-full md:w-1/2 rounded-lg p-2 md:p-4">
           <h2 className="text-2xl font-extrabold mb-4 text-white border-b pb-2">
             Frequently Asked Questions
           </h2>
           <Accordion
             type="multiple"
             collapsible
-            className="bg-gray-900/50 rounded-lg p-4 scrollbar-hide"
+            className="bg-gray-900/50 rounded-lg p-2 md:p-4"
           >
             <AccordionItem value="item-1" className="border-b border-gray-700">
               <AccordionTrigger>What is LOL URL?</AccordionTrigger>
@@ -184,7 +184,7 @@ const LandingPage = () => {
 
             <AccordionItem value="item-5" className="border-b border-gray-700">
               <AccordionTrigger>
-                What formats are the QR codes available in?
+              What are QR code formats?
               </AccordionTrigger>
               <AccordionContent>
                 QR codes can be downloaded in high-quality PNG or SVG formats
@@ -218,9 +218,9 @@ const LandingPage = () => {
         </div>
 
         {/* tweet Section */}
-        <div className="w-full md:w-[35%] h-[600px] flex flex-col justify-center">
+        <div className="w-full md:w-[35%] flex flex-col justify-start">
           <Tweet
-            className="h-full overflow-hidden shadow-xl"
+            className="shadow-xl max-w-full"
             id="1875067876257956171"
           />
         </div>
