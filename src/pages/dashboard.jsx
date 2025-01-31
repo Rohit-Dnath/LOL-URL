@@ -12,10 +12,12 @@ import { Filter } from "lucide-react";
 import React, { useEffect, useState } from "react";
 import { BarLoader } from "react-spinners";
 import { BarChart, Bar, XAxis, YAxis, Tooltip, Legend, ResponsiveContainer } from 'recharts';
-import { ToastContainer } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
 import { toastConfig } from "@/utils/toastConfig";
+import { useLocation } from "react-router-dom";
 
 const Dashboard = () => {
+  const location = useLocation();
   const [searchQuery, setSearchQuery] = useState("");
   const {user} = UrlState();
   const {loading, error, data: urls, fn: fnUrls} = useFetch(getUrls, user.id);
@@ -31,6 +33,14 @@ const Dashboard = () => {
   useEffect(() => {
     fnUrls();
   }, []);
+
+  useEffect(() => {
+    if (location.state?.showDeleteToast) {
+      toast.success("URL deleted successfully!", toastConfig);
+      // Clear the state
+      window.history.replaceState({}, document.title);
+    }
+  }, [location]);
 
   const filteredUrls = urls
     ?.filter((url) =>

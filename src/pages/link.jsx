@@ -17,6 +17,7 @@ import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'r
 import confetti from "canvas-confetti";
 import { Confetti } from "@/components/ui/confetti";
 import { AutoConfetti } from "@/components/ui/auto-confetti";
+import { toastConfig } from "@/utils/toastConfig";
 
 const LinkPage = () => {
   const DOMAIN = window.location.origin;
@@ -38,16 +39,12 @@ const LinkPage = () => {
 
     URL.revokeObjectURL(objectUrl);
 
-    toast.success("Image downloaded successfully!", {
-      position: "top-right",
-    });
+    toast.success("Image downloaded successfully!", toastConfig);
   };
 
   const handleCopy = () => {
     navigator.clipboard.writeText(`${window.location.origin}/${link}`);
-    toast.success("URL copied to clipboard!", {
-      position: "top-right",
-    });
+    toast.success("URL copied to clipboard!", toastConfig);
   };
 
   const handleDelete = async () => {
@@ -55,14 +52,9 @@ const LinkPage = () => {
     if (!confirmDelete) return;
     try {
       await fnDelete();
-      navigate("/dashboard");
-      toast.success("URL deleted successfully!", {
-        position: "top-right",
-      });
+      navigate("/dashboard", { state: { showDeleteToast: true } });
     } catch (error) {
-      toast.error("Failed to delete URL.", {
-        position: "top-right",
-      });
+      toast.error("Failed to delete URL.", toastConfig);
     }
   };
 
@@ -141,9 +133,20 @@ const LinkPage = () => {
 
   return (
     <>
-    <ScrollProgress />
+      <ToastContainer 
+        position="bottom-right" 
+        autoClose={3000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="dark"
+      />
+      <ScrollProgress />
       {isNewLink && <AutoConfetti />}
-      <ToastContainer position="bottom-right" autoClose={5000} hideProgressBar={false} newestOnTop={false} closeOnClick rtl={false} pauseOnFocusLoss draggable pauseOnHover style={{ zIndex: 9999 }} />
       {(loading || loadingStats) && (
         <BarLoader className="mb-4" width={"100%"} color="#8884d8" />
       )}
