@@ -12,14 +12,11 @@ return (
             </main>
             <br />
 
-            
-
             <a 
                 href="https://rohitdebnath.me" 
                 target="_blank" 
                 rel="noopener noreferrer" 
                 className='fixed bottom-4 right-4 flex items-center gap-1 bg-black/70 backdrop-blur-sm px-3 py-1.5 rounded-full hover:bg-black/80 transition-all hover:scale-105 duration-200 z-50'
-                
             >
                 <span className='text-white text-xs'>Made with ❤️ by Rohit</span>
                 <img 
