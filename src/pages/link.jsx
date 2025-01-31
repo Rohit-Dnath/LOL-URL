@@ -94,6 +94,35 @@ const LinkPage = () => {
     if (!error && loading === false) fnStats();
   }, [loading, error]);
 
+  useEffect(() => {
+    if (isNewLink) {
+      const duration = 3 * 1000; // Reduced duration to 3 seconds
+      const end = Date.now() + duration;
+
+      (function frame() {
+        // Random position for firework-like effect
+        const x = Math.random();
+        const y = Math.random() * 0.5;
+
+        confetti({
+          particleCount: 15, // Reduced particle count
+          spread: 40,
+          origin: { x, y },
+          gravity: 0.8, // Higher gravity for faster fall
+          scalar: 0.9, // Slightly smaller particles
+          ticks: 200, // Reduced ticks for shorter trails
+          startVelocity: 25, // Reduced initial velocity
+        });
+
+        if (Date.now() < end) {
+          setTimeout(frame, 250); // Add delay between bursts
+        } else {
+          navigate(`/link/${id}`, { replace: true });
+        }
+      }());
+    }
+  }, [isNewLink, id, navigate]);
+
   if (error) {
     navigate("/dashboard");
   }

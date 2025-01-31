@@ -112,7 +112,10 @@ export function CreateLink() {
       const canvas = ref.current.canvasRef.current;
       const blob = await new Promise((resolve) => canvas.toBlob(resolve));
 
-      await fnCreateUrl(blob, link);
+      const result = await fnCreateUrl(blob, link);
+      if (result) {
+        navigate(`/link/${result[0].id}?new=true`);
+      }
     } catch (e) {
       const newErrors = {};
 
