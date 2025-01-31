@@ -119,13 +119,15 @@ const LandingPage = () => {
       <br />
       <br />
 
-      <h2 className="text-3xl font-extrabold mb-4 text-white border-b pb-2 z-40">
+      <h2 className="text-3xl font-extrabold mb-4 text-white border-b pb-2 z-40 px-4 text-center">
         Testimonials
       </h2>
-      <AnimatedTestimonials
-        testimonials={testimonials}
-        className="start z-40"
-      />
+      <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <AnimatedTestimonials
+          testimonials={testimonials}
+          className="start z-40 grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4"
+        />
+      </div>
       <br />
       <br />
 
