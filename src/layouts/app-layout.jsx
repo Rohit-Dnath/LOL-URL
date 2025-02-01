@@ -25,6 +25,21 @@ return (
                     className='w-6 h-6 hover:scale-110 transition-transform duration-200 rounded-full'
                 />
             </a>
+            <script type="application/ld+json">
+              {`
+                {
+                  "@context": "https://schema.org",
+                  "@type": "WebSite",
+                  "name": "LOL URL",
+                  "url": "https://lolurl.site",
+                  "potentialAction": {
+                    "@type": "SearchAction",
+                    "target": "https://lolurl.site/search?q={search_term_string}",
+                    "query-input": "required name=search_term_string"
+                  }
+                }
+              `}
+            </script>
     </div>
 )
 }

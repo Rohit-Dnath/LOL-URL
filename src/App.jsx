@@ -17,35 +17,133 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/",
-        element: <LandingPage />,
+        element: (
+          <>
+            <head>
+              <title>LOL URL - Home</title>
+              <meta name="description" content="Welcome to LOL URL, the best URL shortener and tracker." />
+              <meta property="og:title" content="LOL URL - Efficient URL Shortening and Tracking" />
+              <meta property="og:description" content="Shorten, share, and track your URLs with LOL URL. Monitor click data, user engagement, and more." />
+              <meta property="og:url" content="https://lolurl.site" />
+              <meta property="og:type" content="website" />
+              <meta property="og:image" content="https://lolurl.site/og-image.jpg" />
+              <meta name="twitter:card" content="summary_large_image" />
+              <meta name="twitter:title" content="LOL URL - Efficient URL Shortening and Tracking" />
+              <meta name="twitter:description" content="Shorten, share, and track your URLs with LOL URL. Monitor click data, user engagement, and more." />
+              <meta name="twitter:image" content="https://lolurl.site/twitter-image.jpg" />
+            </head>
+            <LandingPage />
+          </>
+        ),
       },
       {
         path: "/dashboard",
         element: (
-          <RequireAuth>
-            <Dashboard />
-          </RequireAuth>
+          <>
+            <head>
+              <title>LOL URL - Dashboard</title>
+              <meta name="description" content="View and manage your shortened URLs and track their performance." />
+              <meta property="og:title" content="LOL URL - Efficient URL Shortening and Tracking" />
+              <meta property="og:description" content="Shorten, share, and track your URLs with LOL URL. Monitor click data, user engagement, and more." />
+              <meta property="og:url" content="https://lolurl.site" />
+              <meta property="og:type" content="website" />
+              <meta property="og:image" content="https://lolurl.site/og-image.jpg" />
+              <meta name="twitter:card" content="summary_large_image" />
+              <meta name="twitter:title" content="LOL URL - Efficient URL Shortening and Tracking" />
+              <meta name="twitter:description" content="Shorten, share, and track your URLs with LOL URL. Monitor click data, user engagement, and more." />
+              <meta name="twitter:image" content="https://lolurl.site/twitter-image.jpg" />
+            </head>
+            <RequireAuth>
+              <Dashboard />
+            </RequireAuth>
+          </>
         ),
       },
       {
         path: "/auth",
-        element: <Auth />
+        element: (
+          <>
+            <head>
+              <title>LOL URL - Auth</title>
+              <meta name="description" content="Authenticate to access your LOL URL account." />
+              <meta property="og:title" content="LOL URL - Efficient URL Shortening and Tracking" />
+              <meta property="og:description" content="Shorten, share, and track your URLs with LOL URL. Monitor click data, user engagement, and more." />
+              <meta property="og:url" content="https://lolurl.site" />
+              <meta property="og:type" content="website" />
+              <meta property="og:image" content="https://lolurl.site/og-image.jpg" />
+              <meta name="twitter:card" content="summary_large_image" />
+              <meta name="twitter:title" content="LOL URL - Efficient URL Shortening and Tracking" />
+              <meta name="twitter:description" content="Shorten, share, and track your URLs with LOL URL. Monitor click data, user engagement, and more." />
+              <meta name="twitter:image" content="https://lolurl.site/twitter-image.jpg" />
+            </head>
+            <Auth />
+          </>
+        )
       },
       {
         path: "/link/:id",
         element: (
-          <RequireAuth>
-            <Link />
-          </RequireAuth>
+          <>
+            <head>
+              <title>LOL URL - Link Details</title>
+              <meta name="description" content="View detailed analytics for your shortened URL." />
+              <meta property="og:title" content="LOL URL - Efficient URL Shortening and Tracking" />
+              <meta property="og:description" content="Shorten, share, and track your URLs with LOL URL. Monitor click data, user engagement, and more." />
+              <meta property="og:url" content="https://lolurl.site" />
+              <meta property="og:type" content="website" />
+              <meta property="og:image" content="https://lolurl.site/og-image.jpg" />
+              <meta name="twitter:card" content="summary_large_image" />
+              <meta name="twitter:title" content="LOL URL - Efficient URL Shortening and Tracking" />
+              <meta name="twitter:description" content="Shorten, share, and track your URLs with LOL URL. Monitor click data, user engagement, and more." />
+              <meta name="twitter:image" content="https://lolurl.site/twitter-image.jpg" />
+            </head>
+            <RequireAuth>
+              <Link />
+            </RequireAuth>
+          </>
         ),
       },
       {
         path: "/:id",
-        element: <RedirectLink />,
+        element: (
+          <>
+            <head>
+              <title>LOL URL - Redirecting...</title>
+              <meta name="description" content="Redirecting to your destination URL." />
+              <meta property="og:title" content="LOL URL - Efficient URL Shortening and Tracking" />
+              <meta property="og:description" content="Shorten, share, and track your URLs with LOL URL. Monitor click data, user engagement, and more." />
+              <meta property="og:url" content="https://lolurl.site" />
+              <meta property="og:type" content="website" />
+              <meta property="og:image" content="https://lolurl.site/og-image.jpg" />
+              <meta name="twitter:card" content="summary_large_image" />
+              <meta name="twitter:title" content="LOL URL - Efficient URL Shortening and Tracking" />
+              <meta name="twitter:description" content="Shorten, share, and track your URLs with LOL URL. Monitor click data, user engagement, and more." />
+              <meta name="twitter:image" content="https://lolurl.site/twitter-image.jpg" />
+            </head>
+            <RedirectLink />
+          </>
+        ),
       },
       {
         path: "*",
-        element: <div>Not Found</div>,
+        element: (
+          <>
+            <head>
+              <title>LOL URL - Not Found</title>
+              <meta name="description" content="The page you are looking for does not exist." />
+              <meta property="og:title" content="LOL URL - Efficient URL Shortening and Tracking" />
+              <meta property="og:description" content="Shorten, share, and track your URLs with LOL URL. Monitor click data, user engagement, and more." />
+              <meta property="og:url" content="https://lolurl.site" />
+              <meta property="og:type" content="website" />
+              <meta property="og:image" content="https://lolurl.site/og-image.jpg" />
+              <meta name="twitter:card" content="summary_large_image" />
+              <meta name="twitter:title" content="LOL URL - Efficient URL Shortening and Tracking" />
+              <meta name="twitter:description" content="Shorten, share, and track your URLs with LOL URL. Monitor click data, user engagement, and more." />
+              <meta name="twitter:image" content="https://lolurl.site/twitter-image.jpg" />
+            </head>
+            <div>Not Found</div>
+          </>
+        ),
       }
     ],
   },
