@@ -105,7 +105,7 @@ const LandingPage = () => {
         <div className="pointer-events-none absolute inset-0 h-full bg-[radial-gradient(circle_at_50%_200%,rgba(0,0,0,0.2),rgba(255,255,255,0))]" />
       </div>
 
-      <br /> 
+      <br />
       <br />
       <br />
 
@@ -185,9 +185,7 @@ const LandingPage = () => {
             </AccordionItem>
 
             <AccordionItem value="item-5" className="border-b border-gray-700">
-              <AccordionTrigger>
-              What are QR code formats?
-              </AccordionTrigger>
+              <AccordionTrigger>What are QR code formats?</AccordionTrigger>
               <AccordionContent>
                 QR codes can be downloaded in high-quality PNG or SVG formats
                 for digital and print use.
@@ -209,11 +207,22 @@ const LandingPage = () => {
               </AccordionContent>
             </AccordionItem>
 
-            <AccordionItem value="item-9" className="border-b border-gray-700">
-              <AccordionTrigger>Does LOL URL work globally?</AccordionTrigger>
+            <AccordionItem value="item-1" className="border-b border-gray-700">
+              <AccordionTrigger>
+                How do I track my link’s performance?
+              </AccordionTrigger>
               <AccordionContent>
-                Yes, LOL URL is accessible worldwide, and you can track clicks
-                from any location.
+                You can track clicks, location, and engagement through your
+                dashboard after shortening a URL.
+              </AccordionContent>
+            </AccordionItem>
+            <AccordionItem value="item-2" className="border-b border-gray-700">
+              <AccordionTrigger>
+                Can I customize my shortened links?
+              </AccordionTrigger>
+              <AccordionContent>
+                Yes, you can create custom short links to match your branding or
+                content.
               </AccordionContent>
             </AccordionItem>
           </Accordion>
@@ -221,10 +230,7 @@ const LandingPage = () => {
 
         {/* tweet Section */}
         <div className="w-full md:w-[35%] flex flex-col justify-start">
-          <Tweet
-            className="shadow-xl max-w-full"
-            id="1875067876257956171"
-          />
+          <Tweet className="shadow-xl max-w-full" id="1885504095181770973" />
         </div>
       </div>
     </div>
