@@ -27,6 +27,9 @@ const Header = () => {
     return emojis[index];
   };
 
+
+  
+
   const randomEmoji = user ? getEmojiForUser(user.id) : "👤";
 
   return (
