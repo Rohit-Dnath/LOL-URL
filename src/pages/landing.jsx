@@ -139,16 +139,16 @@ const LandingPage = () => {
       <br />
 
       {/* FAQS and tweet */}
-      <div className="w-full flex flex-col md:flex-row gap-8 px-4 md:px-8 items-start justify-center max-w-[100vw] overflow-x-hidden">
+      <div className="w-full flex flex-col md:flex-row gap-8 px-4  md:px-8 items-start justify-center max-w-[100vw] overflow-x-hidden">
         {/* FAQs Section */}
         <div className="w-full md:w-1/2 rounded-lg p-2 md:p-4">
-          <h2 className="text-2xl font-extrabold mb-4 text-white border-b pb-2">
+          <h2 className="text-xl font-extrabold mb-4 text-white border-b pb-2">
             Frequently Asked Questions
           </h2>
           <Accordion
             type="multiple"
             collapsible
-            className="bg-gray-900/50 rounded-lg p-2 md:p-4"
+            className="bg-gray-900/50 rounded-lg p-2 md:p-4 text-xl"
           >
             <AccordionItem value="item-1" className="border-b border-gray-700">
               <AccordionTrigger>What is LOL URL?</AccordionTrigger>
@@ -168,7 +168,7 @@ const LandingPage = () => {
 
             <AccordionItem value="item-3" className="border-b border-gray-700">
               <AccordionTrigger>
-                Can I track my shortened links?
+                Can I track my links?
               </AccordionTrigger>
               <AccordionContent>
                 Yes! Each link includes a dashboard to monitor clicks, visitor
@@ -209,7 +209,7 @@ const LandingPage = () => {
 
             <AccordionItem value="item-1" className="border-b border-gray-700">
               <AccordionTrigger>
-                How do I track my link’s performance?
+              How to track url performance?
               </AccordionTrigger>
               <AccordionContent>
                 You can track clicks, location, and engagement through your
@@ -218,7 +218,7 @@ const LandingPage = () => {
             </AccordionItem>
             <AccordionItem value="item-2" className="border-b border-gray-700">
               <AccordionTrigger>
-                Can I customize my shortened links?
+              Can I customize my links?
               </AccordionTrigger>
               <AccordionContent>
                 Yes, you can create custom short links to match your branding or
