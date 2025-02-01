@@ -22,7 +22,12 @@ const Header = () => {
   const { user, fetchUser } = UrlState();
 
   const emojis = ["🐸", "🦊", "🐻", "🐹", "🐷", "🐱", "🐯", "🐶", "🐵"];
-  const randomEmoji = emojis[Math.floor(Math.random() * emojis.length)];
+  const getEmojiForUser = (userId) => {
+    const index = userId.charCodeAt(0) % emojis.length;
+    return emojis[index];
+  };
+
+  const randomEmoji = user ? getEmojiForUser(user.id) : "👤";
 
   return (
     <>
@@ -40,7 +45,7 @@ const Header = () => {
               <DropdownMenuTrigger className="w-10 rounded-full overflow-hidden ">
                 <Avatar>
                   <AvatarImage src={user?.user_metadata?.profile_pic} />
-                  <AvatarFallback className="text-3xl bg-gray-200 rounded-full w-10 h-10 flex items-center justify-center">
+                  <AvatarFallback className="text-3xl bg-gray-50 rounded-full w-10 h-10 flex items-center justify-center">
                     {randomEmoji}
                   </AvatarFallback>
                 </Avatar>
