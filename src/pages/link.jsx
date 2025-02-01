@@ -221,11 +221,11 @@ const LinkPage = () => {
 
               <div className="flex flex-col sm:flex-row gap-8">
                 <div className="sm:w-1/2 border p-4 rounded">
-                  <CardTitle className="mb-10">Location Data</CardTitle>
+                  <CardTitle className="mb-10">Location Insights</CardTitle>
                   <Location stats={stats} />
                 </div>
                 <div className="sm:w-1/2 border p-4 rounded pointer-events-none">
-                  <CardTitle className="mb-3">Device Info</CardTitle>
+                  <CardTitle className="mb-3">Device Details</CardTitle>
                   <div className="flex items-center gap-4">
                     <div className="flex items-center gap-2">
                       <div className="w-4 h-4 bg-blue-500"></div>
@@ -240,7 +240,7 @@ const LinkPage = () => {
                 </div>
               </div>
               <div className="w-full border p-4 rounded ">
-                <CardTitle className="mb-8">Engagement Timings</CardTitle>
+                <CardTitle className="mb-8">User Active Time</CardTitle>
                 <div className="w-full overflow-x-auto">
                   <LineChart
                     width={Math.max(window.innerWidth - 64, 500)} // Ensure minimum width of 500

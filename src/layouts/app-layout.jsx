@@ -1,10 +1,14 @@
 import Header from '@/components/header'
 import React from 'react'
 import { Outlet } from 'react-router-dom'
+import { Analytics } from "@vercel/analytics/react"
 
 const AppLayout = () => {
 return (
     <div className='bg-grid-white/[0.05]'>
+       
+        
+     
             <main className='min-h-screen mx-auto max-w-6xl px-2 '>
                     {/* Header*/}
                     <Header />
