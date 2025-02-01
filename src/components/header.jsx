@@ -47,6 +47,8 @@ const Header = () => {
                   <AvatarImage src={user?.user_metadata?.profile_pic} />
                   <AvatarFallback className="text-3xl bg-gray-50 rounded-full w-10 h-10 flex items-center justify-center">
                     {randomEmoji}
+
+                    
                   </AvatarFallback>
                 </Avatar>
               </DropdownMenuTrigger>
