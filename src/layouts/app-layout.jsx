@@ -22,7 +22,7 @@ return (
                 rel="noopener noreferrer" 
                 className='fixed bottom-4 right-4 flex items-center gap-1 bg-black/70 backdrop-blur-sm px-3 py-1.5 rounded-full hover:bg-black/80 transition-all hover:scale-105 duration-200 z-50'
             >
-                <span className='text-white text-xs'>Made with ❤️ by Rohit</span>
+                <span className='text-white text-xs'>Made by Rohit</span>
                 <img 
                     src="https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExaHE5N2J4Ym0ybmhwbGlmbjlzMWQ2Z2RvMmw5dHd1MWR3ZjYwZ2N1NyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/Oc8lIQHZsXqDu/giphy.gif"
                     alt="Hamster"
