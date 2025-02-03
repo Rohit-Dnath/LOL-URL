@@ -51,7 +51,7 @@ const RedirectLink = () => {
       <br />
       <strong className="">Redirecting...</strong>
 <DotLottieReact
-src="https://lottie.host/12bef52c-eb23-435e-9da7-9dde45c176e9/Eab4AJWhDS.lottie"
+src="https://lottie.host/bd7e9ba4-29f2-4660-8549-c28f74fcdb94/beN4xnKRlb.lottie"
 loop
 autoplay
 />

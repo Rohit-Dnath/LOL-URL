@@ -62,7 +62,7 @@ const LinkCard = ({ url, fetchUrls }) => {
         <div className="flex justify-between w-full">
           <img
             src={url?.qr}
-            className="h-32 w-32 object-contain self-start rounded"
+            className="h-32 w-32 object-contain self-start "
             alt="qr code"
           />
           <div className="flex gap-2">
