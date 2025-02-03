@@ -241,10 +241,10 @@ export function CreateLink() {
   const getContainerStyle = (boxShape) => ({
     borderRadius: `${boxShape}%`,
     overflow: 'hidden',
-    padding: boxShape === 50 ? '12px' : '4px', // Reduced padding from 24px/8px to 12px/4px
+    padding: '1px',
     backgroundColor: qrOptions.backgroundColor,
     display: 'inline-block',
-    width: 'fit-content',
+    width: 'max-content',
     border: `${qrOptions.borderWidth}px solid ${qrOptions.borderColor}` // Add border style
   });
 
@@ -296,9 +296,9 @@ export function CreateLink() {
 
   // Update QR size based on screen size
   const getQRSize = () => {
-    if (window.innerWidth < 375) return 80; // Extra small devices
-    if (window.innerWidth < 640) return 100; // Small devices
-    return 140; // Larger devices
+    if (window.innerWidth < 375) return 140;
+    if (window.innerWidth < 640) return 160;
+    return 200;
   };
 
   return (
@@ -495,7 +495,7 @@ export function CreateLink() {
                           type="text"
                           value={qrOptions.backgroundColor}
                           onChange={(e) => handleColorChange({ hex: e.target.value }, 'backgroundColor')}
-                          className="w-full p-1 text-xs sm:text-sm rounded border bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-primary"
+                          className="w-20 p-1 text-xs sm:text-sm rounded border bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-primary"
                         />
                       </div>
                     </div>
@@ -522,59 +522,14 @@ export function CreateLink() {
                           type="text"
                           value={qrOptions.foregroundColor}
                           onChange={(e) => handleColorChange({ hex: e.target.value }, 'foregroundColor')}
-                          className="w-full p-1 text-xs sm:text-sm rounded border bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-primary"
+                          className="w-20 p-1 text-xs sm:text-sm rounded border bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-primary"
                         />
                       </div>
                     </div>
                   </div>
                 </div>
 
-                {/* Controls Section with better mobile layout */}
-                {/* <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
-                 
-                  <div className="space-y-2">
-                    <label className="flex items-center justify-between">
-                      <div className="flex items-center gap-2">
-                        <Palette className="w-4 h-4" />
-                        <span className="text-sm font-medium">QR Box Shape</span>
-                      </div>
-                      <span className="text-sm text-gray-500">
-                        {qrOptions.boxShape === 0 ? 'Square' : 
-                        qrOptions.boxShape === 50 ? 'Circle' : 'Rounded'}
-                      </span>
-                    </label>
-                    <Slider
-                      defaultValue={[0]}
-                      max={50}
-                      step={1}
-                      value={[qrOptions.boxShape]}
-                      onValueChange={handleShapeChange}
-                      className="w-full"
-                    />
-                  </div> */}
-
-                  {/* Border Weight */}
-                  {/* <div className="flex-1 space-y-2">
-                    <label className="flex items-center justify-between">
-                      <div className="flex items-center gap-2">
-                        <Ruler className="w-4 h-4" />
-                        <span className="text-sm font-medium">Border Weight</span>
-                      </div>
-                      <span className="text-sm text-gray-500">{qrOptions.borderWidth}px</span>
-                    </label>
-                    <Slider
-                      defaultValue={[2]}
-                      min={0}
-                      max={10}
-                      step={1}
-                      value={[qrOptions.borderWidth]}
-                      onValueChange={handleBorderWeightChange}
-                      className="w-full"
-                    />
-                  </div>
-                </div> */}
-
-                {/* Logo and Border Section */}
+                {/* Logo Upload and Size Control Section */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                   {/* Logo Upload */}
                   <div className="space-y-2">
@@ -627,32 +582,24 @@ export function CreateLink() {
                     </div>
                   </div>
 
-                  {/* Border Color */}
-                  {/* <div className="space-y-2">
-                    <label className="flex items-center gap-2">
-                      <Palette className="w-4 h-4" />
-                      <span className="text-sm font-medium">Border Color</span>
-                    </label>
-                    <div className="flex flex-col">
-                      <HexColorPicker 
-                        color={qrOptions.borderColor}
-                        onChange={(color) => handleColorChange({ hex: color }, 'borderColor')}
-                        style={{ width: '100%', height: '100px' }} // increased height from 80px to 100px
-                      />
-                      <div className="mt-1 sm:mt-2 flex items-center gap-2 h-8">
-                        <div 
-                          className="w-5 h-5 rounded border" // Adjusted size
-                          style={{ backgroundColor: qrOptions.borderColor }}
-                        />
-                        <input
-                          type="text"
-                          value={qrOptions.borderColor}
-                          onChange={(e) => handleColorChange({ hex: e.target.value }, 'borderColor')}
-                          className="w-full p-1 text-xs sm:text-sm rounded border bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-primary"
-                        />
+                  {/* Logo Size Slider */}
+                  {qrOptions.logo && (
+                    <div className="space-y-2 px-2">
+                      <div className="flex items-center justify-between">
+                        <span className="text-sm font-medium">Logo Size</span>
+                        <span className="text-xs text-gray-500">{qrOptions.logoSize}px</span>
                       </div>
+                      <Slider
+                        defaultValue={[30]}
+                        min={20}
+                        max={60}
+                        step={1}
+                        value={[qrOptions.logoSize]}
+                        onValueChange={(value) => handleQrOptionsChange({ ...qrOptions, logoSize: value[0] })}
+                        className="w-full"
+                      />
                     </div>
-                  </div> */}
+                  )}
                 </div>
 
                 {/* Pattern Section */}
@@ -661,12 +608,12 @@ export function CreateLink() {
                     <LayoutGrid className="w-4 h-4" />
                     <span>QR Pattern</span>
                   </label>
-                  <div className="grid grid-cols-2 gap-2"> {/* Changed from flex flex-col to grid grid-cols-2 */}
+                  <div className="grid grid-cols-2 gap-2">
                     {patternOptions.map((pattern) => (
                       <Button
                         key={pattern.id}
                         variant={qrOptions.pattern === pattern.value ? "default" : "outline"}
-                        className="py-2 px-2 text-xs rounded" // removed w-full as grid-cols-2 handles the width
+                        className="py-2 px-2 text-xs rounded"
                         onClick={() => handlePatternChange(pattern.value)}
                       >
                         {pattern.label}
@@ -703,6 +650,7 @@ const styles = `
 .react-colorful__hue-pointer {
   width: 14px !important;
   height: 14px !important;
+  border-width: 2px !important;
 }
 
 .react-colorful__saturation-pointer {
@@ -711,6 +659,30 @@ const styles = `
 
 .react-colorful__hue-pointer {
   border-width: 2px !important;
+}
+
+.react-colorful {
+  width: 100% !important;
+  height: 80px !important;
+  max-width: 200px !important;
+  margin: 0 auto !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+@media (max-width: 640px) {
+  .react-colorful {
+    max-width: 140px !important;
+    height: 70px !important;
+  }
+
+  .react-colorful__saturation {
+    height: 50px !important;
+  }
+
+  .react-colorful__hue {
+    height: 10px !important;
+  }
 }
 `;
 
