@@ -53,13 +53,15 @@ const RedirectLink = () => {
 
   if (!data) {
     return (
-      <div className="flex flex-col justify-center items-center h-screen">
-        <img 
-          src="https://media.giphy.com/media/26ufnwz3wDUli7GU0/giphy.gif" 
-          alt="Not Found" 
-          className="w-full max-w-xs mb-4" 
-        />
-        <strong>LOL URL doesn't exist, ig :)</strong>
+      <div className="flex flex-col justify-center items-center h-screen overflow-hidden">
+        <div className="mt-8">
+          <img 
+            src="https://media.giphy.com/media/26ufnwz3wDUli7GU0/giphy.gif" 
+            alt="Not Found" 
+            className="w-full max-w-xs mb-4" 
+          />
+          <strong>LOL URL doesn't exist, ig :)</strong>
+        </div>
       </div>
     );
   }
