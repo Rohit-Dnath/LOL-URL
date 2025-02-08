@@ -24,7 +24,9 @@ const RedirectLink = () => {
   useEffect(() => {
     if (!loading && data) {
       fnStats().then(() => {
-        window.location.href = data.original_url;
+        setTimeout(() => {
+          window.location.href = data.original_url;
+        }, 100); // Reduced delay to 0.1 seconds
       });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
