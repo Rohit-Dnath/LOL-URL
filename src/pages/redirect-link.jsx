@@ -58,7 +58,7 @@ const RedirectLink = () => {
       <div className="flex flex-col justify-center items-center h-screen overflow-hidden">
         <div className="mt-8">
           <img 
-            src="https://media.giphy.com/media/26ufnwz3wDUli7GU0/giphy.gif" 
+            src="https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExMnV3ZHVtZXhzb3N2ODNybDhicThzNHh1MW9xYWQ5eG5vejgyazY3dCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/C21GGDOpKT6Z4VuXyn/giphy.gif" 
             alt="Not Found" 
             className="w-full max-w-xs mb-4" 
           />
