@@ -13,7 +13,7 @@ import {useNavigate, useParams, useSearchParams} from "react-router-dom";
 import {BarLoader, BeatLoader} from "react-spinners";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, BarChart, Bar, Cell } from 'recharts';
 import confetti from "canvas-confetti";
 import { Confetti } from "@/components/ui/confetti";
 import { AutoConfetti } from "@/components/ui/auto-confetti";
@@ -131,6 +131,29 @@ const LinkPage = () => {
     clicks: 1,
   }));
 
+  // Add this new data transformation for country visits
+  const countryVisitsData = stats?.reduce((acc, stat) => {
+    if (stat.country) {
+      acc[stat.country] = (acc[stat.country] || 0) + 1;
+    }
+    return acc;
+  }, {});
+
+  // Update the countryChartData transformation to limit to top 10 countries
+  const countryChartData = Object.entries(countryVisitsData || {})
+    .map(([country, visits]) => ({
+      country,
+      visits
+    }))
+    .sort((a, b) => b.visits - a.visits)
+    .slice(0, 10); // Show only top 10 countries
+
+  // Define static colors for the bars
+  const CHART_COLORS = [
+    '#8884d8', '#82ca9d', '#ffc658', '#ff7300', '#a4de6c',
+    '#d0ed57', '#83a6ed', '#8dd1e1', '#82ca9d', '#a4de6c'
+  ];
+
   return (
     <>
       <ToastContainer 
@@ -239,24 +262,65 @@ const LinkPage = () => {
                   <DeviceStats stats={stats} className="text-sm "/>
                 </div>
               </div>
-              <div className="w-full border p-4 rounded ">
-                <CardTitle className="mb-8">User Active Time</CardTitle>
-                <div className="w-full overflow-x-auto">
-                  <LineChart
-                    width={Math.max(window.innerWidth - 64, 500)} // Ensure minimum width of 500
-                    height={300}
-                    data={engagementData}
-                    margin={{
-                      top: 5, right: 30, left: 20, bottom: 5,
-                    }}
-                  >
-                    <CartesianGrid strokeDasharray="3 3" />
-                    <XAxis dataKey="time" />
-                    <YAxis />
-                    <Tooltip />
-                    <Legend />
-                    <Line type="monotone" dataKey="clicks" stroke="#8884d8" activeDot={{ r: 8 }} />
-                  </LineChart>
+              <div className="flex flex-col sm:flex-row gap-8">
+                <div className="sm:w-3/5 border p-4 rounded">
+                  <CardTitle className="mb-8">User Active Time</CardTitle>
+                  <div className="w-full overflow-x-auto">
+                    <LineChart
+                      width={Math.max(window.innerWidth - 64, 500)} // Ensure minimum width of 500
+                      height={300}
+                      data={engagementData}
+                      margin={{
+                        top: 5, right: 30, left: 20, bottom: 5,
+                      }}
+                    >
+                      <CartesianGrid strokeDasharray="3 3" />
+                      <XAxis dataKey="time" />
+                      <YAxis />
+                      <Tooltip />
+                      <Legend />
+                      <Line type="monotone" dataKey="clicks" stroke="#8884d8" activeDot={{ r: 8 }} />
+                    </LineChart>
+                  </div>
+                </div>
+                <div className="sm:w-2/5 border p-4 rounded pointer-events-none">
+                  <CardTitle className="mb-8">Visitor Countries</CardTitle>
+                  <div className="w-full overflow-x-auto ">
+                    <BarChart
+                      width={300}
+                      height={350}
+                      data={countryChartData}
+                      margin={{
+                        top: 20,
+                        right: 20,
+                        left: 60,
+                        bottom: 5
+                      }}
+                    >
+                      <CartesianGrid strokeDasharray="3 3" />
+                      <XAxis dataKey="country" />
+                      <YAxis />
+                      <Tooltip 
+                        cursor={{fill: 'rgba(136, 132, 216, 0.1)'}}
+                        contentStyle={{
+                          backgroundColor: '#1e1e1e',
+                          border: '1px solid #333'
+                        }}
+                      />
+                      <Bar 
+                        dataKey="visits" 
+                        label={{ position: 'top' }}
+                        radius={[4, 4, 0, 0]}
+                        name=" "  // Empty name to remove legend text
+                      >
+                        {
+                          countryChartData.map((entry, index) => (
+                            <Cell key={`cell-${index}`} fill={CHART_COLORS[index % CHART_COLORS.length]} />
+                          ))
+                        }
+                      </Bar>
+                    </BarChart>
+                  </div>
                 </div>
               </div>
             </CardContent>

@@ -40,6 +40,17 @@ export async function getClicksForUrl(url_id) {
   return data;
 }
 
+export const getCountryData = async () => {
+  try {
+    const response = await fetch("https://ipapi.co/json");
+    const data = await response.json();
+    return data.country_name;
+  } catch (error) {
+    console.error("Error fetching country data:", error);
+    return null;
+  }
+};
+
 const parser = new UAParser();
 
 export const storeClicks = async ({id, originalUrl}) => {
