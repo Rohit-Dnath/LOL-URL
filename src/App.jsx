@@ -11,6 +11,7 @@ import RedirectLink from "./pages/redirect-link";
 import UrlProvider from "./context";
 import RequireAuth from "./components/require-auth";
 import { Analytics } from "@vercel/analytics/react";
+import RedirectHandler from "./components/redirect-handler"; // Import the updated component
 
 const router = createBrowserRouter([
   {
@@ -106,44 +107,12 @@ const router = createBrowserRouter([
       },
       {
         path: "/:id",
-        element: (
-          <>
-            <head>
-              <title>LOL URL - Redirecting...</title>
-              <meta name="description" content="Redirecting to your destination URL." />
-              <meta property="og:title" content="LOL URL - Efficient URL Shortening and Tracking" />
-              <meta property="og:description" content="Shorten, share, and track your URLs with LOL URL. Monitor click data, user engagement, and more." />
-              <meta property="og:url" content="https://lolurl.site" />
-              <meta property="og:type" content="website" />
-              <meta property="og:image" content="https://lolurl.site/og-image.jpg" />
-              <meta name="twitter:card" content="summary_large_image" />
-              <meta name="twitter:title" content="LOL URL - Efficient URL Shortening and Tracking" />
-              <meta name="twitter:description" content="Shorten, share, and track your URLs with LOL URL. Monitor click data, user engagement, and more." />
-              <meta name="twitter:image" content="https://lolurl.site/twitter-image.jpg" />
-            </head>
-            <RedirectLink />
-          </>
-        ),
+        element: <RedirectHandler />, // Use the updated component for handling redirection
       },
       {
         path: "*",
         element: (
-          <>
-            <head>
-              <title>LOL URL - Not Found</title>
-              <meta name="description" content="The page you are looking for does not exist." />
-              <meta property="og:title" content="LOL URL - Efficient URL Shortening and Tracking" />
-              <meta property="og:description" content="Shorten, share, and track your URLs with LOL URL. Monitor click data, user engagement, and more." />
-              <meta property="og:url" content="https://lolurl.site" />
-              <meta property="og:type" content="website" />
-              <meta property="og:image" content="https://lolurl.site/og-image.jpg" />
-              <meta name="twitter:card" content="summary_large_image" />
-              <meta name="twitter:title" content="LOL URL - Efficient URL Shortening and Tracking" />
-              <meta name="twitter:description" content="Shorten, share, and track your URLs with LOL URL. Monitor click data, user engagement, and more." />
-              <meta name="twitter:image" content="https://lolurl.site/twitter-image.jpg" />
-            </head>
-            <div>Not Found</div>
-          </>
+          <div>Not Found</div>
         ),
       }
     ],
