@@ -591,8 +591,8 @@ export function CreateLink() {
                       </div>
                       <Slider
                         defaultValue={[30]}
-                        min={20}
-                        max={60}
+                        min={30}
+                        max={50}
                         step={1}
                         value={[qrOptions.logoSize]}
                         onValueChange={(value) => handleQrOptionsChange({ ...qrOptions, logoSize: value[0] })}
