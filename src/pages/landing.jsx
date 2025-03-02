@@ -93,8 +93,24 @@ const LandingPage = () => {
           }, 1000);
         }}
       />
+
+      <div className="mt-4">
+        <a 
+          href="https://www.producthunt.com/posts/lol-url?embed=true&utm_source=badge-featured&utm_medium=badge&utm_souce=badge-lol&#0045;url" 
+          target="_blank"
+        >
+          <img 
+            src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=932417&theme=light&t=1740924853295" 
+            alt="LOL&#0032;URL - Your&#0032;Shortcut&#0032;to&#0032;Smart&#0032;LOL&#0032;Urls&#0032;and&#0032;Insights | Product Hunt" 
+            style={{ width: "250px", height: "54px" }}
+            width="250" 
+            height="54" 
+          />
+        </a>
+      </div>
+
       <br />
-      <br />
+      
 
       <div className="relative flex w-full max-w-full items-center justify-center overflow-hidden rounded-lg border bg-background bg-opacity-80 px-8 pb-32 pt-16 md:pb-60 md:pt-32 md:shadow-xl">
         <span className="pointer-events-none whitespace-pre-wrap bg-gradient-to-b from-black to-white bg-clip-text text-center text-4xl font-semibold leading-none text-transparent dark:to-slate-900/10">
