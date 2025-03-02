@@ -71,11 +71,11 @@ const LandingPage = () => {
         fill="white"
       />
 
-      <h2 className="my-10 sm:my-16 text-3xl sm:text-6xl lg:text-7xl text-white text-center font-extrabold">
+      <h2 className="my-10 sm:my-16 text-3xl sm:text-4xl lg:text-5xl text-white text-center font-extrabold">
         <span className="inline">Your Shortcut to Smart </span>
         <span className="inline">
           <SparklesText
-            className={`inline text-3xl sm:text-6xl lg:text-7xl text-white font-extrabold`}
+            className={`inline text-3xl sm:text-4xl lg:text-5xl text-white font-extrabold`}
             text="LOL Urls"
           />
         </span>
