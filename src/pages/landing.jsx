@@ -208,7 +208,7 @@ const LandingPage = () => {
               </AccordionContent>
             </AccordionItem>
 
-            <AccordionItem value="item-7" className="border-b border-gray-700">
+            <AccordionItem value="item-6" className="border-b border-gray-700">
               <AccordionTrigger>Is my data safe with LOL URL?</AccordionTrigger>
               <AccordionContent>
                 Absolutely! We prioritize privacy and ensure your data is secure
@@ -216,14 +216,14 @@ const LandingPage = () => {
               </AccordionContent>
             </AccordionItem>
 
-            <AccordionItem value="item-8" className="border-b border-gray-700">
+            <AccordionItem value="item-7" className="border-b border-gray-700">
               <AccordionTrigger>Is LOL URL free to use?</AccordionTrigger>
               <AccordionContent>
                 Yes! LOL URL offers free link shortening and basic analytics.
               </AccordionContent>
             </AccordionItem>
 
-            <AccordionItem value="item-1" className="border-b border-gray-700">
+            <AccordionItem value="item-8" className="border-b border-gray-700">
               <AccordionTrigger>
               How to track url performance?
               </AccordionTrigger>
@@ -232,7 +232,7 @@ const LandingPage = () => {
                 dashboard after shortening a URL.
               </AccordionContent>
             </AccordionItem>
-            <AccordionItem value="item-2" className="border-b border-gray-700">
+            <AccordionItem value="item-9" className="border-b border-gray-700">
               <AccordionTrigger>
               Can I customize my links?
               </AccordionTrigger>
