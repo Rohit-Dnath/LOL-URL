@@ -94,7 +94,9 @@ const LandingPage = () => {
         }}
       />
 
-      <div className="mt-4">
+      {/* Product Hunt part */}
+
+      {/* <div className="mt-4">
         <a 
           href="https://www.producthunt.com/posts/lol-url?embed=true&utm_source=badge-featured&utm_medium=badge&utm_souce=badge-lol&#0045;url" 
           target="_blank"
@@ -107,7 +109,7 @@ const LandingPage = () => {
             height="54" 
           />
         </a>
-      </div>
+      </div> */}
 
       <br />
       
@@ -135,7 +137,10 @@ const LandingPage = () => {
       <br />
       <br />
 
-      <h2 className="text-3xl font-extrabold mb-4 text-white border-b pb-2 z-30 px-4 text-center">
+
+      {/* Testimonials Part */}
+
+      {/* <h2 className="text-3xl font-extrabold mb-4 text-white border-b pb-2 z-30 px-4 text-center">
         Testimonials
       </h2>
       <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 z-30 relative">
@@ -143,7 +148,7 @@ const LandingPage = () => {
           testimonials={testimonials}
           className="start z-30 grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4"
         />
-      </div>
+      </div> */}
       <br />
       <br />
 
@@ -245,9 +250,9 @@ const LandingPage = () => {
         </div>
 
         {/* tweet Section */}
-        <div className="w-full md:w-[35%] flex flex-col justify-start">
+        {/* <div className="w-full md:w-[35%] flex flex-col justify-start">
           <Tweet className="shadow-xl max-w-full" id="1885504095181770973" />
-        </div>
+        </div> */}
       </div>
     </div>
   );
