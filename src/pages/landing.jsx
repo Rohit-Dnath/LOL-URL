@@ -250,9 +250,9 @@ const LandingPage = () => {
         </div>
 
         {/* tweet Section */}
-        {/* <div className="w-full md:w-[35%] flex flex-col justify-start">
+        <div className="w-full md:w-[35%] flex flex-col justify-start">
           <Tweet className="shadow-xl max-w-full" id="1885504095181770973" />
-        </div> */}
+        </div>
       </div>
     </div>
   );
