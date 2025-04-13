@@ -45,21 +45,21 @@ const LandingPage = () => {
         "lolurl.site has been a game-changer for our community events. Tracking clicks, devices, and locations has allowed us to optimize our outreach and improve member engagement.",
       name: "Souradip Pal",
       designation: "Intern @ ISRO and Founder of DEV DOT COM Community",
-      src: "https://media.licdn.com/dms/image/v2/D5603AQGLkU9jK4qPzw/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1692735696303?e=1743033600&v=beta&t=Hk-99ss4lmtAsdtUr33lkw9fO0vJTq1Y6zubQ4Ke8GA",
+      src: "./souro.png",
     },
     {
       quote:
         "Using lolurl.site has made sharing and managing links so simple. The analytics are super helpful for understanding how our links are performing.",
       name: "Subhadip Saha",
       designation: "Intern @ ISRO and Game Developer",
-      src: "https://media.licdn.com/dms/image/v2/D5603AQFw6_WaZHprJg/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1731342122024?e=1743033600&v=beta&t=2ztJi_FyS3CcJbLr4UNBY2Kslz-9jrrQJ8Vr5PYldas",
+      src: "./subh.png",
     },
     {
       quote:
         "lolurl.site’s intuitive design makes it perfect for students like us. Shortening and tracking links has never been this straightforward.",
       name: "Ayush Dhua",
       designation: "Ex. Intern @ Goldman Sachs",
-      src: "https://media.licdn.com/dms/image/v2/D5603AQEe4gNcGNgwDQ/profile-displayphoto-shrink_400_400/B56ZOvMfApGwAk-/0/1733811107135?e=1743033600&v=beta&t=j9Y6npQTna2NbU6SFIrQRMhaTPUiGKrbOqKNvOmS-iM",
+      src: "./ayush.png",
     },
     {
       quote:
@@ -511,13 +511,13 @@ const LandingPage = () => {
             Terms and Conditions
           </button>
           <span className="hidden sm:inline">•</span>
-          <button
+          {/* <button
             className="hover:text-white transition-colors"
             onClick={() => openModal("Refund Policy", refundPolicyContent)}
           >
             Refund Policy
           </button>
-          <span className="hidden sm:inline">•</span>
+          <span className="hidden sm:inline">•</span> */}
           <span>Made by Rohit Debnath with ❤️</span>
         </div>
       </footer>
