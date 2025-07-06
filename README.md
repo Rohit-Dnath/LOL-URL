@@ -2,8 +2,15 @@
 
 # 🚀 Welcome to LOL URL
 
+
 <p align="center">
   <img src="public/logo.png" alt="LOL URL Logo" width="120" />
+</p>
+
+<p align="center">
+  <a href="https://www.producthunt.com/posts/lol-url?embed=true&utm_source=badge-featured&utm_medium=badge&utm_souce=badge-lol-url" target="_blank">
+    <img src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=932417&theme=light&t=1740924853295" alt="LOL URL - Your Shortcut to Smart LOL Urls and Insights | Product Hunt" width="250" height="54" />
+  </a>
 </p>
 
 <p align="center">
