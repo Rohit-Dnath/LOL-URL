@@ -54,13 +54,17 @@ Follow these steps to set up the project locally:
 
 ## Contributing
 
-Contributions are welcome! If you'd like to improve this project:
+We welcome contributions from everyone! To get started:
 
 1. Fork the repository.
-2. Create a new branch: `git checkout -b feature-name`
-3. Commit your changes: `git commit -m 'Add a new feature'`
-4. Push to the branch: `git push origin feature-name`
-5. Submit a pull request.
+2. Create a new branch: `git checkout -b feature/your-feature-name`
+3. Make your changes and add tests if applicable.
+4. Run `npm run lint` and `npm run build` to ensure code quality.
+5. Commit your changes: `git commit -m 'Describe your change'`
+6. Push to your fork: `git push origin feature/your-feature-name`
+7. Open a [pull request](https://github.com/Rohit-Dnath/LOL-URL/pulls) with a clear description.
+
+**Please read our [CONTRIBUTING.md](./CONTRIBUTING.md), [CODE_OF_CONDUCT.md](./CODE_OF_CONDUCT.md), [SECURITY.md](./SECURITY.md), [SUPPORT.md](./SUPPORT.md), and [TROUBLESHOOTING.md](./TROUBLESHOOTING.md) before submitting your contribution.**
 
 ---
 
@@ -70,9 +74,13 @@ Special thanks to the open-source community for providing the tools and librarie
 
 ---
 
-## Contact
+## Contact & Support
 
-For any inquiries or suggestions, feel free to reach out at **debnathrohit97@gmail.com** or visit [rohitdebnath.me](https://www.rohitdebnath.me/) .
+For any inquiries, support, or suggestions:
+
+- Open an [issue](https://github.com/Rohit-Dnath/LOL-URL/issues) for bugs or feature requests
+- Email: **debnathrohit97@gmail.com**
+- Website: [rohitdebnath.me](https://www.rohitdebnath.me/)
 
 ---
 
