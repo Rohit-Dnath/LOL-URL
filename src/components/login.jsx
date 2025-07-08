@@ -17,14 +17,9 @@ import useFetch from "@/hooks/use-fetch";
 import { login } from "@/db/apiAuth";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { UrlState } from "@/context";
-
+import supabase from "@/db/supabase";
 
 const Login = () => {
-
-    
-    
-
-
     const [errors, setErrors] = useState([]);
 
     const [FormData, setFormData] = useState({
@@ -93,6 +88,20 @@ const Login = () => {
         }
     }
     
+     const handleGoogleLogin = async () => {
+      const { error } = await supabase.auth.signInWithOAuth({
+        provider: 'google',
+        options: {
+          redirectTo: `${import.meta.env.VITE_SUPABASE_URL}/auth/v1/callback`,
+        }
+      });
+      
+
+      if (error) {
+        console.error("Google login error:", error.message);
+      }
+    };  
+
   return (
     <Card className="bg-background">
       <CardHeader>
@@ -121,7 +130,14 @@ const Login = () => {
             {loading? <BeatLoader color="#8884d8" size={8} /> : "Login"}
 
             {/* <BeatLoader color="#8884d8" size={8} /> : "Login"} */}
-        </Button>
+            </Button>
+              <div className="w-full flex items-center justify-center gap-2">
+                     <span className="text-sm text-muted-foreground">or</span>
+              </div>
+
+              <Button variant="outline" className="rounded w-full" onClick={handleGoogleLogin}>
+                Continue with Google
+              </Button>
       </CardFooter>
     </Card>
   );
