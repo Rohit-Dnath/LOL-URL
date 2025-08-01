@@ -22,7 +22,7 @@ const Dashboard = () => {
   const location = useLocation();
   const [searchQuery, setSearchQuery] = useState("");
   const [dateFilter, setDateFilter] = useState(""); // For date filtering
-  const [clickFilter, setClickFilter] = useState(""); // For click filtering
+  const [clickFilter, setClickFilter] = useState("all"); // For click filtering
   const [currentPage, setCurrentPage] = useState(1);
 
   const { user } = UrlState();
@@ -58,7 +58,7 @@ const Dashboard = () => {
       return url.created_at && new Date(url.created_at).toISOString().slice(0, 10) === dateFilter;
     })
     .filter((url) => {
-      if (!clickFilter) return true;
+      if (!clickFilter || clickFilter === "all") return true;
       const urlClicks = clicks?.filter((c) => c.url_id === url.id).length || 0;
       if (clickFilter === "0-10") return urlClicks >= 0 && urlClicks <= 10;
       if (clickFilter === "11-100") return urlClicks >= 11 && urlClicks <= 100;
@@ -194,7 +194,7 @@ const Dashboard = () => {
             <SelectValue placeholder="All Clicks" />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="">All Clicks</SelectItem>
+            <SelectItem value="all">All Clicks</SelectItem>
             <SelectItem value="0-10">0-10 Clicks</SelectItem>
             <SelectItem value="11-100">11-100 Clicks</SelectItem>
             <SelectItem value="101+">101+ Clicks</SelectItem>
