@@ -1,7 +1,5 @@
 import Header from '@/components/header'
-import React from 'react'
 import { Outlet } from 'react-router-dom'
-import { Analytics } from "@vercel/analytics/react"
 
 const AppLayout = () => {
 return (
@@ -9,7 +7,7 @@ return (
        
         
      
-            <main className='min-h-screen mx-auto max-w-6xl px-2 '>
+            <main className='min-h-screen mx-auto max-w-6xl px-2 rounded-lg'>
                     {/* Header*/}
                     <Header />
                     <Outlet />
