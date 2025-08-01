@@ -76,7 +76,7 @@ const Dashboard = () => {
 
   // Top clicked links for chart
   const topClickedLinks = clicks?.reduce((acc, click) => {
-    const url = urls.find(url => url.id === click.url_id);
+    const url = filteredUrls?.find(url => url.id === click.url_id);
     if (url) {
       if (!acc[url.title]) {
         acc[url.title] = 0;
