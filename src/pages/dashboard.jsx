@@ -3,13 +3,13 @@ import LinkCard from "@/components/link-card";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { ScrollProgress } from "@/components/ui/scroll-progress";
 import { UrlState } from "@/context";
 import { getClicksForUrls } from "@/db/apiClicks";
 import { getUrls } from "@/db/apiUrls";
 import useFetch from "@/hooks/use-fetch";
-import { Filter } from "lucide-react";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { BarLoader } from "react-spinners";
 import { BarChart, Bar, XAxis, YAxis, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import { ToastContainer, toast } from "react-toastify";
@@ -26,7 +26,7 @@ const Dashboard = () => {
   const [currentPage, setCurrentPage] = useState(1);
 
   const { user } = UrlState();
-  const { loading, error, data: urls, fn: fnUrls } = useFetch(getUrls, user.id);
+  const { loading, data: urls, fn: fnUrls } = useFetch(getUrls, user.id);
   const {
     loading: loadingClicks,
     data: clicks,
@@ -202,7 +202,6 @@ const Dashboard = () => {
         </Select>
       </div>
 
-      {error && <Error message={error?.message} />}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
         {(paginatedUrls || []).map((url, i) => {
           return <LinkCard key={i} url={url} fetchUrls={fnUrls} />
