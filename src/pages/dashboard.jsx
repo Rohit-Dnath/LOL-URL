@@ -55,7 +55,7 @@ const Dashboard = () => {
     .filter((url) => {
       if (!dateFilter) return true;
       // Compare only the date part
-      return url.created_at && url.created_at.slice(0, 10) === dateFilter;
+      return url.created_at && new Date(url.created_at).toISOString().slice(0, 10) === dateFilter;
     })
     .filter((url) => {
       if (!clickFilter) return true;
