@@ -13,7 +13,7 @@ import {useNavigate, useParams, useSearchParams} from "react-router-dom";
 import {BarLoader, BeatLoader} from "react-spinners";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, BarChart, Bar, Cell } from 'recharts';
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, BarChart, Bar } from 'recharts';
 import confetti from "canvas-confetti";
 import { Confetti } from "@/components/ui/confetti";
 import { AutoConfetti } from "@/components/ui/auto-confetti";
@@ -148,160 +148,240 @@ const LinkPage = () => {
     .sort((a, b) => b.visits - a.visits)
     .slice(0, 10); // Show only top 10 countries
 
-  // Define static colors for the bars
-  const CHART_COLORS = [
-    '#8884d8', '#82ca9d', '#ffc658', '#ff7300', '#a4de6c',
-    '#d0ed57', '#83a6ed', '#8dd1e1', '#82ca9d', '#a4de6c'
-  ];
-
   return (
     <>
-      <ToastContainer 
-        position="bottom-right" 
-        autoClose={3000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="dark"
-      />
+      <ToastContainer {...toastConfig} />
       <ScrollProgress />
       {isNewLink && <AutoConfetti />}
       {(loading || loadingStats) && (
-        <BarLoader className="mb-4" width={"100%"} color="#8884d8" />
+        <BarLoader className="mb-4" width={"100%"} color="hsl(var(--primary))" />
       )}
-      <br />
-      <br />
 
-      
-      <div className="flex flex-col gap-4 max-w-full">
-        <Card className="bg-background p-4 sm:p-6">
-          <CardContent>
-            <div className="flex flex-col sm:flex-row justify-between items-start gap-6 sm:gap-8">
-              <div className="flex flex-col items-start gap-4 sm:gap-6 w-full sm:w-3/5">
-                <span className="text-3xl sm:text-4xl md:text-6xl font-extrabold hover:underline cursor-pointer break-words w-full">
-                  {url?.title}
-                </span>
-                <a
-                  href={`${window.location.origin}/${link}`}
-                  target="_blank"
-                  className="text-xl sm:text-2xl md:text-3xl text-blue-400 font-bold hover:underline cursor-pointer break-all w-full"
-                >
-                  {window.location.origin}/{link}
-                </a>
-                <a
-                  href={url?.original_url}
-                  target="_blank"
-                  className="flex items-start gap-1 hover:underline cursor-pointer break-all w-full"
-                >
-                  <LinkIcon className="p-1 min-w-[24px]" />
-                  <span className="break-all">{url?.original_url}</span>
-                </a>
-                <span className="flex items-end font-extralight text-sm w-full break-words">
-                  {new Date(url?.created_at).toLocaleString()}
-                </span>
-              </div>
-              <div className="flex flex-col items-center self-center sm:self-start mt-4 sm:mt-0">
-                <img
-                  src={qrCodeUrl}
-                  className="w-32 h-32 sm:w-40 sm:h-40 p-1 object-contain"
-                  alt="qr code"
-                />
-                <div className="flex gap-2 mt-4">
-                  <Button variant="ghost" onClick={handleCopy}>
-                    <Copy />
-                  </Button>
-                  <Button variant="ghost" onClick={downloadImage}>
-                    <Download />
-                  </Button>
-                  <Button variant="ghost" onClick={handleDelete} disable={loadingDelete}>
-                    {loadingDelete ? <BeatLoader size={5} color="white" /> : <Trash />}
-                  </Button>
+      <div className="flex flex-col gap-6 max-w-7xl mx-auto p-4">
+        {/* Main Link Card - Redesigned */}
+        <Card className="bg-background border-2 border-border shadow-lg overflow-hidden">
+          <CardContent className="p-0">
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-0">
+              {/* Left Section - Link Info */}
+              <div className="lg:col-span-2 p-6 lg:p-8 space-y-6">
+                {/* Header */}
+                <div className="space-y-4">
+                  <div className="flex items-start justify-between">
+                    <h1 className="text-2xl lg:text-4xl font-bold text-foreground leading-tight break-words">
+                      {url?.title}
+                    </h1>
+                    <div className="flex items-center gap-2 ml-4">
+                      <Button 
+                        variant="outline" 
+                        size="sm" 
+                        onClick={handleCopy}
+                        className="border-border hover:bg-muted transition-colors"
+                      >
+                        <Copy className="w-4 h-4" />
+                      </Button>
+                      <Button 
+                        variant="outline" 
+                        size="sm" 
+                        onClick={downloadImage}
+                        className="border-border hover:bg-muted transition-colors"
+                      >
+                        <Download className="w-4 h-4" />
+                      </Button>
+                      <Button 
+                        variant="destructive" 
+                        size="sm" 
+                        onClick={handleDelete} 
+                        disabled={loadingDelete}
+                        className="hover:bg-destructive/90 transition-colors"
+                      >
+                        {loadingDelete ? <BeatLoader size={5} color="currentColor" /> : <Trash className="w-4 h-4" />}
+                      </Button>
+                    </div>
+                  </div>
+                  
+                  {/* Short URL */}
+                  <div className="space-y-2">
+                    <label className="text-sm font-medium text-muted-foreground">Short URL</label>
+                    <a
+                      href={`${window.location.origin}/${link}`}
+                      target="_blank"
+                      className="block text-lg lg:text-xl font-semibold text-primary hover:text-primary/80 transition-colors break-all"
+                    >
+                      {window.location.origin}/{link}
+                    </a>
+                  </div>
+
+                  {/* Original URL */}
+                  <div className="space-y-2">
+                    <label className="text-sm font-medium text-muted-foreground">Original URL</label>
+                    <a
+                      href={url?.original_url}
+                      target="_blank"
+                      className="flex items-start gap-2 text-foreground hover:text-primary transition-colors break-all group"
+                    >
+                      <LinkIcon className="w-4 h-4 mt-1 flex-shrink-0 group-hover:text-primary transition-colors" />
+                      <span className="break-all">{url?.original_url}</span>
+                    </a>
+                  </div>
+
+                  {/* Creation Date */}
+                  <div className="space-y-2">
+                    <label className="text-sm font-medium text-muted-foreground">Created</label>
+                    <p className="text-sm text-muted-foreground">
+                      {new Date(url?.created_at).toLocaleString()}
+                    </p>
+                  </div>
                 </div>
+              </div>
+
+              {/* Right Section - QR Code */}
+              <div className="bg-muted/30 border-l border-border p-6 lg:p-8 flex flex-col items-center justify-center space-y-4">
+                <div className="bg-background p-4 border border-border shadow-sm">
+                  <img
+                    src={qrCodeUrl}
+                    className="w-32 h-32 lg:w-40 lg:h-40 object-contain"
+                    alt="QR Code"
+                  />
+                </div>
+                <p className="text-sm text-muted-foreground text-center">
+                  Scan to visit link
+                </p>
               </div>
             </div>
           </CardContent>
         </Card>
 
-        <Card className="rounded bg-background">
-          <CardHeader className="p-4 sm:p-6">
-            <CardTitle className="text-2xl sm:text-4xl font-extrabold break-words">Statistics</CardTitle>
+        {/* Statistics Section - Redesigned */}
+        <Card className="bg-background border-2 border-border shadow-lg">
+          <CardHeader className="border-b border-border">
+            <CardTitle className="text-2xl font-bold text-foreground">Analytics & Statistics</CardTitle>
           </CardHeader>
+          
           {stats && stats.length ? (
-            <CardContent className="flex flex-col gap-4 sm:gap-6 p-4 sm:p-6">
-              <Card className="bg-background rounded">
-                <CardHeader>
-                  <CardTitle>Total Clicks</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p>{stats?.length}</p>
-                </CardContent>
-              </Card>
-              <ScrollProgress className="w-full" />
-
-              <div className="flex flex-col sm:flex-row gap-8">
-                <div className="sm:w-1/2 border p-4 rounded">
-                  <CardTitle className="mb-10">Location Insights</CardTitle>
-                  <Location stats={stats} />
-                </div>
-                <div className="sm:w-1/2 border p-4 rounded pointer-events-none">
-                  <CardTitle className="mb-3">Device Details</CardTitle>
-                  <div className="flex items-center gap-4">
-                    <div className="flex items-center gap-2">
-                      <div className="w-4 h-4 bg-blue-500"></div>
-                      <span>Desktop</span>
+            <CardContent className="p-6 space-y-8">
+              {/* Stats Overview */}
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <Card className="bg-muted/30 border border-border">
+                  <CardContent className="p-6 text-center">
+                    <div className="text-3xl font-bold text-primary mb-2">{stats?.length}</div>
+                    <div className="text-sm font-medium text-muted-foreground">Total Clicks</div>
+                  </CardContent>
+                </Card>
+                
+                <Card className="bg-muted/30 border border-border">
+                  <CardContent className="p-6 text-center">
+                    <div className="text-3xl font-bold text-primary mb-2">
+                      {new Set(stats?.map(stat => stat.country)).size}
                     </div>
-                    <div className="flex items-center gap-2">
-                      <div className="w-4 h-4 bg-green-500"></div>
-                      <span>Mobile</span>
+                    <div className="text-sm font-medium text-muted-foreground">Countries</div>
+                  </CardContent>
+                </Card>
+                
+                <Card className="bg-muted/30 border border-border">
+                  <CardContent className="p-6 text-center">
+                    <div className="text-3xl font-bold text-primary mb-2">
+                      {new Set(stats?.map(stat => stat.device)).size}
                     </div>
-                  </div>
-                  <DeviceStats stats={stats} className="text-sm "/>
-                </div>
+                    <div className="text-sm font-medium text-muted-foreground">Device Types</div>
+                  </CardContent>
+                </Card>
               </div>
-              <div className="flex flex-col sm:flex-row gap-8">
-                <div className="sm:w-3/5 border p-4 rounded">
-                  <CardTitle className="mb-8">User Active Time</CardTitle>
-                  <div className="w-full overflow-x-auto">
+
+              {/* Charts Grid */}
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                {/* Location Analytics */}
+                <Card className="bg-muted/20 border border-border">
+                  <CardHeader className="border-b border-border">
+                    <CardTitle className="text-lg font-semibold text-foreground">Geographic Distribution</CardTitle>
+                  </CardHeader>
+                  <CardContent className="p-6">
+                    <Location stats={stats} />
+                  </CardContent>
+                </Card>
+
+                {/* Device Analytics */}
+                <Card className="bg-muted/20 border border-border">
+                  <CardHeader className="border-b border-border">
+                    <CardTitle className="text-lg font-semibold text-foreground">Device Breakdown</CardTitle>
+                  </CardHeader>
+                  <CardContent className="p-6">
+                    <DeviceStats stats={stats} />
+                  </CardContent>
+                </Card>
+              </div>
+
+              {/* Engagement Chart */}
+              <Card className="bg-muted/20 border border-border">
+                <CardHeader className="border-b border-border">
+                  <CardTitle className="text-lg font-semibold text-foreground">Click Timeline</CardTitle>
+                </CardHeader>
+                <CardContent className="p-6">
+                  <div className="w-full h-[300px]">
                     <LineChart
-                      width={Math.max(window.innerWidth - 64, 500)} // Ensure minimum width of 500
+                      width={window.innerWidth > 1024 ? 800 : window.innerWidth - 200}
                       height={300}
                       data={engagementData}
-                      margin={{
-                        top: 5, right: 30, left: 20, bottom: 5,
-                      }}
+                      margin={{ top: 20, right: 30, left: 20, bottom: 20 }}
                     >
-                      <CartesianGrid strokeDasharray="3 3" />
-                      <XAxis dataKey="time" />
-                      <YAxis />
-                      <Tooltip />
-                      <Legend />
-                      <Line type="monotone" dataKey="clicks" stroke="#8884d8" activeDot={{ r: 8 }} />
+                      <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
+                      <XAxis 
+                        dataKey="time" 
+                        stroke="hsl(var(--muted-foreground))"
+                        fontSize={12}
+                      />
+                      <YAxis 
+                        stroke="hsl(var(--muted-foreground))"
+                        fontSize={12}
+                      />
+                      <Tooltip 
+                        contentStyle={{
+                          backgroundColor: "hsl(var(--background))",
+                          border: "1px solid hsl(var(--border))",
+                          borderRadius: "6px",
+                          color: "hsl(var(--foreground))"
+                        }}
+                      />
+                      <Line 
+                        type="monotone" 
+                        dataKey="clicks" 
+                        stroke="hsl(var(--primary))" 
+                        strokeWidth={2}
+                        dot={{ fill: "hsl(var(--primary))", strokeWidth: 2, r: 4 }}
+                        activeDot={{ r: 6, fill: "hsl(var(--primary))" }}
+                      />
                     </LineChart>
                   </div>
-                </div>
-                <div className="sm:w-2/5 border p-4 rounded pointer-events-none">
-                  <CardTitle className="mb-8">Visitor Countries</CardTitle>
-                  <div className="w-full overflow-x-auto ">
+                </CardContent>
+              </Card>
+
+              {/* Country Visits Chart */}
+              <Card className="bg-muted/20 border border-border">
+                <CardHeader className="border-b border-border">
+                  <CardTitle className="text-lg font-semibold text-foreground">Top Visiting Countries</CardTitle>
+                </CardHeader>
+                <CardContent className="p-6">
+                  <div className="w-full h-[350px]">
                     <BarChart
-                      width={300}
+                      width={window.innerWidth > 1024 ? 800 : window.innerWidth - 200}
                       height={350}
                       data={countryChartData}
-                      margin={{
-                        top: 20,
-                        right: 20,
-                        left: 60,
-                        bottom: 5
-                      }}
+                      margin={{ top: 20, right: 30, left: 20, bottom: 80 }}
                     >
-                      <CartesianGrid strokeDasharray="3 3" />
-                      <XAxis dataKey="country" />
-                      <YAxis />
+                      <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
+                      <XAxis 
+                        dataKey="country" 
+                        stroke="hsl(var(--muted-foreground))"
+                        fontSize={10}
+                        angle={-45}
+                        textAnchor="end"
+                        height={80}
+                        interval={0}
+                      />
+                      <YAxis 
+                        stroke="hsl(var(--muted-foreground))"
+                        fontSize={12}
+                      />
                       <Tooltip 
-                        cursor={{fill: 'rgba(136, 132, 216, 0.1)'}}
                         contentStyle={{
                           backgroundColor: '#1e1e1e',
                           border: '1px solid #333'
@@ -309,26 +389,21 @@ const LinkPage = () => {
                       />
                       <Bar 
                         dataKey="visits" 
-                        label={{ position: 'top' }}
-                        radius={[4, 4, 0, 0]}
-                        name=" "  // Empty name to remove legend text
-                      >
-                        {
-                          countryChartData.map((entry, index) => (
-                            <Cell key={`cell-${index}`} fill={CHART_COLORS[index % CHART_COLORS.length]} />
-                          ))
-                        }
-                      </Bar>
+                        fill="hsl(var(--primary))"
+                        name="Visits"
+                      />
                     </BarChart>
                   </div>
-                </div>
-              </div>
+                </CardContent>
+              </Card>
             </CardContent>
           ) : (
-            <CardContent className="p-4 sm:p-6">
-              {loadingStats === false
-                ? "No Statistics yet"
-                : "Loading Statistics.."}
+            <CardContent className="p-8 text-center">
+              <div className="text-muted-foreground">
+                {loadingStats === false
+                  ? "No analytics data available yet. Share your link to start collecting statistics!"
+                  : "Loading analytics data..."}
+              </div>
             </CardContent>
           )}
         </Card>
