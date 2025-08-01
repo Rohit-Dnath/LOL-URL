@@ -192,7 +192,7 @@ const LinkCard = ({ url, fetchUrls, clicks = [] }) => {
             <div className="text-xs font-medium text-gray-400 uppercase tracking-wide">
               Analytics
             </div>
-            <div className="grid grid-cols-2 gap-3">
+            <div className="grid grid-cols-1 gap-3">
               <div className="bg-gray-800 rounded-md p-3 border border-gray-700">
                 <div className="flex items-center gap-2 mb-1">
                   <MousePointer className="w-4 h-4 text-gray-400" />
@@ -201,13 +201,13 @@ const LinkCard = ({ url, fetchUrls, clicks = [] }) => {
                 <div className="text-lg font-semibold text-white">{totalClicks}</div>
               </div>
               
-              <div className="bg-gray-800 rounded-md p-3 border border-gray-700">
+              {/* <div className="bg-gray-800 rounded-md p-3 border border-gray-700">
                 <div className="flex items-center gap-2 mb-1">
                   <Eye className="w-4 h-4 text-gray-400" />
                   <span className="text-xs text-gray-400">Unique Views</span>
                 </div>
                 <div className="text-lg font-semibold text-white">{uniqueClicks}</div>
-              </div>
+              </div> */}
             </div>
           </div>
         </div>
