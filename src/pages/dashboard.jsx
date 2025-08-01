@@ -186,16 +186,20 @@ const Dashboard = () => {
           className="rounded h-full flex-1 p-2"
         />
         {/* Click filter */}
-        <select
+        <Select
           value={clickFilter}
-          onChange={(e) => setClickFilter(e.target.value)}
-          className="rounded h-full flex-1 p-2 border"
+          onValueChange={setClickFilter}
         >
-          <option value="">All Clicks</option>
-          <option value="0-10">0-10 Clicks</option>
-          <option value="11-100">11-100 Clicks</option>
-          <option value="101+">101+ Clicks</option>
-        </select>
+          <SelectTrigger className="rounded h-full flex-1 p-2 border">
+            <SelectValue placeholder="All Clicks" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="">All Clicks</SelectItem>
+            <SelectItem value="0-10">0-10 Clicks</SelectItem>
+            <SelectItem value="11-100">11-100 Clicks</SelectItem>
+            <SelectItem value="101+">101+ Clicks</SelectItem>
+          </SelectContent>
+        </Select>
       </div>
 
       {error && <Error message={error?.message} />}
