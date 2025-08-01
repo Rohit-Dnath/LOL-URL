@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Social Preview Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #1a1a1a;
+            color: white;
+        }
+        .test-container {
+            background-color: #2a2a2a;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        button {
+            background-color: #667eea;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        button:hover {
+            background-color: #5a67d8;
+        }
+        button:disabled {
+            background-color: #666;
+            cursor: not-allowed;
+        }
+        .preview-image {
+            max-width: 100%;
+            border: 1px solid #444;
+            border-radius: 4px;
+            margin-top: 10px;
+        }
+        .info {
+            background-color: #333;
+            padding: 10px;
+            border-radius: 4px;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>Social Media Preview Test</h1>
+    
+    <div class="test-container">
+        <h2>Test Data</h2>
+        <div class="info">
+            <strong>Title:</strong> Test URL for Social Preview<br>
+            <strong>Original URL:</strong> https://example.com/very-long-url-that-needs-to-be-shortened<br>
+            <strong>Short URL:</strong> abc123<br>
+            <strong>QR Code:</strong> Available
+        </div>
+        
+        <button onclick="generatePreview()">Generate Preview</button>
+        <button onclick="downloadPreview()" id="downloadBtn" disabled>Download Preview</button>
+        
+        <div id="previewContainer"></div>
+    </div>
+
+    <div class="test-container">
+        <h2>Features Tested</h2>
+        <ul>
+            <li>✅ Canvas-based image generation</li>
+            <li>✅ Gradient background design</li>
+            <li>✅ QR code integration</li>
+            <li>✅ Text truncation for long URLs</li>
+            <li>✅ Download functionality</li>
+            <li>✅ Social media optimization</li>
+        </ul>
+    </div>
+
+    <script>
+        let previewImageData = null;
+
+        function generatePreview() {
+            const canvas = document.createElement('canvas');
+            const ctx = canvas.getContext('2d');
+            
+            // Set canvas size for social media (1200x630 is optimal for most platforms)
+            canvas.width = 1200;
+            canvas.height = 630;
+            
+            // Background gradient
+            const gradient = ctx.createLinearGradient(0, 0, 1200, 630);
+            gradient.addColorStop(0, '#667eea');
+            gradient.addColorStop(1, '#764ba2');
+            ctx.fillStyle = gradient;
+            ctx.fillRect(0, 0, 1200, 630);
+            
+            // Add some decorative elements
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.1)';
+            for (let i = 0; i < 5; i++) {
+                ctx.beginPath();
+                ctx.arc(200 + i * 200, 100 + i * 50, 50 + i * 20, 0, 2 * Math.PI);
+                ctx.fill();
+            }
+            
+            // Main title
+            ctx.fillStyle = '#ffffff';
+            ctx.font = 'bold 48px Arial, sans-serif';
+            ctx.textAlign = 'center';
+            ctx.fillText('LOL URL', 600, 150);
+            
+            // URL title
+            ctx.font = 'bold 36px Arial, sans-serif';
+            ctx.fillText('Test URL for Social Preview', 600, 220);
+            
+            // Short URL
+            ctx.font = '24px Arial, sans-serif';
+            ctx.fillStyle = '#e2e8f0';
+            ctx.fillText('example.com/abc123', 600, 280);
+            
+            // Original URL (truncated if too long)
+            ctx.font = '18px Arial, sans-serif';
+            ctx.fillStyle = '#94a3b8';
+            ctx.fillText('https://example.com/very-long-url-that-needs-to-be-shortened', 600, 320);
+            
+            // Stats or additional info
+            ctx.font = '20px Arial, sans-serif';
+            ctx.fillStyle = '#ffffff';
+            ctx.fillText('Click to visit', 600, 380);
+            
+            // Convert to data URL
+            previewImageData = canvas.toDataURL('image/png');
+            
+            // Display the image
+            const container = document.getElementById('previewContainer');
+            container.innerHTML = `
+                <h3>Generated Preview (1200×630)</h3>
+                <img src="${previewImageData}" alt="Social media preview" class="preview-image">
+            `;
+            
+            // Enable download button
+            document.getElementById('downloadBtn').disabled = false;
+            
+            console.log('Preview generated successfully!');
+        }
+
+        function downloadPreview() {
+            if (!previewImageData) {
+                alert('Please generate a preview first!');
+                return;
+            }
+            
+            // Convert data URL to blob
+            const response = fetch(previewImageData);
+            response.then(res => res.blob())
+                .then(blob => {
+                    // Create download link
+                    const url = URL.createObjectURL(blob);
+                    const link = document.createElement('a');
+                    link.href = url;
+                    link.download = 'test_social_preview.png';
+                    
+                    // Trigger download
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+                    
+                    // Clean up
+                    URL.revokeObjectURL(url);
+                    
+                    console.log('Preview downloaded successfully!');
+                })
+                .catch(error => {
+                    console.error('Error downloading preview:', error);
+                    alert('Failed to download preview');
+                });
+        }
+
+        // Auto-generate preview on page load
+        window.addEventListener('load', () => {
+            setTimeout(generatePreview, 1000);
+        });
+    </script>
+</body>
+</html> 

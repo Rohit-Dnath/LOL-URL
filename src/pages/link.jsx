@@ -7,8 +7,8 @@ import {UrlState} from "@/context";
 import {getClicksForUrl} from "@/db/apiClicks";
 import {deleteUrl, getUrl} from "@/db/apiUrls";
 import useFetch from "@/hooks/use-fetch";
-import {Copy, Download, LinkIcon, Trash} from "lucide-react";
-import {useEffect} from "react";
+import {Copy, Download, LinkIcon, Trash, Share2} from "lucide-react";
+import {useEffect, useState} from "react";
 import {useNavigate, useParams, useSearchParams} from "react-router-dom";
 import {BarLoader, BeatLoader} from "react-spinners";
 import { toast, ToastContainer } from "react-toastify";
@@ -18,9 +18,12 @@ import confetti from "canvas-confetti";
 import { Confetti } from "@/components/ui/confetti";
 import { AutoConfetti } from "@/components/ui/auto-confetti";
 import { toastConfig } from "@/utils/toastConfig";
+import { generateSocialPreviewImage, downloadSocialPreview } from "@/utils/socialPreview";
 
 const LinkPage = () => {
   const DOMAIN = window.location.origin;
+  const [isGeneratingSocialPreview, setIsGeneratingSocialPreview] = useState(false);
+  
   const downloadImage = async () => {
     const imageUrl = url?.qr;
     const fileName = `${url?.title}_qr`;
@@ -40,6 +43,25 @@ const LinkPage = () => {
     URL.revokeObjectURL(objectUrl);
 
     toast.success("Image downloaded successfully!", toastConfig);
+  };
+
+  const handleSocialPreview = async () => {
+    if (!url) return;
+    
+    setIsGeneratingSocialPreview(true);
+    try {
+      const success = await downloadSocialPreview(url, `${url.title}_social_preview.png`);
+      if (success) {
+        toast.success("Social preview downloaded successfully!", toastConfig);
+      } else {
+        toast.error("Failed to generate social preview", toastConfig);
+      }
+    } catch (error) {
+      console.error('Error generating social preview:', error);
+      toast.error("Failed to generate social preview", toastConfig);
+    } finally {
+      setIsGeneratingSocialPreview(false);
+    }
   };
 
   const handleCopy = () => {
@@ -217,9 +239,72 @@ const LinkPage = () => {
                   <Button variant="ghost" onClick={downloadImage}>
                     <Download />
                   </Button>
+                  <Button 
+                    variant="ghost" 
+                    onClick={handleSocialPreview}
+                    disabled={isGeneratingSocialPreview}
+                    title="Generate Social Media Preview"
+                  >
+                    {isGeneratingSocialPreview ? <BeatLoader size={5} color="white" /> : <Share2 />}
+                  </Button>
                   <Button variant="ghost" onClick={handleDelete} disable={loadingDelete}>
                     {loadingDelete ? <BeatLoader size={5} color="white" /> : <Trash />}
                   </Button>
+                </div>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Social Media Preview Section */}
+        <Card className="rounded bg-background">
+          <CardHeader className="p-4 sm:p-6">
+            <CardTitle className="text-2xl sm:text-4xl font-extrabold break-words">Social Media Preview</CardTitle>
+          </CardHeader>
+          <CardContent className="p-4 sm:p-6">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              <div className="space-y-4">
+                <h3 className="text-lg font-semibold">Generate Social Media Preview</h3>
+                <p className="text-gray-400">
+                  Create a professional social media preview image for sharing your link on Twitter, Facebook, LinkedIn, and other platforms.
+                </p>
+                <div className="space-y-2">
+                  <div className="flex items-center gap-2 text-sm text-gray-300">
+                    <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                    <span>Optimized for all major social platforms</span>
+                  </div>
+                  <div className="flex items-center gap-2 text-sm text-gray-300">
+                    <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                    <span>Includes QR code for easy access</span>
+                  </div>
+                  <div className="flex items-center gap-2 text-sm text-gray-300">
+                    <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                    <span>Professional gradient design</span>
+                  </div>
+                </div>
+                <Button 
+                  onClick={handleSocialPreview}
+                  disabled={isGeneratingSocialPreview}
+                  className="bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700"
+                >
+                  {isGeneratingSocialPreview ? 'Generating...' : 'Generate & Download Preview'}
+                </Button>
+              </div>
+              <div className="space-y-4">
+                <h3 className="text-lg font-semibold">Preview Specifications</h3>
+                <div className="space-y-3">
+                  <div className="flex justify-between items-center p-3 bg-gray-800 rounded">
+                    <span className="text-sm">Dimensions</span>
+                    <span className="text-sm font-mono">1200 × 630 px</span>
+                  </div>
+                  <div className="flex justify-between items-center p-3 bg-gray-800 rounded">
+                    <span className="text-sm">Format</span>
+                    <span className="text-sm font-mono">PNG</span>
+                  </div>
+                  <div className="flex justify-between items-center p-3 bg-gray-800 rounded">
+                    <span className="text-sm">Optimized for</span>
+                    <span className="text-sm">Twitter, Facebook, LinkedIn</span>
+                  </div>
                 </div>
               </div>
             </div>

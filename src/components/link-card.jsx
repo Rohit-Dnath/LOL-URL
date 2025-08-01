@@ -1,5 +1,5 @@
-import { Copy, Delete, Download, LinkIcon, Trash } from "lucide-react";
-import React from "react";
+import { Copy, Delete, Download, LinkIcon, Trash, Share2 } from "lucide-react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "./ui/button";
 import { deleteUrl } from "@/db/apiUrls";
@@ -8,10 +8,13 @@ import useFetch from "@/hooks/use-fetch";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { toastConfig } from "@/utils/toastConfig";
+import { generateSocialPreviewImage, downloadSocialPreview } from "@/utils/socialPreview";
 
 
 const LinkCard = ({ url, fetchUrls }) => {
   const DOMAIN = window.location.origin;
+  const [isGeneratingSocialPreview, setIsGeneratingSocialPreview] = useState(false);
+  
   const downloadImage = async (e) => {
     e.preventDefault(); // Prevent default behavior
 
@@ -34,6 +37,27 @@ const LinkCard = ({ url, fetchUrls }) => {
 
     toast.success("Image downloaded successfully!", toastConfig);
   };
+
+  const handleSocialPreview = async (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    
+    setIsGeneratingSocialPreview(true);
+    try {
+      const success = await downloadSocialPreview(url, `${url.title}_social_preview.png`);
+      if (success) {
+        toast.success("Social preview downloaded successfully!", toastConfig);
+      } else {
+        toast.error("Failed to generate social preview", toastConfig);
+      }
+    } catch (error) {
+      console.error('Error generating social preview:', error);
+      toast.error("Failed to generate social preview", toastConfig);
+    } finally {
+      setIsGeneratingSocialPreview(false);
+    }
+  };
+
   const { loading: loadingDelete, fn: fnDelete } = useFetch(deleteUrl, url.id);
 
   const handleCopy = () => {
@@ -87,6 +111,19 @@ const LinkCard = ({ url, fetchUrls }) => {
               }}
             >
               <Download className="text-white" />
+            </Button>
+            <Button
+              variant="ghost"
+              className="rounded"
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                handleSocialPreview(e);
+              }}
+              disabled={isGeneratingSocialPreview}
+              title="Generate Social Media Preview"
+            >
+              {isGeneratingSocialPreview ? <BeatLoader size={5} color="white" /> : <Share2 className="text-white" />}
             </Button>
             <Button
               variant="ghost"
