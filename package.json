@@ -30,6 +30,7 @@
     "clsx": "^2.1.1",
     "cobe": "^0.6.3",
     "dotted-map": "^2.2.3",
+    "emailjs-com": "^3.2.0",
     "framer-motion": "^12.0.3",
     "lucide-react": "^0.473.0",
     "mini-svg-data-uri": "^1.4.4",
