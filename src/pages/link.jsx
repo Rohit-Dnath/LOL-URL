@@ -568,43 +568,56 @@ const LinkPage = () => {
                 <CardContent className="p-6">
                   {countryChartData && countryChartData.length > 0 ? (
                     <div className="space-y-4">
-                      {/* Header Row */}
-                      
                       {/* Country List */}
-                      <div className="space-y-1">
-                        {countryChartData.slice(0, showAllCountries ? countryChartData.length : 8).map((country) => {
-                          const percentage = ((country.visits / stats.length) * 100).toFixed(0);
+                      <div className="space-y-2">
+                        {countryChartData.slice(0, showAllCountries ? countryChartData.length : 8).map((country, index) => {
+                          const percentage = ((country.visits / stats.length) * 100).toFixed(1);
                           const countryCode = getCountryCode(country.country);
                           
                           return (
-                            <div key={country.country} className="flex items-center justify-between py-3 hover:bg-muted/30 rounded-lg px-3 transition-colors">
+                            <div key={country.country} className="flex items-center justify-between py-3 px-4 bg-muted/30 hover:bg-muted/50 rounded-lg transition-colors border border-border/50">
+                              {/* Left side: Rank, Flag, Country */}
                               <div className="flex items-center gap-3 flex-1">
-                                <div className="w-6 h-4 flex items-center justify-center">
+                                {/* Rank Badge */}
+                                <div className="w-7 h-7 rounded-full bg-primary text-primary-foreground flex items-center justify-center text-sm font-bold">
+                                  {index + 1}
+                                </div>
+                                
+                                {/* Flag */}
+                                <div className="w-8 h-5 flex items-center justify-center">
                                   {countryCode && (
                                     <img 
-                                      src={`https://flagcdn.com/w20/${countryCode.toLowerCase()}.png`}
+                                      src={`https://flagcdn.com/w40/${countryCode.toLowerCase()}.png`}
                                       alt={`${country.country} flag`}
-                                      className="w-5 h-3 object-cover rounded-sm shadow-sm"
+                                      className="w-full h-full object-cover rounded-sm shadow-sm"
                                       onError={(e) => {
                                         e.target.style.display = 'none';
                                       }}
                                     />
                                   )}
                                 </div>
-                                <span className="text-sm font-medium text-foreground min-w-0 flex-1">
+                                
+                                {/* Country Name */}
+                                <span className="text-foreground font-medium text-sm min-w-0 flex-1">
                                   {country.country}
                                 </span>
                               </div>
                               
-                              {/* Stats */}
+                              {/* Right side: Percentage and Visits */}
                               <div className="flex items-center gap-6">
-                                <div className="flex items-center gap-4 min-w-[80px]">
-                                  <span className="text-sm text-muted-foreground">
-                                    {percentage}%
-                                  </span>
-                                  <span className="font-medium text-foreground text-sm">
+                                {/* Percentage */}
+                                <span className="text-primary text-sm font-medium">
+                                  {percentage}% of traffic
+                                </span>
+                                
+                                {/* Visit Count */}
+                                <div className="text-right">
+                                  <div className="text-foreground text-lg font-bold">
                                     {country.visits}
-                                  </span>
+                                  </div>
+                                  <div className="text-muted-foreground text-xs">
+                                    visits
+                                  </div>
                                 </div>
                               </div>
                             </div>
