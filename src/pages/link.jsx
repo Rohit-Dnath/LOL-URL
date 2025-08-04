@@ -9,11 +9,12 @@ import {deleteUrl, getUrl} from "@/db/apiUrls";
 import useFetch from "@/hooks/use-fetch";
 import {Copy, Download, LinkIcon, Trash} from "lucide-react";
 import {useEffect, useState} from "react";
+import React from "react";
 import {useNavigate, useParams, useSearchParams} from "react-router-dom";
 import {BarLoader, BeatLoader} from "react-spinners";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip } from 'recharts';
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import confetti from "canvas-confetti";
 import { Confetti } from "@/components/ui/confetti";
 import { AutoConfetti } from "@/components/ui/auto-confetti";
@@ -211,10 +212,60 @@ const LinkPage = () => {
 
   const qrCodeUrl = url?.qr || "fallback-image-url"; // Add a fallback image URL if needed
 
-  const engagementData = stats?.map(stat => ({
-    time: new Date(stat.created_at).toLocaleTimeString(),
-    clicks: 1,
-  }));
+  // Enhanced engagement data with time gaps and cumulative clicks
+  const engagementData = React.useMemo(() => {
+    if (!stats || stats.length === 0) return [];
+
+    // Group clicks by hour and date
+    const clicksByHour = stats.reduce((acc, stat) => {
+      const date = new Date(stat.created_at);
+      const hour = new Date(date.getFullYear(), date.getMonth(), date.getDate(), date.getHours());
+      const hourKey = hour.getTime();
+      
+      acc[hourKey] = (acc[hourKey] || 0) + 1;
+      return acc;
+    }, {});
+
+    // Get the time range from first click to now
+    const sortedStats = [...stats].sort((a, b) => new Date(a.created_at) - new Date(b.created_at));
+    const firstClick = new Date(sortedStats[0].created_at);
+    const lastClick = new Date(sortedStats[sortedStats.length - 1].created_at);
+    const now = new Date();
+    
+    // Start from the hour of first click
+    const startHour = new Date(firstClick.getFullYear(), firstClick.getMonth(), firstClick.getDate(), firstClick.getHours());
+    // End at current hour or last click hour, whichever is later
+    const endHour = new Date(Math.max(lastClick.getTime(), now.getTime()));
+    endHour.setMinutes(0, 0, 0); // Round to hour
+
+    const timelineData = [];
+    let currentHour = new Date(startHour);
+    let cumulativeClicks = 0;
+
+    while (currentHour <= endHour) {
+      const hourKey = currentHour.getTime();
+      const clicksInHour = clicksByHour[hourKey] || 0;
+      cumulativeClicks += clicksInHour;
+
+      timelineData.push({
+        time: currentHour.toLocaleString('en-US', { 
+          month: 'short', 
+          day: 'numeric', 
+          hour: 'numeric',
+          hour12: true 
+        }),
+        fullTime: currentHour.toLocaleString(),
+        clicks: clicksInHour,
+        totalClicks: cumulativeClicks,
+        hasData: clicksInHour > 0
+      });
+
+      // Move to next hour
+      currentHour = new Date(currentHour.getTime() + 60 * 60 * 1000);
+    }
+
+    return timelineData;
+  }, [stats]);
 
   // Add this new data transformation for country visits
   const countryVisitsData = stats?.reduce((acc, stat) => {
@@ -401,40 +452,110 @@ const LinkPage = () => {
                   <CardTitle className="text-lg font-semibold text-foreground">Click Timeline</CardTitle>
                 </CardHeader>
                 <CardContent className="p-6">
-                  <div className="w-full h-[300px]">
-                    <LineChart
-                      width={window.innerWidth > 1024 ? 800 : window.innerWidth - 200}
-                      height={300}
-                      data={engagementData}
-                      margin={{ top: 20, right: 30, left: 20, bottom: 20 }}
-                    >
-                      <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
-                      <XAxis 
-                        dataKey="time" 
-                        stroke="hsl(var(--muted-foreground))"
-                        fontSize={12}
-                      />
-                      <YAxis 
-                        stroke="hsl(var(--muted-foreground))"
-                        fontSize={12}
-                      />
-                      <Tooltip 
-                        contentStyle={{
-                          backgroundColor: "hsl(var(--background))",
-                          border: "1px solid hsl(var(--border))",
-                          borderRadius: "6px",
-                          color: "hsl(var(--foreground))"
-                        }}
-                      />
-                      <Line 
-                        type="monotone" 
-                        dataKey="clicks" 
-                        stroke="hsl(var(--primary))" 
-                        strokeWidth={2}
-                        dot={{ fill: "hsl(var(--primary))", strokeWidth: 2, r: 4 }}
-                        activeDot={{ r: 6, fill: "hsl(var(--primary))" }}
-                      />
-                    </LineChart>
+                  <div className="w-full h-[400px]">
+                    <ResponsiveContainer width="100%" height="100%">
+                      <LineChart
+                        data={engagementData}
+                        margin={{ top: 20, right: 30, left: 20, bottom: 60 }}
+                      >
+                        <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" opacity={0.3} />
+                        <XAxis 
+                          dataKey="time" 
+                          stroke="hsl(var(--muted-foreground))"
+                          fontSize={11}
+                          angle={-45}
+                          textAnchor="end"
+                          height={80}
+                          interval={Math.max(1, Math.floor(engagementData?.length / 8) || 1)}
+                        />
+                        <YAxis 
+                          stroke="hsl(var(--muted-foreground))"
+                          fontSize={12}
+                          allowDecimals={false}
+                        />
+                        <Tooltip 
+                          contentStyle={{
+                            backgroundColor: "hsl(var(--background))",
+                            border: "1px solid hsl(var(--border))",
+                            borderRadius: "8px",
+                            color: "hsl(var(--foreground))",
+                            boxShadow: "0 4px 6px -1px rgb(0 0 0 / 0.1)"
+                          }}
+                          labelFormatter={(label, payload) => {
+                            if (payload && payload[0]) {
+                              return `Time: ${payload[0].payload.fullTime}`;
+                            }
+                            return `Time: ${label}`;
+                          }}
+                          formatter={(value, name) => {
+                            if (name === 'clicks') {
+                              return [value === 0 ? 'No clicks' : `${value} click${value !== 1 ? 's' : ''}`, 'Clicks in this hour'];
+                            }
+                            if (name === 'totalClicks') {
+                              return [`${value} total`, 'Cumulative Clicks'];
+                            }
+                            return [value, name];
+                          }}
+                        />
+                        
+                        {/* Hourly clicks line */}
+                        <Line 
+                          type="monotone" 
+                          dataKey="clicks" 
+                          stroke="hsl(var(--primary))" 
+                          strokeWidth={2}
+                          dot={(props) => {
+                            const { cx, cy, payload } = props;
+                            if (payload?.hasData) {
+                              return (
+                                <circle 
+                                  cx={cx} 
+                                  cy={cy} 
+                                  r={4} 
+                                  fill="hsl(var(--primary))" 
+                                  stroke="hsl(var(--background))" 
+                                  strokeWidth={2}
+                                />
+                              );
+                            }
+                            return (
+                              <circle 
+                                cx={cx} 
+                                cy={cy} 
+                                r={2} 
+                                fill="hsl(var(--muted-foreground))" 
+                                opacity={0.3}
+                              />
+                            );
+                          }}
+                          activeDot={{ r: 6, fill: "hsl(var(--primary))", stroke: "hsl(var(--background))", strokeWidth: 2 }}
+                          connectNulls={false}
+                        />
+                        
+                        {/* Cumulative clicks line */}
+                        <Line 
+                          type="monotone" 
+                          dataKey="totalClicks" 
+                          stroke="hsl(var(--secondary))" 
+                          strokeWidth={1.5}
+                          strokeDasharray="5 5"
+                          dot={false}
+                          activeDot={{ r: 4, fill: "hsl(var(--secondary))" }}
+                        />
+                      </LineChart>
+                    </ResponsiveContainer>
+                  </div>
+                  
+                  {/* Legend */}
+                  <div className="flex items-center justify-center gap-6 mt-4 text-sm">
+                    <div className="flex items-center gap-2">
+                      <div className="w-3 h-0.5 bg-primary"></div>
+                      <span className="text-muted-foreground">Hourly Clicks</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <div className="w-3 h-0.5 border-b-2 border-dashed border-secondary"></div>
+                      <span className="text-muted-foreground">Cumulative Total</span>
+                    </div>
                   </div>
                 </CardContent>
               </Card>
