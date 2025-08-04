@@ -194,7 +194,18 @@ const Signup = () => {
         <Input name="password" type="password" placeholder="Enter Password" onChange={handleInputChange} />
         {errors.password && <Error message={errors.password} />}
 
+
         <input name="profile_pic" type="file" accept="image/*" onChange={handleInputChange} />
+
+        <div className="space-y-1">
+          {/* <input
+            name="profile_pic"
+            type="file"
+            accept="image/*"
+            onChange={handleInputChange}
+          /> */}
+        </div>
+
         {errors.profile_pic && <Error message={errors.profile_pic} />}
       </CardContent>
 

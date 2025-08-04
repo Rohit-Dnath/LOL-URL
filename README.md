@@ -4,17 +4,21 @@
 
 
 <p align="center">
+
   <img src="/logo.png" alt="LOL URL Logo" width="120" />
+
+  <img src="public/logo.png" alt="LOL URL Logo" width="150" />
+
 </p>
 
-<p align="center">
+<!-- <p align="center">
   <a href="https://www.producthunt.com/posts/lol-url?embed=true&utm_source=badge-featured&utm_medium=badge&utm_souce=badge-lol-url" target="_blank">
     <img src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=932417&theme=light&t=1740924853295" alt="LOL URL - Your Shortcut to Smart LOL Urls and Insights | Product Hunt" width="250" height="54" />
   </a>
-</p>
+</p> -->
 
 <p align="center">
-  <b>Shorten, Share, Track, Laugh! 😄</b><br>
+  <b>Your Links, Now with Superpowers. 😄</b><br>
   <a href="https://lolurl.site/">🌐 Live Demo</a> •
   <a href="https://github.com/Rohit-Dnath/LOL-URL/issues">Issues</a> •
   <a href="https://github.com/Rohit-Dnath/LOL-URL/pulls">Pull Requests</a> •
@@ -142,6 +146,55 @@ See [THIRD_PARTY_NOTICES.md](./THIRD_PARTY_NOTICES.md) for a full list of depend
 
 ---
 
+## 👥 Contributors
+
+This project exists thanks to all the amazing people who contribute! 🙌
+
+<a href="https://github.com/Rohit-Dnath/LOL-URL/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=Rohit-Dnath/LOL-URL" alt="Contributors" />
+</a>
+
+### 👑 Project Founder & Lead Maintainer
+
+**[Rohit Debnath](https://github.com/Rohit-Dnath)** 👑 - *Creator & Admin*
+- 🚀 Built LOL URL from the ground up
+- 🛠️ Lead maintainer and project architect
+- 💡 Vision: Making URL shortening fun and accessible for everyone
+
+### 🌟 How to become a contributor:
+
+- **🐛 Report bugs** - Found an issue? [Open an issue](https://github.com/Rohit-Dnath/LOL-URL/issues/new)
+- **💡 Suggest features** - Have ideas? We'd love to hear them!
+- **🔧 Submit pull requests** - Code contributions are always welcome
+- **📚 Improve documentation** - Help make our docs better
+- **🎨 Design improvements** - UI/UX enhancements
+- **🧪 Testing** - Help us test new features and report issues
+- **📢 Spread the word** - Share LOL URL with your network
+
+### 🚀 Getting Started as a Contributor:
+
+1. **Star the repo** ⭐ - Show your support!
+2. **Fork the repository** - Create your own copy
+3. **Check out** [CONTRIBUTING.md](./CONTRIBUTING.md) for detailed guidelines
+4. **Look for** [good first issues](https://github.com/Rohit-Dnath/LOL-URL/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22) to get started
+5. **Join our community** - Connect with other contributors
+
+### 💝 Recognition
+
+Every contributor, no matter how big or small their contribution, is valued and recognized:
+
+- **Code Contributors** - Listed in our contributors graph
+- **Documentation Contributors** - Credited in relevant docs
+- **Community Contributors** - Recognized in our community channels
+- **Issue Reporters** - Acknowledged in issue resolutions
+- **Feature Suggesters** - Credited when features are implemented
+
+**Together, we're building something amazing!** 🚀
+
+Want to see your name here? Check out our [CONTRIBUTORS-GUIDE.md](./CONTRIBUTORS-GUIDE.md) to get started!
+
+---
+
 
 ## 📬 Contact & Support
 
@@ -211,12 +264,12 @@ If you love LOL URL, star the repo, share it on social media, and tell your frie
 <div align="center" style="margin-top: 2em; margin-bottom: 2em;">
   <img src="./public/rohit.jpg" alt="Rohit Debnath" width="120" style="border-radius: 50%; box-shadow: 0 4px 16px rgba(0,0,0,0.15); margin-bottom: 1em;" />
   <h2 style="font-weight: 700; margin: 0.5em 0; font-size: 1.5em; background: linear-gradient(90deg,#00c6ff,#0072ff); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Hey, it's me, the developer of LOL URL,<br>Rohit Debnath</h2>
-  <p style="font-size: 1.1em; color: #444; margin-bottom: 1em;">Connect with me:</p>
+  <p style="font-size: 1.1em; color: #44; margin-bottom: 1em;">Connect with me:</p>
   <a href="https://www.linkedin.com/in/rohit-debnath/" target="_blank" style="margin: 0 10px;">
     <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linkedin/linkedin-original.svg" alt="LinkedIn" width="32" style="vertical-align: middle;" />
   </a>
   <a href="https://x.com/r0dth" target="_blank" style="margin: 0 10px;">
-    <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/x.svg" alt="X (Twitter)" width="32" style="vertical-align: middle;" />
+    <img src="https://res.cloudinary.com/dcm9ma2b3/image/upload/v1754266253/twitterx_tuyrrj.png" alt="X (Twitter)" width="32" style="vertical-align: middle;" />
   </a>
   <p style="margin-top: 1.5em; font-size: 1.1em; color: #666;">Made with ❤️ by the open source community.</p>
 </div>
