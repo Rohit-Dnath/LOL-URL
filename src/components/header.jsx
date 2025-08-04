@@ -32,10 +32,11 @@ const Header = () => {
   return (
     <>
       <nav className="p-4 flex justify-between items-center ">
-        <Link to="/">
-          {/* <img src="/logo.png" className="inline-block h-16" alt="LOGO" /> */}
-          <h1 className="text-3xl font-sans font-extrabold">lὄlurl.site (beta)</h1>  
-   
+        <Link to="/" className="flex items-center gap-2">
+          <img src="/logo.png" className="h-16" alt="LOGO" /> 
+          <h1 className="text-3xl font-sans font-extrabold flex items-center">
+            lὄlurl.site <span className="text-sm font-normal text-gray-400">(beta)</span>
+          </h1>
         </Link>
         <div className="flex gap-4 items-center">
           {/* GitHub Open Source Button */}
@@ -61,8 +62,6 @@ const Header = () => {
                   <AvatarImage src={user?.user_metadata?.profile_pic} />
                   <AvatarFallback className="text-3xl bg-gray-50 rounded-full w-10 h-10 flex items-center justify-center">
                     {randomEmoji}
-
-                    
                   </AvatarFallback>
                 </Avatar>
               </DropdownMenuTrigger>
