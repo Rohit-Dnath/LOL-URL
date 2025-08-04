@@ -28,18 +28,18 @@ const Signup = () => {
     name: "",
     email: "",
     password: "",
-    profile_pic: "",
+    profile_pic: defaultProfilePic,
   });
 
   const handleInputChange = (e) => {
-    const {name, value, files} = e.target;
+    const {name, value} = e.target;
     setFormData((prevState) => ({
       ...prevState,
-      [name]: files ? files[0] : value,
+      [name]: value,
     }));
   };
 
-  const {loading, error, fn: fnSignup, data} = useFetch(signup, formData);
+  const {loading, error, fn: fnSignup, data} = useFetch(signup);
 
   useEffect(() => {
     if (error === null && data) {
@@ -59,16 +59,17 @@ const Signup = () => {
         password: Yup.string()
           .min(6, "Password must be at least 6 characters")
           .required("Password is required"),
-        profile_pic: Yup.mixed(),
       });
 
       await schema.validate(formData, {abortEarly: false});
 
-      if (!formData.profile_pic) {
-        formData.profile_pic = defaultProfilePic;
-      }
+      // Always use default profile picture
+      const signupData = {
+        ...formData,
+        profile_pic: defaultProfilePic
+      };
 
-      await fnSignup();
+      await fnSignup(signupData);
     } catch (error) {
       const newErrors = {};
       if (error?.inner) {
@@ -123,15 +124,6 @@ const Signup = () => {
           />
         </div>
         {errors.password && <Error message={errors.password} />}
-        <div className="space-y-1">
-          {/* <input
-            name="profile_pic"
-            type="file"
-            accept="image/*"
-            onChange={handleInputChange}
-          /> */}
-        </div>
-        {errors.profile_pic && <Error message={errors.profile_pic} />}
       </CardContent>
       <CardFooter>
         <Button className="rounded" onClick={handleSignup}>
