@@ -8,12 +8,12 @@ import {getClicksForUrl} from "@/db/apiClicks";
 import {deleteUrl, getUrl} from "@/db/apiUrls";
 import useFetch from "@/hooks/use-fetch";
 import {Copy, Download, LinkIcon, Trash} from "lucide-react";
-import {useEffect} from "react";
+import {useEffect, useState} from "react";
 import {useNavigate, useParams, useSearchParams} from "react-router-dom";
 import {BarLoader, BeatLoader} from "react-spinners";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, BarChart, Bar } from 'recharts';
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip } from 'recharts';
 import confetti from "canvas-confetti";
 import { Confetti } from "@/components/ui/confetti";
 import { AutoConfetti } from "@/components/ui/auto-confetti";
@@ -21,6 +21,91 @@ import { toastConfig } from "@/utils/toastConfig";
 
 const LinkPage = () => {
   const DOMAIN = window.location.origin;
+  const [showAllCountries, setShowAllCountries] = useState(false);
+
+  // Helper function to get country code for flag
+  const getCountryCode = (countryName) => {
+    const countryMap = {
+      'India': 'IN',
+      'United States': 'US',
+      'United States of America': 'US',
+      'United Kingdom': 'GB',
+      'Canada': 'CA',
+      'Australia': 'AU',
+      'Germany': 'DE',
+      'France': 'FR',
+      'Japan': 'JP',
+      'China': 'CN',
+      'Brazil': 'BR',
+      'Mexico': 'MX',
+      'Spain': 'ES',
+      'Italy': 'IT',
+      'Netherlands': 'NL',
+      'Belgium': 'BE',
+      'Switzerland': 'CH',
+      'Austria': 'AT',
+      'Sweden': 'SE',
+      'Norway': 'NO',
+      'Denmark': 'DK',
+      'Finland': 'FI',
+      'Poland': 'PL',
+      'Czech Republic': 'CZ',
+      'Hungary': 'HU',
+      'Romania': 'RO',
+      'Bulgaria': 'BG',
+      'Croatia': 'HR',
+      'Slovakia': 'SK',
+      'Slovenia': 'SI',
+      'Lithuania': 'LT',
+      'Latvia': 'LV',
+      'Estonia': 'EE',
+      'Ireland': 'IE',
+      'Portugal': 'PT',
+      'Greece': 'GR',
+      'Turkey': 'TR',
+      'Russia': 'RU',
+      'Ukraine': 'UA',
+      'Belarus': 'BY',
+      'Israel': 'IL',
+      'United Arab Emirates': 'AE',
+      'Saudi Arabia': 'SA',
+      'South Africa': 'ZA',
+      'Egypt': 'EG',
+      'Nigeria': 'NG',
+      'Kenya': 'KE',
+      'Morocco': 'MA',
+      'Algeria': 'DZ',
+      'Tunisia': 'TN',
+      'South Korea': 'KR',
+      'North Korea': 'KP',
+      'Thailand': 'TH',
+      'Vietnam': 'VN',
+      'Malaysia': 'MY',
+      'Singapore': 'SG',
+      'Indonesia': 'ID',
+      'Philippines': 'PH',
+      'Pakistan': 'PK',
+      'Bangladesh': 'BD',
+      'Sri Lanka': 'LK',
+      'Nepal': 'NP',
+      'Myanmar': 'MM',
+      'Cambodia': 'KH',
+      'Laos': 'LA',
+      'Argentina': 'AR',
+      'Chile': 'CL',
+      'Colombia': 'CO',
+      'Peru': 'PE',
+      'Venezuela': 'VE',
+      'Ecuador': 'EC',
+      'Uruguay': 'UY',
+      'Paraguay': 'PY',
+      'Bolivia': 'BO',
+      'New Zealand': 'NZ',
+      'Côte d\'Ivoire': 'CI',
+      'Cote D\'Ivoire': 'CI'
+    };
+    return countryMap[countryName] || null;
+  };
   const downloadImage = async () => {
     const imageUrl = url?.qr;
     const fileName = `${url?.title}_qr`;
@@ -357,43 +442,85 @@ const LinkPage = () => {
               {/* Country Visits Chart */}
               <Card className="bg-muted/20 border border-border">
                 <CardHeader className="border-b border-border">
-                  <CardTitle className="text-lg font-semibold text-foreground">Top Visiting Countries</CardTitle>
+                  <CardTitle className="text-lg font-semibold text-foreground">Countries</CardTitle>
                 </CardHeader>
                 <CardContent className="p-6">
-                  <div className="w-full h-[350px]">
-                    <BarChart
-                      width={window.innerWidth > 1024 ? 800 : window.innerWidth - 200}
-                      height={350}
-                      data={countryChartData}
-                      margin={{ top: 20, right: 30, left: 20, bottom: 80 }}
-                    >
-                      <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
-                      <XAxis 
-                        dataKey="country" 
-                        stroke="hsl(var(--muted-foreground))"
-                        fontSize={10}
-                        angle={-45}
-                        textAnchor="end"
-                        height={80}
-                        interval={0}
-                      />
-                      <YAxis 
-                        stroke="hsl(var(--muted-foreground))"
-                        fontSize={12}
-                      />
-                      <Tooltip 
-                        contentStyle={{
-                          backgroundColor: '#1e1e1e',
-                          border: '1px solid #333'
-                        }}
-                      />
-                      <Bar 
-                        dataKey="visits" 
-                        fill="hsl(var(--primary))"
-                        name="Visits"
-                      />
-                    </BarChart>
-                  </div>
+                  {countryChartData && countryChartData.length > 0 ? (
+                    <div className="space-y-4">
+                      {/* Header Row */}
+                      <div className="flex items-center justify-between text-sm text-muted-foreground border-b border-border pb-2">
+                        <span></span>
+                        <div className="flex items-center gap-8">
+                          <span>VISITORS</span>
+                        </div>
+                      </div>
+                      
+                      {/* Country List */}
+                      <div className="space-y-1">
+                        {countryChartData.slice(0, showAllCountries ? countryChartData.length : 8).map((country) => {
+                          const percentage = ((country.visits / stats.length) * 100).toFixed(0);
+                          const countryCode = getCountryCode(country.country);
+                          
+                          return (
+                            <div key={country.country} className="flex items-center justify-between py-3 hover:bg-muted/30 rounded-lg px-3 transition-colors">
+                              <div className="flex items-center gap-3 flex-1">
+                                <div className="w-6 h-4 flex items-center justify-center">
+                                  {countryCode && (
+                                    <img 
+                                      src={`https://flagcdn.com/w20/${countryCode.toLowerCase()}.png`}
+                                      alt={`${country.country} flag`}
+                                      className="w-5 h-3 object-cover rounded-sm shadow-sm"
+                                      onError={(e) => {
+                                        e.target.style.display = 'none';
+                                      }}
+                                    />
+                                  )}
+                                </div>
+                                <span className="text-sm font-medium text-foreground min-w-0 flex-1">
+                                  {country.country}
+                                </span>
+                              </div>
+                              
+                              {/* Stats */}
+                              <div className="flex items-center gap-6">
+                                <div className="flex items-center gap-4 min-w-[80px]">
+                                  <span className="text-sm text-muted-foreground">
+                                    {percentage}%
+                                  </span>
+                                  <span className="font-medium text-foreground text-sm">
+                                    {country.visits}
+                                  </span>
+                                </div>
+                              </div>
+                            </div>
+                          );
+                        })}
+                      </div>
+                      
+                      {/* View All Button */}
+                      {countryChartData.length > 8 && (
+                        <div className="pt-4 border-t border-border">
+                          <Button 
+                            variant="outline" 
+                            size="sm" 
+                            className="w-full hover:bg-muted/50 transition-colors"
+                            onClick={() => setShowAllCountries(!showAllCountries)}
+                          >
+                            {showAllCountries ? (
+                              <>Show Less</>
+                            ) : (
+                              <>View All {countryChartData.length} Countries</>
+                            )}
+                          </Button>
+                        </div>
+                      )}
+                    </div>
+                  ) : (
+                    <div className="text-center text-muted-foreground py-8">
+                      <div className="text-lg font-medium mb-2">No country data available yet</div>
+                      <div className="text-sm">Share your link to start collecting visitor data!</div>
+                    </div>
+                  )}
                 </CardContent>
               </Card>
             </CardContent>
