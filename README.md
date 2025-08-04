@@ -4,14 +4,14 @@
 
 
 <p align="center">
-  <img src="public/logo.png" alt="LOL URL Logo" width="120" />
+  <img src="public/logo.png" alt="LOL URL Logo" width="150" />
 </p>
 
-<p align="center">
+<!-- <p align="center">
   <a href="https://www.producthunt.com/posts/lol-url?embed=true&utm_source=badge-featured&utm_medium=badge&utm_souce=badge-lol-url" target="_blank">
     <img src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=932417&theme=light&t=1740924853295" alt="LOL URL - Your Shortcut to Smart LOL Urls and Insights | Product Hunt" width="250" height="54" />
   </a>
-</p>
+</p> -->
 
 <p align="center">
   <b>Shorten, Share, Track, Laugh! 😄</b><br>
@@ -139,6 +139,55 @@ See [CONTRIBUTORS-GUIDE.md](./CONTRIBUTORS-GUIDE.md) for more ways to get involv
 
 Special thanks to the open-source community for providing the tools and libraries that made this project possible.
 See [THIRD_PARTY_NOTICES.md](./THIRD_PARTY_NOTICES.md) for a full list of dependencies.
+
+---
+
+## 👥 Contributors
+
+This project exists thanks to all the amazing people who contribute! 🙌
+
+<a href="https://github.com/Rohit-Dnath/LOL-URL/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=Rohit-Dnath/LOL-URL" alt="Contributors" />
+</a>
+
+### 👑 Project Founder & Lead Maintainer
+
+**[Rohit Debnath](https://github.com/Rohit-Dnath)** 👑 - *Creator & Admin*
+- 🚀 Built LOL URL from the ground up
+- 🛠️ Lead maintainer and project architect
+- 💡 Vision: Making URL shortening fun and accessible for everyone
+
+### 🌟 How to become a contributor:
+
+- **🐛 Report bugs** - Found an issue? [Open an issue](https://github.com/Rohit-Dnath/LOL-URL/issues/new)
+- **💡 Suggest features** - Have ideas? We'd love to hear them!
+- **🔧 Submit pull requests** - Code contributions are always welcome
+- **📚 Improve documentation** - Help make our docs better
+- **🎨 Design improvements** - UI/UX enhancements
+- **🧪 Testing** - Help us test new features and report issues
+- **📢 Spread the word** - Share LOL URL with your network
+
+### 🚀 Getting Started as a Contributor:
+
+1. **Star the repo** ⭐ - Show your support!
+2. **Fork the repository** - Create your own copy
+3. **Check out** [CONTRIBUTING.md](./CONTRIBUTING.md) for detailed guidelines
+4. **Look for** [good first issues](https://github.com/Rohit-Dnath/LOL-URL/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22) to get started
+5. **Join our community** - Connect with other contributors
+
+### 💝 Recognition
+
+Every contributor, no matter how big or small their contribution, is valued and recognized:
+
+- **Code Contributors** - Listed in our contributors graph
+- **Documentation Contributors** - Credited in relevant docs
+- **Community Contributors** - Recognized in our community channels
+- **Issue Reporters** - Acknowledged in issue resolutions
+- **Feature Suggesters** - Credited when features are implemented
+
+**Together, we're building something amazing!** 🚀
+
+Want to see your name here? Check out our [CONTRIBUTORS-GUIDE.md](./CONTRIBUTORS-GUIDE.md) to get started!
 
 ---
 
