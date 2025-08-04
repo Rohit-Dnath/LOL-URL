@@ -1,7 +1,5 @@
 import Header from '@/components/header'
-import React from 'react'
 import { Outlet } from 'react-router-dom'
-import { Analytics } from "@vercel/analytics/react"
 
 const AppLayout = () => {
 return (
@@ -9,7 +7,7 @@ return (
        
         
      
-            <main className='min-h-screen mx-auto max-w-6xl px-2 '>
+            <main className='min-h-screen mx-auto max-w-6xl px-2 rounded-lg'>
                     {/* Header*/}
                     <Header />
                     <Outlet />
@@ -18,7 +16,7 @@ return (
 
             {/* made by me section */}
 
-            {/* <a 
+            <a 
                 href="https://rohitdebnath.me" 
                 target="_blank" 
                 rel="noopener noreferrer" 
@@ -30,7 +28,7 @@ return (
                     alt="Hamster"
                     className='w-6 h-6 hover:scale-110 transition-transform duration-200 rounded-full'
                 />
-            </a> */}
+            </a>
             <script type="application/ld+json">
               {`
                 {
