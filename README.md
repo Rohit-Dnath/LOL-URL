@@ -14,7 +14,7 @@
 </p> -->
 
 <p align="center">
-  <b>Shorten, Share, Track, Laugh! 😄</b><br>
+  <b>Your Links, Now with Superpowers. 😄</b><br>
   <a href="https://lolurl.site/">🌐 Live Demo</a> •
   <a href="https://github.com/Rohit-Dnath/LOL-URL/issues">Issues</a> •
   <a href="https://github.com/Rohit-Dnath/LOL-URL/pulls">Pull Requests</a> •
@@ -260,12 +260,12 @@ If you love LOL URL, star the repo, share it on social media, and tell your frie
 <div align="center" style="margin-top: 2em; margin-bottom: 2em;">
   <img src="./public/rohit.jpg" alt="Rohit Debnath" width="120" style="border-radius: 50%; box-shadow: 0 4px 16px rgba(0,0,0,0.15); margin-bottom: 1em;" />
   <h2 style="font-weight: 700; margin: 0.5em 0; font-size: 1.5em; background: linear-gradient(90deg,#00c6ff,#0072ff); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Hey, it's me, the developer of LOL URL,<br>Rohit Debnath</h2>
-  <p style="font-size: 1.1em; color: #444; margin-bottom: 1em;">Connect with me:</p>
+  <p style="font-size: 1.1em; color: #44; margin-bottom: 1em;">Connect with me:</p>
   <a href="https://www.linkedin.com/in/rohit-debnath/" target="_blank" style="margin: 0 10px;">
     <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linkedin/linkedin-original.svg" alt="LinkedIn" width="32" style="vertical-align: middle;" />
   </a>
   <a href="https://x.com/r0dth" target="_blank" style="margin: 0 10px;">
-    <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/x.svg" alt="X (Twitter)" width="32" style="vertical-align: middle;" />
+    <img src="https://res.cloudinary.com/dcm9ma2b3/image/upload/v1754266253/twitterx_tuyrrj.png" alt="X (Twitter)" width="32" style="vertical-align: middle;" />
   </a>
   <p style="margin-top: 1.5em; font-size: 1.1em; color: #666;">Made with ❤️ by the open source community.</p>
 </div>
