@@ -16,7 +16,7 @@ return (
 
             {/* made by me section */}
 
-            {/* <a 
+            <a 
                 href="https://rohitdebnath.me" 
                 target="_blank" 
                 rel="noopener noreferrer" 
@@ -28,7 +28,7 @@ return (
                     alt="Hamster"
                     className='w-6 h-6 hover:scale-110 transition-transform duration-200 rounded-full'
                 />
-            </a> */}
+            </a>
             <script type="application/ld+json">
               {`
                 {
