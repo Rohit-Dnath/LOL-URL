@@ -448,12 +448,6 @@ const LinkPage = () => {
                   {countryChartData && countryChartData.length > 0 ? (
                     <div className="space-y-4">
                       {/* Header Row */}
-                      <div className="flex items-center justify-between text-sm text-muted-foreground border-b border-border pb-2">
-                        <span></span>
-                        <div className="flex items-center gap-8">
-                          <span>VISITORS</span>
-                        </div>
-                      </div>
                       
                       {/* Country List */}
                       <div className="space-y-1">
