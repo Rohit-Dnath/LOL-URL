@@ -4,7 +4,7 @@
 LOL URL
 
 ## Logo
-See `public/logo.png`
+See `/logo.png`
 
 ## Colors
 - Primary: #6366F1 (Indigo)
