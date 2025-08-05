@@ -27,7 +27,7 @@ const Signup = () => {
     name: "",
     email: "",
     password: "",
-    profile_pic: "",
+    profile_pic: defaultProfilePic,
   });
   const serviceID = import.meta.env.VITE_EMAILJS_SERVICE_ID;
   const templateID = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
@@ -74,10 +74,9 @@ const Signup = () => {
     const { name, value, files } = e.target;
     setFormData((prevState) => ({
       ...prevState,
-      [name]: files ? files[0] : value,
+      [name]: value,
     }));
   };
-
   const sendVerificationCode = async () => {
     if (!formData.email) {
       setErrors({ email: "Please enter an email first" });
@@ -138,11 +137,13 @@ const Signup = () => {
         return;
       }
 
-      if (!formData.profile_pic) {
-        formData.profile_pic = defaultProfilePic;
-      }
+      // Always use default profile picture
+      const signupData = {
+        ...formData,
+        profile_pic: defaultProfilePic
+      };
 
-      await fnSignup();
+      await fnSignup(signupData);
     } catch (error) {
       const newErrors = {};
       if (error?.inner) {
@@ -193,7 +194,6 @@ const Signup = () => {
 
         <Input name="password" type="password" placeholder="Enter Password" onChange={handleInputChange} />
         {errors.password && <Error message={errors.password} />}
-
 
         <input name="profile_pic" type="file" accept="image/*" onChange={handleInputChange} />
 
