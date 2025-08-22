@@ -495,32 +495,7 @@ const LandingPage = () => {
       )}
 
       {/* Add footer before the closing div of the main component */}
-      <footer className="w-full mt-12 py-4 border-t border-gray-800">
-        <div className="container mx-auto px-4 flex flex-wrap items-center justify-center gap-x-6 text-sm text-gray-400">
-          <button
-            className="hover:text-white transition-colors"
-            onClick={() => openModal("Privacy Policy", privacyPolicyContent)}
-          >
-            Privacy Policy
-          </button>
-          <span className="hidden sm:inline">•</span>
-          <button
-            className="hover:text-white transition-colors"
-            onClick={() => openModal("Terms and Conditions", termsContent)}
-          >
-            Terms and Conditions
-          </button>
-          <span className="hidden sm:inline">•</span>
-          {/* <button
-            className="hover:text-white transition-colors"
-            onClick={() => openModal("Refund Policy", refundPolicyContent)}
-          >
-            Refund Policy
-          </button>
-          <span className="hidden sm:inline">•</span> */}
-          <span>Made by Rohit Debnath with ❤️</span>
-        </div>
-      </footer>
+      
     </div>
   );
 };
