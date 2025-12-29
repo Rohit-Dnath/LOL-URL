@@ -1,10 +1,13 @@
-import { createClient } from '@supabase/supabase-js';
+// DEPRECATED: Supabase has been removed from this project
+// This file is kept as a stub to prevent import errors
+// 
+// Migration to Google OAuth + Prisma/Neon DB in progress
+// See GOOGLE-OAUTH-SETUP.md for new authentication setup
+// See MIGRATION-PLAN.md for complete migration details
 
-const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
-const supabaseKey = import.meta.env.VITE_SUPABASE_KEY;
+console.warn('⚠️ Supabase client import detected. This has been deprecated.');
+console.warn('📚 See GOOGLE-OAUTH-SETUP.md for the new authentication system.');
 
-// Create a single supabase client for interacting with your database
-const supabase = createClient(supabaseUrl, supabaseKey);
+export default null;
+export const supabaseUrl = null;
 
-export default supabase;
-export { supabaseUrl };

@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import { signIn } from "@/lib/auth/session";
-import { useSession } from "@/lib/auth/session";
+import { useGoogleLogin } from '@react-oauth/google';
+import { useSession } from "@/lib/auth/google-auth.jsx";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { BarLoader } from "react-spinners";
@@ -10,7 +10,8 @@ const Auth = () => {
   const [searchParams] = useSearchParams();
   const longLink = searchParams.get("createNew");
   const navigate = useNavigate();
-  const { session, status } = useSession();
+  const { session, status, signIn } = useSession();
+  const googleClientId = import.meta.env.VITE_GOOGLE_CLIENT_ID;
 
   useEffect(() => {
     if (status === "authenticated" && session) {
@@ -27,11 +28,36 @@ const Auth = () => {
     );
   }
 
-  const handleGoogleSignIn = async () => {
-    await signIn("google", {
-      callbackUrl: `/dashboard${longLink ? `?createNew=${longLink}` : ""}`
-    });
-  };
+  // Only call useGoogleLogin if client ID is available
+  const handleGoogleSignIn = googleClientId ? useGoogleLogin({
+    onSuccess: async (tokenResponse) => {
+      try {
+        // Get user info from Google
+        const userInfoResponse = await fetch('https://www.googleapis.com/oauth2/v3/userinfo', {
+          headers: { Authorization: `Bearer ${tokenResponse.access_token}` },
+        });
+        const userInfo = await userInfoResponse.json();
+
+        // Create session with user info
+        const sessionData = {
+          user: {
+            id: userInfo.sub,
+            email: userInfo.email,
+            name: userInfo.name,
+            image: userInfo.picture,
+          },
+          accessToken: tokenResponse.access_token,
+          expiresAt: Date.now() + (tokenResponse.expires_in * 1000),
+        };
+
+        signIn(sessionData);
+        navigate(`/dashboard${longLink ? `?createNew=${longLink}` : ""}`);
+      } catch (error) {
+        console.error('Failed to get user info:', error);
+      }
+    },
+    onError: (error) => console.error('Login Failed:', error)
+  }) : null;
 
   return (
     <div className="mt-16 md:mt-24 flex flex-col items-center gap-8 md:gap-10 px-4 md:px-0">
@@ -57,9 +83,11 @@ const Auth = () => {
         </CardHeader>
         <CardContent className="space-y-4 pb-6">
           <Button
-            onClick={handleGoogleSignIn}
+            onClick={() => handleGoogleSignIn && handleGoogleSignIn()}
             variant="outline"
             className="w-full h-12 text-base font-semibold border-2"
+            disabled={!googleClientId}
+            title={!googleClientId ? 'Google OAuth not configured. Set VITE_GOOGLE_CLIENT_ID in .env' : undefined}
           >
             <svg className="mr-3 h-5 w-5" viewBox="0 0 24 24">
               <path
@@ -82,6 +110,13 @@ const Auth = () => {
             </svg>
             Continue with Google
           </Button>
+
+          {!googleClientId && (
+            <div className="text-xs text-center p-3 bg-destructive/10 border border-destructive/20 rounded-lg">
+              <p className="text-destructive font-semibold mb-1">⚠️ Google OAuth Not Configured</p>
+              <p className="text-muted-foreground">Add VITE_GOOGLE_CLIENT_ID to your .env file</p>
+            </div>
+          )}
 
           <div className="relative">
             <div className="absolute inset-0 flex items-center">

@@ -1,32 +1,20 @@
-import supabase from "./supabase";
+// Mock API for Clicks - Replace with your Prisma/Neon backend API calls
 import { UAParser } from "ua-parser-js";
 
 export const getClicksForUrls = async (urlIds) => {
-  const { data, error } = await supabase
-    .from("clicks")
-    .select("*")
-    .in("url_id", urlIds);
-
-  if (error) {
-    console.error("Error fetching clicks:", error);
-    return null;
-  }
-
-  return data;
+  // TODO: Replace with actual API call
+  console.log('getClicksForUrls called:', urlIds);
+  
+  const allClicks = JSON.parse(localStorage.getItem('clicks') || '[]');
+  return allClicks.filter(click => urlIds.includes(click.url_id));
 };
 
 export const getClicksForUrl = async (url_id) => {
-  const { data, error } = await supabase
-    .from("clicks")
-    .select("*")
-    .eq("url_id", url_id);
-
-  if (error) {
-    console.error(error);
-    return null;
-  }
-
-  return data;
+  // TODO: Replace with actual API call
+  console.log('getClicksForUrl called:', url_id);
+  
+  const allClicks = JSON.parse(localStorage.getItem('clicks') || '[]');
+  return allClicks.filter(click => click.url_id === url_id);
 };
 
 const parser = new UAParser();
@@ -39,15 +27,23 @@ export const storeClicks = async ({ id, originalUrl }) => {
     const response = await fetch("https://ipapi.co/json");
     const { city, country_name: country } = await response.json();
 
-    await supabase.from("clicks").insert({
+    // Store click in localStorage (replace with API call)
+    const allClicks = JSON.parse(localStorage.getItem('clicks') || '[]');
+    allClicks.push({
+      id: Date.now().toString(),
       url_id: id,
       city: city,
       country: country,
       device: device,
+      created_at: new Date().toISOString()
     });
+    localStorage.setItem('clicks', JSON.stringify(allClicks));
 
     window.location.href = originalUrl;
   } catch (error) {
     console.error("Error recording click:", error);
+    // Still redirect even if tracking fails
+    window.location.href = originalUrl;
   }
 };
+

@@ -1,5 +1,5 @@
 import { createContext, useContext } from "react";
-import { useSession } from "@/lib/auth/session";
+import { useSession } from "@/lib/auth/google-auth.jsx";
 
 const UrlContext = createContext();
 

@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
-import { useSession } from "@/lib/auth/session";
+import { useSession } from "@/lib/auth/google-auth.jsx";
 import { BarLoader } from "react-spinners";
 
 function RequireAuth({ children }) {

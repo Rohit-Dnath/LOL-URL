@@ -6,8 +6,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { signOut } from "@/lib/auth/session";
-import { useSession } from "@/lib/auth/session";
+import { useSession } from "@/lib/auth/google-auth.jsx";
 import { Avatar, AvatarFallback, AvatarImage } from "@radix-ui/react-avatar";
 import { LinkIcon, LogOut, User } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
@@ -16,12 +15,13 @@ import { Button } from "./ui/button";
 
 const Header = () => {
   const navigate = useNavigate();
-  const { session, status } = useSession();
+  const { session, status, signOut } = useSession();
   const user = session?.user;
   const loading = status === "loading";
 
   const handleLogout = async () => {
-    await signOut({ callbackUrl: "/" });
+    signOut();
+    navigate("/");
   };
 
   return (
