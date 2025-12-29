@@ -2,11 +2,13 @@ import { storeClicks } from "@/db/apiClicks";
 import { getLongUrl } from "@/db/apiUrls";
 import useFetch from "@/hooks/use-fetch";
 import { useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import React from "react";
+import Header from "@/components/header";
 
 const RedirectHandler = () => {
   const { id } = useParams();
+  const navigate = useNavigate();
 
   const { loading, data, fn } = useFetch(getLongUrl, id);
 
@@ -25,22 +27,25 @@ const RedirectHandler = () => {
 
   if (loading) {
     return (
-      <div className="flex flex-col justify-center items-center h-screen">
-        <strong>Redirecting...</strong>
-      </div>
+      <div className="fixed inset-0 bg-white" />
     );
   }
 
   if (!data) {
     return (
-      <div className="flex flex-col justify-center items-center h-screen">
-        <div className="mt-8">
-          <img 
-            src="https://media.giphy.com/media/26ufnwz3wDUli7GU0/giphy.gif" 
-            alt="Not Found" 
-            className="w-full max-w-xs mb-4" 
-          />
-          <strong>LOL URL doesn't exist, ig :)</strong>
+      <div className="min-h-screen bg-background">
+        <div className="mx-auto max-w-6xl px-2">
+          <Header />
+        </div>
+        <div className="flex flex-col justify-center items-center min-h-[70vh]">
+          <div className="text-center">
+            <img 
+              src="https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExc3dzNTdhajNqa3oydml4Y3dobm5wbGdnZWVzdWw0ZHZxbmw0YmhzYyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/s0ga0kEwOZcSBRsTmI/giphy.gif" 
+              alt="Not Found" 
+              className="w-full max-w-xs mb-4 mx-auto" 
+            />
+            <strong className="text-lg">Kilq Kliq....Not found :(</strong>
+          </div>
         </div>
       </div>
     );

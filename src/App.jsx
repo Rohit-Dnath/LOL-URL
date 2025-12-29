@@ -15,6 +15,10 @@ import RedirectHandler from "./components/redirect-handler"; // Import the updat
 
 const router = createBrowserRouter([
   {
+    path: "/:id",
+    element: <RedirectHandler />,
+  },
+  {
     element: <AppLayout />,
     children: [
       {
@@ -104,10 +108,6 @@ const router = createBrowserRouter([
             </RequireAuth>
           </>
         ),
-      },
-      {
-        path: "/:id",
-        element: <RedirectHandler />, // Use the updated component for handling redirection
       },
       {
         path: "*",
