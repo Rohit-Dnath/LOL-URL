@@ -1,4 +1,4 @@
-import { Copy, Download, LinkIcon, Trash, Calendar, MousePointer, Eye, ExternalLink } from "lucide-react";
+import { Copy, Download, LinkIcon, Trash, Calendar, MousePointer, Eye, ExternalLink, TrendingUp } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from "./ui/button";
 import { deleteUrl } from "@/db/apiUrls";
@@ -16,6 +16,16 @@ const LinkCard = ({ url, fetchUrls, clicks = [] }) => {
   const totalClicks = urlClicks.length;
   const uniqueClicks = new Set(urlClicks.map(click => click.ip)).size;
   
+  // Performance calculation
+  const getPerformance = () => {
+    if (totalClicks === 0) return { label: 'No Data', color: 'text-muted-foreground', bg: 'bg-muted', width: 0 };
+    if (totalClicks > 10) return { label: 'High', color: 'text-primary', bg: 'bg-primary', width: 100 };
+    if (totalClicks > 5) return { label: 'Medium', color: 'text-blue-500', bg: 'bg-blue-500', width: 60 };
+    return { label: 'Low', color: 'text-yellow-500', bg: 'bg-yellow-500', width: 30 };
+  };
+  
+  const performance = getPerformance();
+  
   // Format creation date
   const formatDate = (dateString) => {
     const date = new Date(dateString);
@@ -29,11 +39,13 @@ const LinkCard = ({ url, fetchUrls, clicks = [] }) => {
     if (diffInDays < 365) return `${Math.floor(diffInDays / 30)} months ago`;
     return `${Math.floor(diffInDays / 365)} years ago`;
   };
+  
   const downloadImage = async (e) => {
-    e.preventDefault(); // Prevent default behavior
+    e.preventDefault();
+    e.stopPropagation();
 
     const imageUrl = url?.qr;
-    const fileName = `${url?.title}_qr`; // Add "qr" to the file name
+    const fileName = `${url?.title}_qr`;
 
     const response = await fetch(imageUrl);
     const blob = await response.blob();
@@ -49,190 +61,192 @@ const LinkCard = ({ url, fetchUrls, clicks = [] }) => {
 
     URL.revokeObjectURL(objectUrl);
 
-    toast.success("Image downloaded successfully!", toastConfig);
+    toast.success("QR code downloaded!", toastConfig);
   };
+  
   const { loading: loadingDelete, fn: fnDelete } = useFetch(deleteUrl, url.id);
 
-  const handleCopy = () => {
+  const handleCopy = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
     const link = `${window.location.origin}/${url?.custom_url ? url?.custom_url : url?.short_url}`;
     navigator.clipboard.writeText(link);
-    toast.success("URL copied to clipboard!", toastConfig);
+    toast.success("Link copied!", toastConfig);
   };
 
   const handleDelete = async (e) => {
     e.preventDefault();
     e.stopPropagation();
-    const confirmDelete = window.confirm("Are you sure you want to delete this URL?");
+    const confirmDelete = window.confirm("Delete this link permanently?");
     if (!confirmDelete) return;
     try {
       await fnDelete();
       fetchUrls();
-      toast.success("URL deleted successfully!", toastConfig);
+      toast.success("Link deleted!", toastConfig);
     } catch {
-      toast.error("Failed to delete URL.", toastConfig);
+      toast.error("Failed to delete.", toastConfig);
     }
   };
 
   return (
-    <div className="relative h-[480px]">
-      <Link 
-        to={`/link/${url?.id}`} 
-        className="flex flex-col h-full border border-gray-600 bg-gray-900/50 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 hover:border-gray-500 overflow-hidden"
-      >
-        {/* Header Section with QR Code and Actions */}
-        <div className="flex items-start justify-between p-4 border-b border-gray-700">
-          <div className="flex items-start gap-3">
-            <img
-              src={url?.qr}
-              className="h-16 w-16 object-contain rounded-md bg-white p-1"
-              alt="QR Code"
-            />
+    <Link 
+      to={`/link/${url?.id}`} 
+      className="group block h-full"
+    >
+      <div className="h-full border-2 border-border bg-card rounded-xl overflow-hidden transition-all duration-200 hover:border-primary hover:shadow-lg hover:shadow-primary/5">
+        
+        {/* Header with QR and Title */}
+        <div className="p-6 border-b border-border bg-gradient-to-b from-muted/30 to-transparent">
+          <div className="flex items-start gap-4">
+            {/* QR Code */}
+            <div className="relative flex-shrink-0">
+              <div className="w-20 h-20 rounded-lg bg-white p-2 shadow-sm border border-border/50">
+                <img
+                  src={url?.qr}
+                  className="w-full h-full object-contain"
+                  alt="QR Code"
+                />
+              </div>
+              <button
+                onClick={downloadImage}
+                className="absolute -bottom-2 -right-2 w-7 h-7 rounded-full bg-primary text-white shadow-md opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex items-center justify-center hover:bg-primary/90"
+                title="Download QR"
+              >
+                <Download className="w-3.5 h-3.5" />
+              </button>
+            </div>
+
+            {/* Title and Meta */}
             <div className="flex-1 min-w-0">
-              <h3 className="text-base font-semibold text-white truncate mb-1">
+              <h3 className="text-lg font-semibold text-foreground mb-2 truncate group-hover:text-primary transition-colors">
                 {url?.title}
               </h3>
-              <div className="text-xs text-gray-400 flex items-center gap-1">
-                <Calendar className="w-3 h-3" />
-                <span>{formatDate(url?.created_at)}</span>
+              <div className="flex items-center gap-3 text-xs text-muted-foreground">
+                <div className="flex items-center gap-1">
+                  <Calendar className="w-3 h-3" />
+                  <span>{formatDate(url?.created_at)}</span>
+                </div>
+                <div className="flex items-center gap-1">
+                  <TrendingUp className="w-3 h-3" />
+                  <span className={performance.color}>{performance.label}</span>
+                </div>
               </div>
             </div>
-          </div>
-          
-          {/* Action Buttons */}
-          <div className="flex gap-1 ml-2">
-            <Button
-              variant="ghost"
-              size="sm"
-              className="h-7 w-7 p-0 hover:bg-gray-700"
-              onClick={(e) => {
-                e.preventDefault();
-                e.stopPropagation();
-                handleCopy();
-              }}
-              title="Copy Link"
-            >
-              <Copy className="w-3 h-3 text-gray-400" />
-            </Button>
-            <Button
-              variant="ghost"
-              size="sm"
-              className="h-7 w-7 p-0 hover:bg-gray-700"
-              onClick={(e) => {
-                e.preventDefault();
-                e.stopPropagation();
-                downloadImage(e);
-              }}
-              title="Download QR Code"
-            >
-              <Download className="w-3 h-3 text-gray-400" />
-            </Button>
-            <Button
-              variant="ghost"
-              size="sm"
-              className="h-7 w-7 p-0 hover:bg-gray-700"
-              onClick={(e) => {
-                e.preventDefault();
-                e.stopPropagation();
-                window.open(url?.original_url, '_blank');
-              }}
-              title="Visit Original URL"
-            >
-              <ExternalLink className="w-3 h-3 text-gray-400" />
-            </Button>
-            <Button
-              variant="ghost"
-              size="sm"
-              className="h-7 w-7 p-0 hover:bg-gray-700"
-              onClick={(e) => {
-                e.preventDefault();
-                e.stopPropagation();
-                handleDelete(e);
-              }}
-              disabled={loadingDelete}
-              title="Delete Link"
-            >
-              {loadingDelete ? (
-                <BeatLoader size={3} color="#9ca3af" />
-              ) : (
-                <Trash className="w-3 h-3 text-gray-400" />
-              )}
-            </Button>
+
+            {/* Action Buttons */}
+            <div className="flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+              <Button
+                variant="ghost"
+                size="sm"
+                className="h-8 w-8 p-0 hover:bg-primary/10 hover:text-primary"
+                onClick={handleCopy}
+                title="Copy Link"
+              >
+                <Copy className="w-3.5 h-3.5" />
+              </Button>
+              <Button
+                variant="ghost"
+                size="sm"
+                className="h-8 w-8 p-0 hover:bg-primary/10 hover:text-primary"
+                onClick={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  window.open(url?.original_url, '_blank');
+                }}
+                title="Visit URL"
+              >
+                <ExternalLink className="w-3.5 h-3.5" />
+              </Button>
+              <Button
+                variant="ghost"
+                size="sm"
+                className="h-8 w-8 p-0 hover:bg-destructive/10 hover:text-destructive"
+                onClick={handleDelete}
+                disabled={loadingDelete}
+                title="Delete"
+              >
+                {loadingDelete ? (
+                  <BeatLoader size={3} color="currentColor" />
+                ) : (
+                  <Trash className="w-3.5 h-3.5" />
+                )}
+              </Button>
+            </div>
           </div>
         </div>
 
-        {/* Content Section */}
-        <div className="flex-1 p-4 space-y-3">
+        {/* URLs Section */}
+        <div className="p-6 space-y-4">
           {/* Short URL */}
-          <div className="space-y-1">
-            <div className="text-xs font-medium text-gray-400 uppercase tracking-wide">
+          <div>
+            <label className="text-xs font-medium text-muted-foreground uppercase tracking-wider mb-2 block">
               Short URL
-            </div>
-            <div className="bg-gray-800 rounded-md p-2 border border-gray-700">
-              <span className="text-sm text-white font-mono break-all">
-                {window.location.origin}/{url?.custom_url ? url?.custom_url : url.short_url}
-              </span>
+            </label>
+            <div className="relative group/url">
+              <div className="bg-muted/50 border border-border rounded-lg px-4 py-3 font-mono text-sm text-foreground hover:border-primary/50 transition-colors cursor-pointer" onClick={handleCopy}>
+                <span className="break-all">
+                  {window.location.origin.replace(/^https?:\/\//, '')}/{url?.custom_url || url.short_url}
+                </span>
+              </div>
+              <Copy className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground opacity-0 group-hover/url:opacity-100 transition-opacity" />
             </div>
           </div>
 
           {/* Original URL */}
-          <div className="space-y-1">
-            <div className="text-xs font-medium text-gray-400 uppercase tracking-wide">
+          <div>
+            <label className="text-xs font-medium text-muted-foreground uppercase tracking-wider mb-2 block">
               Original URL
-            </div>
-            <div className="flex items-start gap-2">
-              <LinkIcon className="w-4 h-4 text-gray-400 mt-0.5 flex-shrink-0" />
-              <span className="text-sm text-gray-300 break-all line-clamp-2">
+            </label>
+            <div className="flex items-start gap-2 px-4 py-3 bg-muted/30 rounded-lg border border-border">
+              <LinkIcon className="w-4 h-4 text-muted-foreground mt-0.5 flex-shrink-0" />
+              <span className="text-sm text-foreground/80 break-all line-clamp-2">
                 {url?.original_url}
               </span>
             </div>
           </div>
+        </div>
 
-          {/* Statistics */}
-          <div className="space-y-1">
-            <div className="text-xs font-medium text-gray-400 uppercase tracking-wide">
-              Analytics
-            </div>
-            <div className="grid grid-cols-1 gap-3">
-              <div className="bg-gray-800 rounded-md p-3 border border-gray-700">
-                <div className="flex items-center gap-2 mb-1">
-                  <MousePointer className="w-4 h-4 text-gray-400" />
-                  <span className="text-xs text-gray-400">Total Clicks</span>
+        {/* Analytics Footer */}
+        <div className="px-6 pb-6">
+          <div className="bg-gradient-to-br from-primary/5 to-primary/10 border border-primary/20 rounded-lg p-4">
+            <div className="flex items-center justify-between mb-3">
+              <div className="flex items-center gap-2">
+                <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center">
+                  <MousePointer className="w-4 h-4 text-primary" />
                 </div>
-                <div className="text-lg font-semibold text-white">{totalClicks}</div>
+                <div>
+                  <div className="text-xs font-medium text-muted-foreground">Total Clicks</div>
+                  <div className="text-2xl font-bold text-foreground">{totalClicks}</div>
+                </div>
               </div>
               
-              {/* <div className="bg-gray-800 rounded-md p-3 border border-gray-700">
-                <div className="flex items-center gap-2 mb-1">
-                  <Eye className="w-4 h-4 text-gray-400" />
-                  <span className="text-xs text-gray-400">Unique Views</span>
+              {totalClicks > 0 && (
+                <div className="text-right">
+                  <div className="text-xs text-muted-foreground mb-1">Performance</div>
+                  <div className="flex items-center gap-2">
+                    <div className="w-20 h-2 bg-muted/50 rounded-full overflow-hidden">
+                      <div 
+                        className={`h-full ${performance.bg} transition-all duration-500`}
+                        style={{ width: `${performance.width}%` }}
+                      ></div>
+                    </div>
+                    <span className={`text-xs font-semibold ${performance.color}`}>
+                      {performance.label}
+                    </span>
+                  </div>
                 </div>
-                <div className="text-lg font-semibold text-white">{uniqueClicks}</div>
-              </div> */}
+              )}
             </div>
+            
+            {totalClicks === 0 && (
+              <div className="text-center py-2">
+                <p className="text-xs text-muted-foreground">No clicks yet - Share your link!</p>
+              </div>
+            )}
           </div>
         </div>
-
-        {/* Footer with Performance */}
-        <div className="p-4 border-t border-gray-700 bg-gray-800/30">
-          <div className="flex justify-between items-center">
-            <span className="text-xs text-gray-400">
-              Performance: {totalClicks > 10 ? 'High' : totalClicks > 5 ? 'Medium' : totalClicks > 0 ? 'Low' : 'No Data'}
-            </span>
-            <span className="text-xs text-gray-500">
-              {new Date(url?.created_at).toLocaleDateString()}
-            </span>
-          </div>
-          {totalClicks > 0 && (
-            <div className="w-full bg-gray-700 rounded-full h-1 mt-2">
-              <div 
-                className="h-1 rounded-full bg-gray-400"
-                style={{ width: `${Math.min((totalClicks / 20) * 100, 100)}%` }}
-              ></div>
-            </div>
-          )}
-        </div>
-      </Link>
-    </div>
+      </div>
+    </Link>
   );
 };
 
