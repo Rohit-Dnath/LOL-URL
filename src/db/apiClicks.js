@@ -1,19 +1,8 @@
-import {UAParser} from "ua-parser-js";
 import supabase from "./supabase";
+import { UAParser } from "ua-parser-js";
 
-// export async function getClicks() {
-//   let {data, error} = await supabase.from("clicks").select("*");
-
-//   if (error) {
-//     console.error(error);
-//     throw new Error("Unable to load Stats");
-//   }
-
-//   return data;
-// }
-
-export async function getClicksForUrls(urlIds) {
-  const {data, error} = await supabase
+export const getClicksForUrls = async (urlIds) => {
+  const { data, error } = await supabase
     .from("clicks")
     .select("*")
     .in("url_id", urlIds);
@@ -24,44 +13,32 @@ export async function getClicksForUrls(urlIds) {
   }
 
   return data;
-}
+};
 
-export async function getClicksForUrl(url_id) {
-  const {data, error} = await supabase
+export const getClicksForUrl = async (url_id) => {
+  const { data, error } = await supabase
     .from("clicks")
     .select("*")
     .eq("url_id", url_id);
 
   if (error) {
     console.error(error);
-    throw new Error("Unable to load Stats");
+    return null;
   }
 
   return data;
-}
-
-export const getCountryData = async () => {
-  try {
-    const response = await fetch("https://ipapi.co/json");
-    const data = await response.json();
-    return data.country_name;
-  } catch (error) {
-    console.error("Error fetching country data:", error);
-    return null;
-  }
 };
 
 const parser = new UAParser();
 
-export const storeClicks = async ({id, originalUrl}) => {
+export const storeClicks = async ({ id, originalUrl }) => {
   try {
     const res = parser.getResult();
-    const device = res.device.type || "desktop"; // Default to desktop if type is not detected
+    const device = res.device.type || "desktop";
 
     const response = await fetch("https://ipapi.co/json");
-    const {city, country_name: country} = await response.json();
+    const { city, country_name: country } = await response.json();
 
-    // Record the click
     await supabase.from("clicks").insert({
       url_id: id,
       city: city,
@@ -69,8 +46,7 @@ export const storeClicks = async ({id, originalUrl}) => {
       device: device,
     });
 
-    // Remove the redirection logic from here
-    // window.location.href = originalUrl;
+    window.location.href = originalUrl;
   } catch (error) {
     console.error("Error recording click:", error);
   }

@@ -1,72 +1,105 @@
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { Spotlight } from "@/components/ui/spotlight";
-import { AnimatedTestimonials } from "@/components/ui/animated-testimonials";
-import { X } from "lucide-react"; // Import X icon for close button
-
+import { Card, CardContent } from "@/components/ui/card";
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { PlaceholdersAndVanishInput } from "@/components/ui/placeholders-and-vanish-input";
-import { FeaturesSectionDemo } from "@/components/ui/feature-_sec";
-import { VelocityScroll } from "@/components/ui/scroll-based-velocity";
-import { SparklesText } from "@/components/ui/sparkles-text";
-import { ScrollProgress } from "@/components/ui/scroll-progress";
-import { Globe } from "@/components/ui/globe";
-import { Tweet } from "react-tweet";
+import { Link, BarChart3, QrCode, Users, Shield, Zap, TrendingUp, Globe2, MousePointerClick, Check, X } from "lucide-react";
 
 const LandingPage = () => {
-  const [longurl, setLongUrl] = useState();
+  const [longurl, setLongUrl] = useState("");
   const navigate = useNavigate();
   const [modalOpen, setModalOpen] = useState(false);
   const [modalContent, setModalContent] = useState({
     title: "",
     content: "",
   });
+  
+  // Rotating text for hero section
+  const [currentWordIndex, setCurrentWordIndex] = useState(0);
+  const rotatingWords = ["Professionals", "Marketers", "Teams", "Startups", "Agencies", "Enterprises"];
+  
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentWordIndex((prev) => (prev + 1) % rotatingWords.length);
+    }, 2000); // Change word every 2 seconds
+    
+    return () => clearInterval(interval);
+  }, [rotatingWords.length]);
 
   const handleChange = (e) => {
     setLongUrl(e.target.value);
   };
 
-  const placeholders = [
-    "https://www.example.com/this-is-a-very-long-url-example",
-    "https://www.anotherexample.com/another-very-long-url",
-    "https://www.yetanotherexample.com/yet-another-long-url",
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (longurl) {
+      navigate(`/auth?createNew=${longurl}`);
+    }
+  };
+
+  const features = [
+    {
+      icon: Link,
+      title: "Smart URL Shortening",
+      description: "Transform long, complex URLs into clean, memorable short links in seconds.",
+    },
+    {
+      icon: BarChart3,
+      title: "Advanced Analytics",
+      description: "Track clicks, locations, devices, and engagement in real-time with detailed insights.",
+    },
+    {
+      icon: QrCode,
+      title: "QR Code Generator",
+      description: "Create customizable QR codes for your links, perfect for print and digital campaigns.",
+    },
+    {
+      icon: Users,
+      title: "Team Collaboration",
+      description: "Work together with workspace features, role-based permissions, and shared analytics.",
+    },
+    {
+      icon: Shield,
+      title: "Secure & Reliable",
+      description: "Enterprise-grade security with privacy-focused tracking and data protection.",
+    },
+    {
+      icon: Zap,
+      title: "Lightning Fast",
+      description: "Instant redirects with 99.9% uptime and global CDN infrastructure.",
+    },
   ];
 
   const testimonials = [
     {
-      quote:
-        "lolurl.site has been a game-changer for our community events. Tracking clicks, devices, and locations has allowed us to optimize our outreach and improve member engagement.",
+      quote: "KliqIN has been a game-changer for our community events. Tracking clicks, devices, and locations has allowed us to optimize our outreach and improve member engagement.",
       name: "Souradip Pal",
-      designation: "Intern @ ISRO and Founder of DEV DOT COM Community",
-      src: "./souro.png",
+      designation: "Founder, DEV DOT COM Community",
+      image: "./souro.png",
     },
     {
-      quote:
-        "Using lolurl.site has made sharing and managing links so simple. The analytics are super helpful for understanding how our links are performing.",
+      quote: "Using KliqIN has made sharing and managing links so simple. The analytics are super helpful for understanding how our links are performing.",
       name: "Subhadip Saha",
-      designation: "Intern @ ISRO and Game Developer",
-      src: "./subh.png",
+      designation: "Game Developer",
+      image: "./subh.png",
     },
     {
-      quote:
-        "lolurl.site’s intuitive design makes it perfect for students like us. Shortening and tracking links has never been this straightforward.",
+      quote: "KliqIN's intuitive design makes it perfect for students like us. Shortening and tracking links has never been this straightforward.",
       name: "Ayush Dhua",
-      designation: "Ex. Intern @ Goldman Sachs",
-      src: "./ayush.png",
+      designation: "Ex. Goldman Sachs",
+      image: "./ayush.png",
     },
     {
-      quote:
-        "The simplicity and smart features of lolurl.site make it an essential tool for students. It’s easy to use and incredibly effective.",
+      quote: "The simplicity and smart features of KliqIN make it an essential tool for students. It's easy to use and incredibly effective.",
       name: "Subinoy Biswas",
-      designation: "Intern @ ISRO and SIH Winner",
-      src: "./subinoy.png",
+      designation: "SIH Winner",
+      image: "./subinoy.png",
     },
   ];
 
@@ -82,420 +115,413 @@ const LandingPage = () => {
   };
 
   const privacyPolicyContent = `
-    <div><p>Our Privacy Policy was last updated on <strong>06/04/2025</strong>.</p>
-
-<p>At <strong>LOL URL</strong>, one of our main priorities is the privacy of our visitors. This Privacy Policy document contains types of information that is collected and recorded by <strong>LOL URL</strong> and how we use it.</p>
-
-<p>If you have additional questions or require more information about our Privacy Policy, do not hesitate to contact us at <a href="mailto:debnathrohit97@gmail.com">debnathrohit97@gmail.com</a>.</p>
-
-<p>This Privacy Policy applies only to our online activities and is valid for visitors to our website with regards to the information that they shared and/or collected on <a href="https://lolurl.site/" target="_blank" rel="noopener noreferrer">https://lolurl.site/</a>. This policy is not applicable to any information collected offline or via channels other than this website.</p>
-
-<h2><strong>Consent</strong></h2>
-
-<p>By using our website, you hereby consent to our Privacy Policy and agree to its terms.</p>
-
-<h2><strong>Information We Collect</strong></h2>
-
-<p>The personal information that you are asked to provide, and the reasons why you are asked to provide it, will be made clear to you at the point we ask you to provide your personal information. This policy has been generated by<a href="https://dodopayments.com">dodopayments.com</a>.</p>
-
-<p>If you contact us directly, we may receive additional information about you such as your name, email address, phone number, the contents of the message and/or attachments you may send us, and any other information you may choose to provide.</p>
-
-<p>When you register for an account, we may ask for your contact information, including items such as name, company name, address, email address, and telephone number.</p>
-
-<h2><strong>How We Use Your Information</strong></h2>
-
-<p>We use the information we collect in various ways, including to:</p>
-
-<ul><li>Provide, operate, and maintain our website.</li><li>Improve, personalize, and expand our website.</li><li>Understand and analyze how you use our website.</li><li>Develop new products, services, features, and functionality.</li><li>Communicate with you, either directly or through one of our partners, including for customer service, to provide you with updates and other information relating to the website, and for marketing and promotional purposes.</li><li>Send you emails.</li><li>Find and prevent fraud.</li></ul>
-
-<h2><strong>Log Files</strong></h2>
-
-<p><strong>LOL URL</strong> follows a standard procedure of using log files. These files log visitors when they visit websites. All hosting companies do this as part of hosting services' analytics.</p>
-
-<p>The information collected by log files includes internet protocol (IP) addresses, browser type, Internet Service Provider (ISP), date and time stamp, referring/exit pages, and possibly the number of clicks. These are not linked to any information that is personally identifiable. The purpose of the information is for analyzing trends, administering the site, tracking users' movement on the website, and gathering demographic information.</p>
-
-<h2><strong>Cookies and Web Beacons</strong></h2>
-
-<p>Like any other website, <strong>LOL URL</strong> uses 'cookies'. These cookies are used to store information including visitors' preferences, and the pages on the website that the visitor accessed or visited.</p>
-
-<p>The information is used to optimize the users' experience by customizing our web page content based on visitors' browser type and/or other information.</p>
-
-<h2><strong>Advertising Partners Privacy Policies</strong></h2>
-
-<p>Third-party ad servers or ad networks use technologies like cookies, JavaScript, or Web Beacons that are used in their respective advertisements and links that appear on <strong>LOL URL</strong>, which are sent directly to users' browsers. They automatically receive your IP address when this occurs. These technologies are used to measure the effectiveness of their advertising campaigns and/or to personalize the advertising content that you see on websites that you visit.</p>
-
-<p>Note that <strong>LOL URL</strong> has no access to or control over these cookies that are used by third-party advertisers.</p>
-
-<h2><strong>Third Party Privacy Policies</strong></h2>
-
-<p><strong>LOL URL</strong>'s Privacy Policy does not apply to other advertisers or websites. Thus, we are advising you to consult the respective Privacy Policies of these third-party ad servers for more detailed information. It may include their practices and instructions about how to opt-out of certain options.</p>
-
-<p>You can choose to disable cookies through your individual browser options. This is recommended by dodopayments.com. To know more detailed information about cookie management with specific web browsers, it can be found at the browsers' respective websites.</p>
-
-<h2><strong>CCPA Privacy Rights (Do Not Sell My Personal Information)</strong></h2>
-
-<p>Under the CCPA, among other rights, California consumers have the right to:</p>
-
-<ul><li>Request that a business that collects a consumer's personal data disclose the categories and specific pieces of personal data that a business has collected about consumers.</li><li>Request that a business delete any personal data about the consumer that a business has collected.</li><li>Request that a business that sells a consumer's personal data, not sell the consumer's personal data.</li></ul>
-
-<p>If you make a request, we have one month to respond to you. If you would like to exercise any of these rights, please contact us.</p>
-
-<h2><strong>GDPR Data Protection Rights</strong></h2>
-
-<p>We want to ensure you are fully aware of all of your data protection rights. Every user is entitled to the following:</p>
-
-<ul><li><strong>The right to access:</strong> You have the right to request copies of your personal data. We may charge you a small fee for this service.</li><li><strong>The right to rectification:</strong> You have the right to request that we correct any information you believe is inaccurate. You also have the right to request that we complete the information you believe is incomplete.</li><li><strong>The right to erasure:</strong> You have the right to request that we erase your personal data, under certain conditions.</li><li><strong>The right to restrict processing:</strong> You have the right to request that we restrict the processing of your personal data, under certain conditions.</li><li><strong>The right to object to processing:</strong> You have the right to object to our processing of your personal data, under certain conditions.</li><li><strong>The right to data portability:</strong> You have the right to request that we transfer the data that we have collected to another organization, or directly to you, under certain conditions.</li></ul>
-
-<p>If you make a request, we have one month to respond to you. If you would like to exercise any of these rights, please contact us.</p>
-
-<h2><strong>Children's Information</strong></h2>
-
-<p>Another part of our priority is adding protection for children while using the internet. We encourage parents and guardians to observe, participate in, and/or monitor and guide their online activity. These guidelines have been generated by dodopayments.com.</p>
-
-<p><strong>LOL URL</strong> does not knowingly collect any Personal Identifiable Information from children under the age of 13. If you think that your child provided this kind of information on our website, we strongly encourage you to contact us immediately and we will do our best efforts to promptly remove such information from our records.</p></div>
+    <div><p>Our Privacy Policy was last updated on <strong>December 29, 2025</strong>.</p>
+    <p>At <strong>KliqIN</strong>, one of our main priorities is the privacy of our visitors...</p>
+    </div>
   `;
 
   const termsContent = `
-    <div><p>Our Terms and Conditions were last updated on <strong>06/04/2025</strong>.</p>
-
-<p>Please read these terms and conditions carefully before using Our Service.</p>
-
-<h3><strong>Acknowledgment</strong></h3>
-
-<p>These are the Terms and Conditions governing the use of this Service and the agreement that operates between you and the Company. These Terms and Conditions set out the rights and obligations of all users regarding the use of the Service.</p>
-
-<p>Your access to and use of the Service is conditioned on your acceptance of and compliance with these Terms and Conditions. These Terms and Conditions apply to all visitors, users, and others who access or use the Service.</p>
-
-<p>By accessing or using the Service you agree to be bound by these Terms and Conditions. If you disagree with any part of these Terms and Conditions, then you may not access the Service. This acknowledgement has been suggested by <a href="https://dodopayments.com">dodopayments.com</a>.</p>
-
-<p>Your access to and use of the Service is also conditioned on your acceptance of and compliance with the Privacy Policy of the Company. Our Privacy Policy describes Our policies and procedures on the collection, use, and disclosure of your personal information when you use the Application or the Website and tells you about your privacy rights and how the law protects you. Please read Our Privacy Policy carefully before using Our Service.</p>
-
-<h3><strong>User Accounts</strong></h3>
-
-<p>When you create an account with us, you must provide us with information that is accurate, complete, and current at all times. Failure to do so constitutes a breach of the Terms, which may result in the immediate termination of your account.</p>
-
-<p>You are responsible for safeguarding the password that you use to access the Service and for any activities or actions under your password, whether your password is with Our Service or a Third-Party Social Media Service. Dodopayments.com does not bear any liability for the same.</p>
-
-<p>You agree not to disclose your password to any third party. You must notify us immediately upon becoming aware of any breach of security or unauthorized use of your account.</p>
-
-<p>You may not use as a username the name of another person or entity that is not lawfully available for use, a name or trademark that is subject to any rights of another person or entity other than you without appropriate authorization, or a name that is otherwise offensive, vulgar, or obscene.</p>
-
-<h3><strong>Copyright Policy</strong></h3>
-
-<p><strong>Intellectual Property Infringement</strong></p>
-
-<p>All content, features, and functionality of our services, including but not limited to text, graphics, logos, and software, are the exclusive property of <strong>LOL URL</strong> and are protected by international copyright, trademark, and other intellectual property laws.</p>
-
-<p><strong>DMCA Notice and DMCA Procedure for Copyright Infringement Claims</strong></p>
-
-<p>You may submit a notification pursuant to the Digital Millennium Copyright Act (DMCA) by providing our Copyright Agent with the following information in writing (see 17 U.S.C 512(c)(3) for further detail):</p>
-
-<ol><li>An electronic or physical signature of the person authorized to act on behalf of the owner of the copyright's interest.</li><li>A description of the copyrighted work that You claim has been infringed, including the URL (i.e., web page address) of the location where the copyrighted work exists or a copy of the copyrighted work.</li><li>Identification of the URL or other specific location on the Service where the material that You claim is infringing is located.</li><li>Your address, telephone number, and email address.</li><li>A statement by You that You have a good faith belief that the disputed use is not authorized by the copyright owner, its agent, or the law.</li><li>A statement by You, made under penalty of perjury, that the above information in Your notice is accurate and that You are the copyright owner or authorized to act on the copyright owner's behalf.</li></ol>
-
-<p>You can contact our copyright agent via email at <a href="mailto:NIL">NIL</a>. Upon receipt of a notification, the Company will take whatever action, in its sole discretion, it deems appropriate, including removing the challenged content from the Service.</p>
-
-<h3><strong>Intellectual Property</strong></h3>
-
-<p>The Service and its original content (excluding Content provided by you or other users), features, and functionality are and will remain the exclusive property of the Company and its licensors.</p>
-
-<p>The Service is protected by copyright, trademark, and other laws of both the Country and foreign countries. This is following the recommendation made by dodopayments.com.</p>
-
-<p>Our trademarks and trade dress may not be used in connection with any product or service without the prior written consent of the Company.</p>
-
-<h3><strong>Your Feedback to Us</strong></h3>
-
-<p>You assign all rights, title, and interest in any Feedback You provide to the Company. If for any reason such assignment is ineffective, You agree to grant the Company a non-exclusive, perpetual, irrevocable, royalty-free, worldwide right, and license to use, reproduce, disclose, sublicense, distribute, modify, and exploit such Feedback without restriction.</p>
-
-<h3><strong>Links to Other Websites</strong></h3>
-
-<p>Our Service may contain links to third-party websites or services that are not owned or controlled by the Company.</p>
-
-<p>The Company has no control over, and assumes no responsibility for, the content, privacy policies, or practices of any third-party websites or services. You further acknowledge and agree that the Company shall not be responsible or liable, directly or indirectly, for any damage or loss caused or alleged to be caused by or in connection with the use of or reliance on any such content, goods, or services available on or through any such websites or services.</p>
-
-<p>We strongly advise you to read the terms and conditions and privacy policies of any third-party websites or services that you visit.</p>
-
-<h3><strong>Termination</strong></h3>
-
-<p>We may terminate or suspend your Account immediately, without prior notice or liability, for any reason whatsoever, including without limitation if you breach these Terms and Conditions.</p>
-
-<p>Upon termination, your right to use the Service will cease immediately. If you wish to terminate your Account, you may simply discontinue using the Service.</p>
-
-<h3><strong>Limitation of Liability</strong></h3>
-
-<p>Notwithstanding any damages that you might incur, the entire liability of the Company and any of its suppliers under any provision of these Terms and Your exclusive remedy for all of the foregoing shall be limited to the amount actually paid by you through the Service or 100 USD if you haven't purchased anything through the Service.</p>
-
-<p><strong>"AS IS" and "AS AVAILABLE" Disclaimer</strong></p>
-
-<p>The Service is provided to You "AS IS" and "AS AVAILABLE" and with all faults and defects without warranty of any kind. To the maximum extent permitted under applicable law, the Company, on its own behalf and on behalf of its Affiliates and its and their respective licensors and service providers, expressly disclaims all warranties, whether express, implied, statutory or otherwise, with respect to the Service, including all implied warranties of merchantability, fitness for a particular purpose, title and non-infringement, and warranties that may arise out of course of dealing, course of performance, usage or trade practice. This has been generated by dodopayments.com. Without limitation to the foregoing, the Company provides no warranty or undertaking, and makes no representation of any kind that the Service will meet Your requirements, achieve any intended results, be compatible or work with any other software, applications, systems or services, operate without interruption, meet any performance or reliability standards or be error free or that any errors or defects can or will be corrected.</p>
-
-<p>Without limiting the foregoing, neither the Company nor any of the company's provider makes any representation or warranty of any kind, express or implied: (i) as to the operation or availability of the Service, or the information, content, and materials or products included thereon; (ii) that the Service will be uninterrupted or error-free; (iii) as to the accuracy, reliability, or currency of any information or content provided through the Service; or (iv) that the Service, its servers, the content, or e-mails sent from or on behalf of the Company are free of viruses, scripts, trojan horses, worms, malware, timebombs or other harmful components.</p>
-
-<p>Some jurisdictions do not allow the exclusion of certain types of warranties or limitations on applicable statutory rights of a consumer, so some or all of the above exclusions and limitations may not apply to You. But in such a case the exclusions and limitations set forth in this section shall be applied to the greatest extent enforceable under applicable law.</p>
-
-<h3><strong>Governing Law</strong></h3>
-
-<p>The laws of <strong>India</strong>, excluding its conflicts of law rules, shall govern these Terms and your use of the Service. Your use of the Application may also be subject to other local, state, national, or international laws.</p>
-
-<h3><strong>Disputes Resolution</strong></h3>
-
-<p>If You have any concern or dispute about the Service, You agree to first try to resolve the dispute informally by contacting the Company.</p>
-
-<h3><strong>Changes to These Terms and Conditions</strong></h3>
-
-<p>We reserve the right, at Our sole discretion, to modify or replace these Terms at any time. If a revision is material, we will make reasonable efforts to provide at least 30 days' notice before any new terms take effect. What constitutes a material change will be determined at our sole discretion.</p>
-
-<p>By continuing to access or use our Service after those revisions become effective, you agree to be bound by the revised terms.</p>
-
-<h3><strong>Contact Us</strong></h3>
-
-<p>If you have any questions about these Terms and Conditions, You can contact us:</p>
-
-<ul><li>By visiting our website: <a href="https://lolurl.site/" target="_blank" rel="noopener noreferrer">https://lolurl.site/</a></li><li>By sending us an email: <a href="mailto:debnathrohit97@gmail.com">debnathrohit97@gmail.com</a></li></ul></div>
-  `;
-
-  const refundPolicyContent = `
-    <div><h1><strong>Return &amp; Refund Policy</strong></h1>
-
-<p>Our Return and Refund Policy was last updated on <strong>06/04/2025</strong>.</p>
-
-<p>Thank you for shopping at <strong>LOL URL</strong>.</p>
-
-<p>The following terms are applicable for any products that you have purchased from us.</p>
-
-<h2><strong>Eligibility for Refunds</strong></h2>
-
-<p>We offer refunds under the following circumstances:</p>
-
-<ul><li>If the service is not delivered as promised due to an error on our end.</li><li>If a technical issue caused by our platform prevents you from accessing the features you paid for, and the issue cannot be resolved within a reasonable timeframe.</li><li>If you cancel your subscription within the refund period outlined below.</li></ul>
-
-<h2><strong>Refund Period</strong></h2>
-
-<p>Refund requests must be made within <strong>15</strong> days of the payment date. Requests made after this period will not be eligible for a refund.</p>
-
-<h2><strong>Non-Refundable Cases</strong></h2>
-
-<p>Refunds will not be granted under the following conditions:</p>
-
-<ul><li>If you change your mind after purchasing a subscription or service.</li><li>If you fail to use the service during the subscription period.</li><li>If the issue is caused by third-party software or tools not affiliated with our platform.</li></ul>
-
-<h2><strong>Refund Process</strong></h2>
-
-<p>To request a refund, please follow these steps:</p>
-
-<ol><li>Contact our support team at <a href="mailto:debnathrohit97@gmail.com">debnathrohit97@gmail.com</a>.</li><li>Provide your payment receipt, order ID, and a detailed explanation of the issue.</li><li>Our team will review your request and respond within 3-5 business days.</li><li>If your request is approved, the refund will be processed to your original payment method within 7-10 business days.</li><li>This has been generated by <a href="https://dodopayments.com">dodopayments.com</a></li></ol>
-
-<h2><strong>Contact Us</strong></h2>
-
-<p>If you have any questions about this Refund Policy or require assistance, please reach out to us:</p>
-
-<p>Email: <a href="mailto:debnathrohit97@gmail.com">debnathrohit97@gmail.com</a></p></div>
+    <div><p>Our Terms and Conditions were last updated on <strong>December 29, 2025</strong>.</p>
+    <p>Please read these terms and conditions carefully before using Our Service...</p>
+    </div>
   `;
 
   return (
-    <div className="flex flex-col items-center">
-      <Spotlight
-        className="-top-40 left-0 md:left-60 md:-top-20"
-        fill="white"
-      />
+    <div className="flex flex-col items-center" style={{ fontFamily: 'Oswald, sans-serif' }}>
+      {/* Hero Section */}
+      <section className="w-full max-w-7xl mx-auto px-4 py-20 md:py-32 text-center">
+        <div className="mb-6">
+          <span className="text-sm font-semibold tracking-widest uppercase flex items-center justify-center gap-2 flex-wrap">
+            <span className="text-foreground">Built for</span>
+            <span 
+              key={currentWordIndex}
+              className="bg-primary text-white px-4 py-1.5 rounded-lg shadow-lg animate-in fade-in slide-in-from-bottom-2 duration-500 relative"
+              style={{ 
+                animation: 'fadeSlideIn 0.5s ease-out',
+                display: 'inline-block',
+                boxShadow: '0 0 20px rgba(58, 87, 71, 0.4)',
+                transition: 'all 0.5s ease-out'
+              }}
+            >
+              {rotatingWords[currentWordIndex]}
+            </span>
+          </span>
+        </div>
+        
+        <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold mb-6 leading-tight tracking-tight">
+          SHORTEN. <span className="text-primary">TRACK.</span><br />
+          DOMINATE.
+        </h1>
+        
+        <p className="text-base md:text-lg text-muted-foreground mb-12 max-w-2xl mx-auto font-normal" style={{ fontFamily: 'Inter, sans-serif' }}>
+          Transform long URLs into powerful marketing assets. Get <span className="font-semibold">real-time analytics</span>, create <span className="font-semibold">branded short links</span>, and collaborate with your team—all in one place.
+        </p>
 
-      <h2 className="my-10 sm:my-16 text-3xl sm:text-4xl lg:text-6xl text-white text-center font-extrabold">
-        <span className="inline">Your Shortcut to Smart </span>
-        <span className="inline">
-          <SparklesText
-            className={`inline text-3xl sm:text-4xl lg:text-6xl text-white font-extrabold`}
-            text="LOL Urls"
-          />
-        </span>
-        <span className="inline"> and Insights ▼</span>
-      </h2>
+        {/* URL Input */}
+        <form onSubmit={handleSubmit} className="max-w-2xl mx-auto mb-8">
+          <div className="flex flex-col sm:flex-row gap-3">
+            <Input
+              type="url"
+              placeholder="https://your-long-url.com/example"
+              value={longurl}
+              onChange={handleChange}
+              className="flex-1 h-14 text-base px-6"
+              required
+            />
+            <Button 
+              type="submit" 
+              size="lg" 
+              className="h-14 px-8 text-base font-semibold"
+            >
+              Shorten Now
+            </Button>
+          </div>
+        </form>
 
-      <ScrollProgress className="w-full" />
+        <div className="flex flex-wrap justify-center gap-6 text-sm text-muted-foreground" style={{ fontFamily: 'Inter, sans-serif' }}>
+          <div className="flex items-center gap-2">
+            <Check className="w-4 h-4 text-primary" />
+            <span>Free Forever</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <Check className="w-4 h-4 text-primary" />
+            <span>No Credit Card</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <Check className="w-4 h-4 text-primary" />
+            <span>Instant Setup</span>
+          </div>
+        </div>
+      </section>
 
-      <PlaceholdersAndVanishInput
-        placeholders={placeholders}
-        onChange={handleChange}
-        onSubmit={() => {
-          setTimeout(() => {
-            if (longurl) navigate(`/auth?createNew=${longurl}`);
-          }, 1000);
-        }}
-      />
+      {/* Stats Section */}
+      <section className="w-full bg-muted/50 py-16">
+        <div className="max-w-7xl mx-auto px-4">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+            <div>
+              <div className="text-4xl md:text-5xl font-bold text-primary mb-2">10K+</div>
+              <div className="text-sm text-muted-foreground">Links Created</div>
+            </div>
+            <div>
+              <div className="text-4xl md:text-5xl font-bold text-primary mb-2">50K+</div>
+              <div className="text-sm text-muted-foreground">Clicks Tracked</div>
+            </div>
+            <div>
+              <div className="text-4xl md:text-5xl font-bold text-primary mb-2">500+</div>
+              <div className="text-sm text-muted-foreground">Active Users</div>
+            </div>
+            <div>
+              <div className="text-4xl md:text-5xl font-bold text-primary mb-2">99.9%</div>
+              <div className="text-sm text-muted-foreground">Uptime</div>
+            </div>
+          </div>
+        </div>
+      </section>
 
-      {/* <div className="mt-4">
-        <a
-          href="https://www.producthunt.com/posts/lol-url?embed=true&utm_source=badge-featured&utm_medium=badge&utm_souce=badge-lol&#0045;url"
-          target="_blank"
-        >
-          <img
-            src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=932417&theme=light&t=1740924853295"
-            alt="LOL&#0032;URL - Your&#0032;Shortcut&#0032;to&#0032;Smart&#0032;LOL&#0032;Urls&#0032;and&#0032;Insights | Product Hunt"
-            style={{ width: "250px", height: "54px" }}
-            width="250"
-            height="54"
-          />
-        </a>
-      </div> */}
+      {/* Features Section */}
+      <section className="w-full max-w-7xl mx-auto px-4 py-20 md:py-32">
+        <div className="text-center mb-16">
+          <h2 className="text-3xl md:text-5xl font-extrabold mb-4">
+            Everything You Need to Succeed
+          </h2>
+          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+            Powerful features designed to help you track, analyze, and optimize your links.
+          </p>
+        </div>
 
-      <br />
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {features.map((feature, index) => {
+            const Icon = feature.icon;
+            return (
+              <Card key={index} className="border-2 hover:border-primary transition-colors duration-300">
+                <CardContent className="p-6">
+                  <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center mb-4">
+                    <Icon className="w-6 h-6 text-primary" />
+                  </div>
+                  <h3 className="text-xl font-bold mb-2">{feature.title}</h3>
+                  <p className="text-muted-foreground">{feature.description}</p>
+                </CardContent>
+              </Card>
+            );
+          })}
+        </div>
+      </section>
 
-      <div className="relative flex w-full max-w-full items-center justify-center overflow-hidden rounded-lg border bg-background bg-opacity-80 px-8 pb-32 pt-16 md:pb-60 md:pt-32 md:shadow-xl">
-        <span className="pointer-events-none whitespace-pre-wrap bg-gradient-to-b from-black to-white bg-clip-text text-center text-4xl font-semibold leading-none text-transparent dark:to-slate-900/10">
-          Track Your Smart Links Globally
-        </span>
-        <Globe className="top-28 mt-8 w-128 h-128 md:w-160 md:h-160" />{" "}
-        {/* Added mt-8 for gap and increased globe size */}
-        <div className="pointer-events-none absolute inset-0 h-full bg-[radial-gradient(circle_at_50%_200%,rgba(0,0,0,0.2),rgba(255,255,255,0))]" />
-      </div>
+      {/* Testimonials Section */}
+      <section className="w-full bg-muted/50 py-20 md:py-32">
+        <div className="max-w-7xl mx-auto px-4">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-5xl font-extrabold mb-4">
+              Trusted by Ambitious Teams
+            </h2>
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+              Join thousands of users who trust KliqIN for their link management needs.
+            </p>
+          </div>
 
-      <br />
-      <br />
-      <br />
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {testimonials.map((testimonial, index) => (
+              <Card key={index} className="border-2">
+                <CardContent className="p-6">
+                  <p className="text-sm text-muted-foreground mb-4 italic">
+                    "{testimonial.quote}"
+                  </p>
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center overflow-hidden">
+                      {testimonial.image ? (
+                        <img src={testimonial.image} alt={testimonial.name} className="w-full h-full object-cover" />
+                      ) : (
+                        <Users className="w-5 h-5 text-primary" />
+                      )}
+                    </div>
+                    <div>
+                      <div className="font-semibold text-sm">{testimonial.name}</div>
+                      <div className="text-xs text-muted-foreground">{testimonial.designation}</div>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </div>
+      </section>
 
-      <h2 className="text-4xl font-extrabold mb-8 text-white border-b pb-2 zindex-100">
-        Features
-      </h2>
-      <div className="w-full max-w-4xl mx-auto px-4">
-        <FeaturesSectionDemo />
-      </div>
+      {/* CTA Section */}
+      <section className="w-full max-w-7xl mx-auto px-4 py-20 md:py-32">
+        <Card className="border-2 border-primary bg-primary/5">
+          <CardContent className="p-12 text-center">
+            <h2 className="text-3xl md:text-5xl font-extrabold mb-4">
+              READY TO KLIQ IT?
+            </h2>
+            <p className="text-lg text-muted-foreground mb-8 max-w-2xl mx-auto">
+              Join thousands of users who trust KliqIN. Start shortening and tracking your links today.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Button 
+                size="lg" 
+                className="h-14 px-8 text-base font-semibold"
+                onClick={() => navigate('/auth')}
+              >
+                Start Free Trial
+              </Button>
+              <Button 
+                size="lg" 
+                variant="outline" 
+                className="h-14 px-8 text-base font-semibold"
+                onClick={() => navigate('/dashboard')}
+              >
+                View Dashboard
+              </Button>
+            </div>
+            <p className="text-sm text-muted-foreground mt-6">
+              30-day satisfaction guarantee • No credit card required • Cancel anytime
+            </p>
+          </CardContent>
+        </Card>
+      </section>
 
-      <br />
-      <br />
-
-      <h2 className="text-3xl font-extrabold mb-4 text-white border-b pb-2 z-30 px-4 text-center">
-        Testimonials
-      </h2>
-      <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 z-30 relative">
-        <AnimatedTestimonials
-          testimonials={testimonials}
-          className="start z-30 grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4"
-        />
-      </div>
-      <br />
-      <br />
-
-      <VelocityScroll>LOL THE URL •</VelocityScroll>
-
-      <br />
-      <br />
-      <br />
-      <br />
-
-      {/* FAQS and tweet */}
-      <div className="w-full flex flex-col md:flex-row gap-8 px-4  md:px-8 items-start justify-center max-w-[100vw] overflow-x-hidden">
-        {/* FAQs Section */}
-        <div className="w-full md:w-1/2 rounded-lg p-2 md:p-4">
-          <h2 className="text-xl font-extrabold mb-4 text-white border-b pb-2">
+      {/* FAQ Section */}
+      <section className="w-full max-w-4xl mx-auto px-4 py-20">
+        <div className="text-center mb-12">
+          <h2 className="text-3xl md:text-4xl font-extrabold mb-4">
             Frequently Asked Questions
           </h2>
-          <Accordion
-            type="multiple"
-            collapsible
-            className="bg-gray-900/50 rounded-lg p-2 md:p-4 text-xl"
-          >
-            <AccordionItem value="item-1" className="border-b border-gray-700">
-              <AccordionTrigger>What is LOL URL?</AccordionTrigger>
-              <AccordionContent>
-                LOL URL is a tool to shorten links, generate QR codes, and track
-                link performance like clicks, devices, and locations.
-              </AccordionContent>
-            </AccordionItem>
-
-            <AccordionItem value="item-2" className="border-b border-gray-700">
-              <AccordionTrigger>How do I shorten a link?</AccordionTrigger>
-              <AccordionContent>
-                Simply paste your long URL into the input box, click "Shorten,"
-                and get a clean, shareable link instantly.
-              </AccordionContent>
-            </AccordionItem>
-
-            <AccordionItem value="item-3" className="border-b border-gray-700">
-              <AccordionTrigger>Can I track my links?</AccordionTrigger>
-              <AccordionContent>
-                Yes! Each link includes a dashboard to monitor clicks, visitor
-                locations, and devices in real-time.
-              </AccordionContent>
-            </AccordionItem>
-
-            <AccordionItem value="item-4" className="border-b border-gray-700">
-              <AccordionTrigger>Can I customize my links?</AccordionTrigger>
-              <AccordionContent>
-                Yes, you can create personalized URLs that match your branding
-                or campaigns.
-              </AccordionContent>
-            </AccordionItem>
-
-            <AccordionItem value="item-5" className="border-b border-gray-700">
-              <AccordionTrigger>What are QR code formats?</AccordionTrigger>
-              <AccordionContent>
-                QR codes can be downloaded in high-quality PNG or SVG formats
-                for digital and print use.
-              </AccordionContent>
-            </AccordionItem>
-
-            <AccordionItem value="item-6" className="border-b border-gray-700">
-              <AccordionTrigger>Is my data safe with LOL URL?</AccordionTrigger>
-              <AccordionContent>
-                Absolutely! We prioritize privacy and ensure your data is secure
-                and accessible only to you.
-              </AccordionContent>
-            </AccordionItem>
-
-            <AccordionItem value="item-7" className="border-b border-gray-700">
-              <AccordionTrigger>Is LOL URL free to use?</AccordionTrigger>
-              <AccordionContent>
-                Yes! LOL URL offers free link shortening and basic analytics.
-              </AccordionContent>
-            </AccordionItem>
-
-            <AccordionItem value="item-8" className="border-b border-gray-700">
-              <AccordionTrigger>How to track url performance?</AccordionTrigger>
-              <AccordionContent>
-                You can track clicks, location, and engagement through your
-                dashboard after shortening a URL.
-              </AccordionContent>
-            </AccordionItem>
-            <AccordionItem value="item-9" className="border-b border-gray-700">
-              <AccordionTrigger>Can I customize my links?</AccordionTrigger>
-              <AccordionContent>
-                Yes, you can create custom short links to match your branding or
-                content.
-              </AccordionContent>
-            </AccordionItem>
-          </Accordion>
         </div>
 
-        {/* tweet Section */}
-        <div className="w-full md:w-[35%] flex flex-col justify-start">
-          <Tweet className="shadow-xl max-w-full" id="1885504095181770973" />
+        <Accordion type="multiple" className="space-y-4">
+          <AccordionItem value="item-1" className="border rounded-lg px-6">
+            <AccordionTrigger className="text-left font-semibold">
+              What is KliqIN?
+            </AccordionTrigger>
+            <AccordionContent className="text-muted-foreground">
+              KliqIN is a powerful URL shortener with advanced analytics, QR code generation, and team collaboration features. Track clicks, locations, devices, and more in real-time.
+            </AccordionContent>
+          </AccordionItem>
+
+          <AccordionItem value="item-2" className="border rounded-lg px-6">
+            <AccordionTrigger className="text-left font-semibold">
+              How do I shorten a link?
+            </AccordionTrigger>
+            <AccordionContent className="text-muted-foreground">
+              Simply paste your long URL into the input box above, click "Shorten Now," and get a clean, shareable link instantly. You can also customize your links with custom slugs.
+            </AccordionContent>
+          </AccordionItem>
+
+          <AccordionItem value="item-3" className="border rounded-lg px-6">
+            <AccordionTrigger className="text-left font-semibold">
+              Can I track my links?
+            </AccordionTrigger>
+            <AccordionContent className="text-muted-foreground">
+              Yes! Each link includes a dashboard to monitor clicks, visitor locations, devices, browsers, and engagement metrics in real-time. You can also export analytics data.
+            </AccordionContent>
+          </AccordionItem>
+
+          <AccordionItem value="item-4" className="border rounded-lg px-6">
+            <AccordionTrigger className="text-left font-semibold">
+              Is KliqIN free to use?
+            </AccordionTrigger>
+            <AccordionContent className="text-muted-foreground">
+              Yes! KliqIN offers free link shortening and basic analytics. Premium features like team workspaces, custom domains, and advanced analytics are available on paid plans.
+            </AccordionContent>
+          </AccordionItem>
+
+          <AccordionItem value="item-5" className="border rounded-lg px-6">
+            <AccordionTrigger className="text-left font-semibold">
+              Can I customize my short links?
+            </AccordionTrigger>
+            <AccordionContent className="text-muted-foreground">
+              Absolutely! You can create custom short links (branded slugs) that match your brand or campaign. Custom domains are also available on premium plans.
+            </AccordionContent>
+          </AccordionItem>
+
+          <AccordionItem value="item-6" className="border rounded-lg px-6">
+            <AccordionTrigger className="text-left font-semibold">
+              Is my data safe with KliqIN?
+            </AccordionTrigger>
+            <AccordionContent className="text-muted-foreground">
+              Absolutely! We prioritize privacy and security. All data is encrypted, and we use privacy-focused tracking methods. We never sell your data to third parties.
+            </AccordionContent>
+          </AccordionItem>
+        </Accordion>
+      </section>
+
+      {/* Footer */}
+      <footer className="w-full border-t mt-20 bg-muted/30 relative overflow-hidden">
+        {/* Large Background Text */}
+        <div className="absolute inset-0 flex items-center justify-center pointer-events-none select-none">
+          <span className="text-[12rem] md:text-[16rem] lg:text-[20rem] font-black text-muted-foreground/[0.03] whitespace-nowrap" style={{ fontFamily: 'Oswald, sans-serif' }}>
+            KliqIN
+          </span>
         </div>
-      </div>
+        <div className="w-full px-8 md:px-12 lg:px-16 py-16 relative z-10">
+          <div className="grid grid-cols-1 md:grid-cols-5 gap-8 mb-12">
+            {/* Brand Section */}
+            <div className="md:col-span-2">
+              <h3 className="text-2xl font-bold mb-3" style={{ fontFamily: 'Oswald, sans-serif' }}>
+                <span className="text-foreground">Kliq</span>
+                <span className="text-primary">IN</span>
+              </h3>
+              <p className="text-sm text-muted-foreground max-w-xs leading-relaxed">
+                Premium URL shortening for modern teams. Fast, reliable, and feature-rich. 
+                Track every click with powerful analytics.
+              </p>
+              
+              {/* Social Links */}
+              <div className="flex items-center gap-4 mt-6">
+                <a 
+                  href="https://twitter.com/kliqin" 
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors"
+                >
+                  <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84" />
+                  </svg>
+                  <span>Twitter</span>
+                </a>
+                <a 
+                  href="https://linkedin.com/company/kliqin" 
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors"
+                >
+                  <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                  </svg>
+                  <span>LinkedIn</span>
+                </a>
+                <a 
+                  href="https://github.com/Rohit-Dnath/LOL-URL" 
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors"
+                >
+                  <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                    <path fillRule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" clipRule="evenodd" />
+                  </svg>
+                  <span>GitHub</span>
+                </a>
+              </div>
+            </div>
+
+            {/* Platform */}
+            <div>
+              <h3 className="font-semibold text-foreground mb-4">Platform</h3>
+              <ul className="space-y-3 text-sm text-muted-foreground">
+                <li><a href="#features" className="hover:text-primary transition-colors">Features</a></li>
+                <li><a href="#pricing" className="hover:text-primary transition-colors">Pricing</a></li>
+                <li><a href="/auth" className="hover:text-primary transition-colors">Login</a></li>
+              </ul>
+            </div>
+
+            {/* Support */}
+            <div>
+              <h3 className="font-semibold text-foreground mb-4">Support</h3>
+              <ul className="space-y-3 text-sm text-muted-foreground">
+                <li><a href="#" className="hover:text-primary transition-colors">Help Center</a></li>
+                <li><a href="mailto:support@kliq.in" className="hover:text-primary transition-colors">Contact Us</a></li>
+              </ul>
+            </div>
+
+            {/* Legal */}
+            <div>
+              <h3 className="font-semibold text-foreground mb-4">Legal</h3>
+              <ul className="space-y-3 text-sm text-muted-foreground">
+                <li>
+                  <button 
+                    onClick={() => openModal("Privacy Policy", privacyPolicyContent)} 
+                    className="hover:text-primary transition-colors text-left"
+                  >
+                    Privacy Policy
+                  </button>
+                </li>
+                <li>
+                  <button 
+                    onClick={() => openModal("Terms of Service", termsContent)} 
+                    className="hover:text-primary transition-colors text-left"
+                  >
+                    Terms
+                  </button>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          {/* Bottom Bar */}
+          <div className="border-t pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-muted-foreground" style={{ fontFamily: 'Inter, sans-serif' }}>
+            <div>
+              © 2025 KliqIN Inc.
+            </div>
+            <div className="flex items-center gap-2">
+              <span>by <a href="https://rohitdebnath.me" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline font-semibold">Rohit Debnath</a></span>
+            </div>
+          </div>
+        </div>
+      </footer>
 
       {/* Modal */}
       {modalOpen && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-          <div className="bg-gray-800 rounded-lg shadow-lg max-w-2xl w-full max-h-[90vh] overflow-y-auto">
-            <div className="p-4 border-b border-gray-700 flex justify-between items-center sticky top-0 bg-gray-800 z-10">
-              <h3 className="text-xl font-bold text-white">
-                {modalContent.title}
-              </h3>
-              <button
-                onClick={closeModal}
-                className="text-gray-400 hover:text-white transition-colors"
-                aria-label="Close modal"
-              >
-                <X size={24} />
-              </button>
-            </div>
-            <div
-              className="p-4 text-white"
-              dangerouslySetInnerHTML={{ __html: modalContent.content }}
-            ></div>
-          </div>
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+          <Card className="max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+            <CardContent className="p-6">
+              <div className="flex justify-between items-center mb-4">
+                <h3 className="text-2xl font-bold">{modalContent.title}</h3>
+                <button
+                  onClick={closeModal}
+                  className="text-muted-foreground hover:text-foreground transition-colors"
+                  aria-label="Close modal"
+                >
+                  <X className="w-6 h-6" />
+                </button>
+              </div>
+              <div
+                className="prose prose-sm max-w-none"
+                dangerouslySetInnerHTML={{ __html: modalContent.content }}
+              />
+            </CardContent>
+          </Card>
         </div>
       )}
-
-      {/* Add footer before the closing div of the main component */}
-      
     </div>
   );
 };

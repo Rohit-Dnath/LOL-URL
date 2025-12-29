@@ -91,7 +91,7 @@ export function CreateLink() {
     error,
     data,
     fn: fnCreateUrl,
-  } = useFetch(createUrl, {...formValues, user_id: user.id});
+  } = useFetch(createUrl, {...formValues, user_id: user?.id});
 
   useEffect(() => {
     if (error === null && data) {
@@ -312,24 +312,21 @@ export function CreateLink() {
       className="rounded-xl"
     >
       <DialogTrigger asChild>
-        <Button variant="" className="rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105">Create New Link</Button>
+        <Button variant="" className="font-semibold">Create New Link</Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-5xl bg-background border-2 border-border p-2 sm:p-4 md:p-6 max-h-[95vh] overflow-y-auto shadow-2xl rounded-xl">
-        <DialogHeader className="space-y-2">
-          <DialogTitle className="font-bold text-lg sm:text-xl md:text-2xl bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">Create New Link</DialogTitle>
+      <DialogContent className="sm:max-w-5xl bg-background border-2 p-4 sm:p-6 max-h-[95vh] overflow-y-auto">
+        <DialogHeader>
+          <DialogTitle className="text-2xl font-bold">Create New Link</DialogTitle>
+          <p className="text-sm text-muted-foreground mt-1">Shorten your URL and customize your QR code</p>
         </DialogHeader>
         
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 sm:gap-4 md:gap-6">
           {/* Left Column - QR Code Preview and Form Fields */}
           <div className="flex flex-col gap-3 sm:gap-4">
-            {/* QR Code Preview with responsive container */}
-            <div className="relative flex justify-center items-center p-6 sm:p-8 bg-gradient-to-br from-muted/20 via-muted/10 to-transparent rounded-2xl border border-border/50 shadow-inner overflow-hidden">
-              {/* Decorative elements */}
-              <div className="absolute top-2 right-2 w-20 h-20 bg-gradient-to-br from-primary/10 to-primary/5 rounded-full blur-xl"></div>
-              <div className="absolute bottom-2 left-2 w-16 h-16 bg-gradient-to-br from-secondary/10 to-secondary/5 rounded-full blur-xl"></div>
-              
+            {/* QR Code Preview */}
+            <div className="relative flex justify-center items-center p-8 bg-muted/30 rounded-lg border-2">
               { formValues.customUrl?.trim() ? (
-                <div style={getContainerStyle(qrOptions.boxShape)} className="relative z-10 shadow-xl">
+                <div style={getContainerStyle(qrOptions.boxShape)}>
                   <QRCode 
                     ref={ref} 
                     size={getQRSize()} // Dynamic size based on screen width
@@ -354,50 +351,50 @@ export function CreateLink() {
               ) : (
                 <div
                   style={{
-                    width: getQRSize(), // Dynamic size for placeholder too
+                    width: getQRSize(),
                     height: getQRSize(),
                     border: '2px dashed currentColor',
-                    clipPath: 'polygon(0 10%, 10% 0, 90% 0, 100% 10%, 100% 90%, 90% 100%, 10% 100%, 0 90%)',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
                     color: 'hsl(var(--muted-foreground))',
                     backgroundColor: 'hsl(var(--muted))',
+                    borderRadius: '8px'
                   }}
-                  className="relative z-10 transition-all duration-300 hover:scale-105 hover:border-primary/50"
+                  className="transition-all duration-300"
                 >
-                  <span className="font-medium">LOL No QR</span>
+                  <span className="font-medium">QR Preview</span>
                 </div>
               )}
             </div>
 
-            {/* Form Fields with better spacing for mobile */}
-            <div className="flex flex-col gap-3 sm:gap-4 p-5 sm:p-6 bg-gradient-to-br from-muted/20 via-muted/10 to-transparent rounded-2xl border border-border/30 shadow-sm">
-              <div className="space-y-1">
-                <label htmlFor="title" className="text-sm font-medium text-muted-foreground">Link Title</label>
+            {/* Form Fields */}
+            <div className="flex flex-col gap-4 p-6 bg-muted/20 rounded-lg border-2">
+              <div className="space-y-2">
+                <label htmlFor="title" className="text-sm font-medium">Link Title</label>
                 <Input
                   id="title"
-                  placeholder="Short Link's Title"
+                  placeholder="Enter a descriptive title"
                   value={formValues.title}
                   onChange={handleChange}
-                  className="rounded-xl border-border/50 focus:border-primary transition-all duration-300 hover:border-border focus:ring-2 focus:ring-primary/20"
+                  className="border-2"
                 />
                 {errors.title && <Error message={errors.title} />}
               </div>
               
-              <div className="space-y-1">
-                <label htmlFor="longUrl" className="text-sm font-medium text-muted-foreground">Original URL</label>
+              <div className="space-y-2">
+                <label htmlFor="longUrl" className="text-sm font-medium">Original URL</label>
                 <Input
                   id="longUrl"
-                  placeholder="Enter your Loooong URL"
+                  placeholder="https://your-long-url.com"
                   value={formValues.longUrl}
                   onChange={handleChange}
-                  className="rounded-xl border-border/50 focus:border-primary transition-all duration-300 hover:border-border focus:ring-2 focus:ring-primary/20"
+                  className="border-2"
                 />
                 {errors.longUrl && <Error message={errors.longUrl} />}
               </div>
               
-              <div className="space-y-1">
+              <div className="space-y-2">
                 <label className="text-sm font-medium text-muted-foreground">Custom URL</label>
                 <div className="flex items-center">
                   <Card className="p-3 rounded-xl bg-muted/50 text-muted-foreground font-mono text-sm border-border/50 shrink-0 rounded-r-none h-12">{window.location.origin}/</Card>

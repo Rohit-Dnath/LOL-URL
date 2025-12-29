@@ -294,24 +294,24 @@ const LinkPage = () => {
       )}
 
       <div className="flex flex-col gap-6 max-w-7xl mx-auto p-4">
-        {/* Main Link Card - Redesigned */}
-        <Card className="bg-background border-2 border-border shadow-lg overflow-hidden">
+        {/* Main Link Card */}
+        <Card className="border-2">
           <CardContent className="p-0">
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-0">
               {/* Left Section - Link Info */}
               <div className="lg:col-span-2 p-6 lg:p-8 space-y-6">
                 {/* Header */}
                 <div className="space-y-4">
-                  <div className="flex items-start justify-between">
-                    <h1 className="text-2xl lg:text-4xl font-bold text-foreground leading-tight break-words">
+                  <div className="flex items-start justify-between gap-4">
+                    <h1 className="text-3xl lg:text-4xl font-extrabold leading-tight break-words">
                       {url?.title}
                     </h1>
-                    <div className="flex items-center gap-2 ml-4">
+                    <div className="flex items-center gap-2 flex-shrink-0">
                       <Button 
                         variant="outline" 
                         size="sm" 
                         onClick={handleCopy}
-                        className="border-border hover:bg-muted transition-colors"
+                        className="border-2"
                       >
                         <Copy className="w-4 h-4" />
                       </Button>
@@ -319,7 +319,7 @@ const LinkPage = () => {
                         variant="outline" 
                         size="sm" 
                         onClick={downloadImage}
-                        className="border-border hover:bg-muted transition-colors"
+                        className="border-2"
                       >
                         <Download className="w-4 h-4" />
                       </Button>
@@ -328,7 +328,6 @@ const LinkPage = () => {
                         size="sm" 
                         onClick={handleDelete} 
                         disabled={loadingDelete}
-                        className="hover:bg-destructive/90 transition-colors"
                       >
                         {loadingDelete ? <BeatLoader size={5} color="currentColor" /> : <Trash className="w-4 h-4" />}
                       </Button>
@@ -341,7 +340,7 @@ const LinkPage = () => {
                     <a
                       href={`${window.location.origin}/${link}`}
                       target="_blank"
-                      className="block text-lg lg:text-xl font-semibold text-primary hover:text-primary/80 transition-colors break-all"
+                      className="block text-lg font-semibold text-primary hover:text-primary/80 transition-colors break-all"
                     >
                       {window.location.origin}/{link}
                     </a>
@@ -371,15 +370,15 @@ const LinkPage = () => {
               </div>
 
               {/* Right Section - QR Code */}
-              <div className="bg-muted/30 border-l border-border p-6 lg:p-8 flex flex-col items-center justify-center space-y-4">
-                <div className="bg-background p-4 border border-border shadow-sm">
+              <div className="bg-muted/30 border-l-2 p-6 lg:p-8 flex flex-col items-center justify-center space-y-4">
+                <div className="bg-background p-4 border-2">
                   <img
                     src={qrCodeUrl}
                     className="w-32 h-32 lg:w-40 lg:h-40 object-contain"
                     alt="QR Code"
                   />
                 </div>
-                <p className="text-sm text-muted-foreground text-center">
+                <p className="text-sm text-muted-foreground text-center font-medium">
                   Scan to visit link
                 </p>
               </div>
@@ -387,35 +386,36 @@ const LinkPage = () => {
           </CardContent>
         </Card>
 
-        {/* Statistics Section - Redesigned */}
-        <Card className="bg-background border-2 border-border shadow-lg">
-          <CardHeader className="border-b border-border">
-            <CardTitle className="text-2xl font-bold text-foreground">Analytics & Statistics</CardTitle>
+        {/* Statistics Section */}
+        <Card className="border-2">
+          <CardHeader className="border-b-2">
+            <CardTitle className="text-2xl font-bold">Analytics & Insights</CardTitle>
+            <p className="text-sm text-muted-foreground mt-1">Track your link performance in real-time</p>
           </CardHeader>
           
           {stats && stats.length ? (
-            <CardContent className="p-6 space-y-8">
+            <CardContent className="p-6 space-y-6">
               {/* Stats Overview */}
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <Card className="bg-muted/30 border border-border">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <Card className="border-2 hover:border-primary transition-colors">
                   <CardContent className="p-6 text-center">
-                    <div className="text-3xl font-bold text-primary mb-2">{stats?.length}</div>
+                    <div className="text-4xl font-bold text-primary mb-2">{stats?.length}</div>
                     <div className="text-sm font-medium text-muted-foreground">Total Clicks</div>
                   </CardContent>
                 </Card>
                 
-                <Card className="bg-muted/30 border border-border">
+                <Card className="border-2 hover:border-primary transition-colors">
                   <CardContent className="p-6 text-center">
-                    <div className="text-3xl font-bold text-primary mb-2">
+                    <div className="text-4xl font-bold text-primary mb-2">
                       {new Set(stats?.map(stat => stat.country)).size}
                     </div>
                     <div className="text-sm font-medium text-muted-foreground">Countries</div>
                   </CardContent>
                 </Card>
                 
-                <Card className="bg-muted/30 border border-border">
+                <Card className="border-2 hover:border-primary transition-colors">
                   <CardContent className="p-6 text-center">
-                    <div className="text-3xl font-bold text-primary mb-2">
+                    <div className="text-4xl font-bold text-primary mb-2">
                       {new Set(stats?.map(stat => stat.device)).size}
                     </div>
                     <div className="text-sm font-medium text-muted-foreground">Device Types</div>
@@ -424,11 +424,11 @@ const LinkPage = () => {
               </div>
 
               {/* Charts Grid */}
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 {/* Location Analytics */}
-                <Card className="bg-muted/20 border border-border">
-                  <CardHeader className="border-b border-border">
-                    <CardTitle className="text-lg font-semibold text-foreground">Geographic Distribution</CardTitle>
+                <Card className="border-2">
+                  <CardHeader className="border-b-2">
+                    <CardTitle className="text-lg font-bold">Geographic Distribution</CardTitle>
                   </CardHeader>
                   <CardContent className="p-6">
                     <Location stats={stats} />
@@ -436,9 +436,9 @@ const LinkPage = () => {
                 </Card>
 
                 {/* Device Analytics */}
-                <Card className="bg-muted/20 border border-border">
-                  <CardHeader className="border-b border-border">
-                    <CardTitle className="text-lg font-semibold text-foreground">Device Breakdown</CardTitle>
+                <Card className="border-2">
+                  <CardHeader className="border-b-2">
+                    <CardTitle className="text-lg font-bold">Device Breakdown</CardTitle>
                   </CardHeader>
                   <CardContent className="p-6">
                     <DeviceStats stats={stats} />
@@ -447,9 +447,10 @@ const LinkPage = () => {
               </div>
 
               {/* Engagement Chart */}
-              <Card className="bg-muted/20 border border-border">
-                <CardHeader className="border-b border-border">
-                  <CardTitle className="text-lg font-semibold text-foreground">Click Timeline</CardTitle>
+              <Card className="border-2">
+                <CardHeader className="border-b-2">
+                  <CardTitle className="text-lg font-bold">Click Timeline</CardTitle>
+                  <p className="text-sm text-muted-foreground mt-1">Hourly click activity</p>
                 </CardHeader>
                 <CardContent className="p-6">
                   <div className="w-full h-[400px]">

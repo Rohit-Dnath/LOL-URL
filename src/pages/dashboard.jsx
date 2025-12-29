@@ -38,7 +38,7 @@ const Dashboard = () => {
   const [sortOrder, setSortOrder] = useState("desc");
 
   const { user } = UrlState();
-  const { loading, data: urls, fn: fnUrls } = useFetch(getUrls, user.id);
+  const { loading, data: urls, fn: fnUrls } = useFetch(getUrls, user?.id);
   const {
     loading: loadingClicks,
     data: clicks,
@@ -288,45 +288,58 @@ const Dashboard = () => {
       <br />
 
       {/* Stats Cards */}
-      <div className="grid grid-cols-2 gap-4">
-        <Card className="bg-background rounded-xl">
-          <CardHeader>
-            <CardTitle className="text-lg md:text-2xl">Links Created</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <p className="text-xl md:text-2xl">{urls?.length}</p>
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <Card className="border-2 hover:border-primary transition-colors duration-300">
+          <CardContent className="p-6">
+            <p className="text-sm font-medium text-muted-foreground mb-2">Links Created</p>
+            <p className="text-3xl font-bold text-foreground">{urls?.length || 0}</p>
           </CardContent>
         </Card>
 
-        <Card className="bg-background rounded-xl">
-          <CardHeader>
-            <CardTitle className="text-lg md:text-2xl">Total Clicks</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <p className="text-xl md:text-2xl">{clicks?.length}</p>
+        <Card className="border-2 hover:border-primary transition-colors duration-300">
+          <CardContent className="p-6">
+            <p className="text-sm font-medium text-muted-foreground mb-2">Total Clicks</p>
+            <p className="text-3xl font-bold text-foreground">{clicks?.length || 0}</p>
+          </CardContent>
+        </Card>
+        
+        <Card className="border-2 hover:border-primary transition-colors duration-300">
+          <CardContent className="p-6">
+            <p className="text-sm font-medium text-muted-foreground mb-2">Avg Clicks/Link</p>
+            <p className="text-3xl font-bold text-foreground">{urls?.length ? Math.round((clicks?.length || 0) / urls.length) : 0}</p>
+          </CardContent>
+        </Card>
+        
+        <Card className="border-2 hover:border-primary transition-colors duration-300">
+          <CardContent className="p-6">
+            <p className="text-sm font-medium text-muted-foreground mb-2">Active Links</p>
+            <p className="text-3xl font-bold text-foreground">{filteredUrls?.length || 0}</p>
           </CardContent>
         </Card>
       </div>
 
       {/* Graph Card */}
-      <div className="w-full mt-4 pointer-events-none">
-        <Card className="bg-background rounded-xl">
-          <CardHeader>
+      <div className="w-full mt-6 pointer-events-none">
+        <Card className="border-2">
+          <CardHeader className="space-y-1 pb-4">
             <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-              <CardTitle className="text-lg md:text-2xl">Top Clicked Links</CardTitle>
+              <div>
+                <CardTitle className="text-2xl font-bold">Top Performing Links</CardTitle>
+                <p className="text-sm text-muted-foreground mt-1">Track your most clicked links</p>
+              </div>
               <div className="pointer-events-auto">
                 <Select
                   value={chartType}
                   onValueChange={setChartType}
                 >
-                  <SelectTrigger className="rounded-lg w-[140px]">
+                  <SelectTrigger className="w-[160px] border-2">
                     <SelectValue placeholder="Chart Type" />
                   </SelectTrigger>
                   <SelectContent>
                     <SelectItem value="bar">Bar Chart</SelectItem>
                     <SelectItem value="line">Line Chart</SelectItem>
                     <SelectItem value="area">Area Chart</SelectItem>
-                    <SelectItem value="horizontal">Horizontal Bar</SelectItem>
+                    <SelectItem value="horizontal">Horizontal</SelectItem>
                     <SelectItem value="pie">Pie Chart</SelectItem>
                   </SelectContent>
                 </Select>
@@ -383,29 +396,32 @@ const Dashboard = () => {
       </div>
 
       {/* My Links section */}
-      <div className="flex flex-row justify-between items-center w-full">
-        <h1 className="text-2xl md:text-4xl font-extrabold">My Links</h1>
+      <div className="flex flex-row justify-between items-center w-full mt-8 mb-4">
+        <div>
+          <h1 className="text-3xl md:text-4xl font-extrabold">My Links</h1>
+          <p className="text-sm text-muted-foreground mt-1">Manage and track all your shortened URLs</p>
+        </div>
         <CreateLink className="rounded-xl" />
       </div>
 
       {/* Search and filter controls */}
-      <div className="flex flex-col gap-4 mb-4">
+      <div className="flex flex-col gap-4">
         {/* Basic filters row */}
-        <div className="flex flex-col md:flex-row gap-2">
+        <div className="flex flex-col md:flex-row gap-3">
           {/* Search bar */}
           <Input
             type="text"
-            placeholder="Search links..."
+            placeholder="Search by title..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="rounded-xl h-full flex-1 p-2"
+            className="h-11 flex-1 border-2"
           />
           {/* Click filter */}
           <Select
             value={clickFilter}
             onValueChange={setClickFilter}
           >
-            <SelectTrigger className="rounded-xl h-full w-full md:w-[200px] p-2 border">
+            <SelectTrigger className="h-11 w-full md:w-[180px] border-2">
               <SelectValue placeholder="All Clicks" />
             </SelectTrigger>
             <SelectContent>
@@ -419,9 +435,9 @@ const Dashboard = () => {
           {/* Advanced Filters Button */}
           <Dialog open={showAdvancedFilters} onOpenChange={setShowAdvancedFilters}>
             <DialogTrigger asChild>
-              <Button variant="outline" className="rounded-xl flex items-center gap-2">
+              <Button variant="outline" className="h-11 flex items-center gap-2 border-2">
                 <Filter className="h-4 w-4" />
-                Advanced Filters
+                Filters
               </Button>
             </DialogTrigger>
             <DialogContent className="rounded-xl max-w-2xl">
@@ -594,15 +610,19 @@ const Dashboard = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
         {(paginatedUrls || []).length === 0 ? (
           <div className="col-span-full">
-            <Card className="bg-background rounded-xl">
-              <CardContent className="flex flex-col items-center justify-center py-12">
-                <div className="text-center space-y-4">
-                  <div className="text-6xl">🔍</div>
-                  <h3 className="text-xl font-semibold">No links found</h3>
-                  <p className="text-muted-foreground max-w-md">
+            <Card className="border-2 border-dashed">
+              <CardContent className="flex flex-col items-center justify-center py-16">
+                <div className="text-center space-y-4 max-w-md">
+                  <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-4">
+                    <svg className="w-8 h-8 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                    </svg>
+                  </div>
+                  <h3 className="text-2xl font-bold">No links found</h3>
+                  <p className="text-muted-foreground">
                     {(startDate || endDate || minClicks || maxClicks || searchQuery || clickFilter !== "all") 
-                      ? "No links match your current filters. Try adjusting your search criteria."
-                      : "You haven't created any links yet. Create your first link to get started!"
+                      ? "No links match your filters. Try adjusting your search criteria."
+                      : "You haven't created any links yet. Click the button above to get started!"
                     }
                   </p>
                   {(startDate || endDate || minClicks || maxClicks || searchQuery || clickFilter !== "all") && (
@@ -619,7 +639,7 @@ const Dashboard = () => {
                         setClickFilter("all");
                         setSearchQuery("");
                       }}
-                      className="rounded-lg"
+                      className="mt-4"
                     >
                       Clear All Filters
                     </Button>
@@ -637,23 +657,23 @@ const Dashboard = () => {
 
       {/* Pagination controls */}
       {totalPages > 1 && (
-        <div className="flex justify-center items-center gap-2 mt-6">
+        <div className="flex justify-center items-center gap-3 mt-8">
           <Button
             disabled={currentPage === 1}
             onClick={() => setCurrentPage((p) => p - 1)}
             variant="outline"
-            className="rounded-xl"
+            className="border-2"
           >
             Previous
           </Button>
-          <span>
+          <span className="text-sm font-medium px-4">
             Page {currentPage} of {totalPages}
           </span>
           <Button
             disabled={currentPage === totalPages}
             onClick={() => setCurrentPage((p) => p + 1)}
             variant="outline"
-            className="rounded-xl"
+            className="border-2"
           >
             Next
           </Button>
