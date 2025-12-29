@@ -70,8 +70,6 @@ export async function createUrl({ title, longUrl, customUrl, user_id }, qrcode) 
     qr,
     created_at: new Date().toISOString()
   };
-
-  return data;
   
   const urls = JSON.parse(localStorage.getItem(`urls_${user_id}`) || '[]');
   urls.push(newUrl);
