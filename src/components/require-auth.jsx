@@ -6,7 +6,7 @@ import {BarLoader} from "react-spinners";
 function RequireAuth({children}) {
   const navigate = useNavigate();
 
-  const {loading, isAuthenticated} = UrlState();
+  const {loading, isAuthenticated} = UrlState() || { loading: true, isAuthenticated: false };
 
   useEffect(() => {
     if (!isAuthenticated && loading === false) navigate("/auth");

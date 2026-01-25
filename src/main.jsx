@@ -3,6 +3,21 @@ import { createRoot } from 'react-dom/client'
 import './index.css'
 import App from './App.jsx'
 
+// Origin restriction check
+const allowedOrigin = import.meta.env.VITE_ALLOWED_ORIGIN;
+const currentOrigin = window.location.origin;
+
+if (allowedOrigin && currentOrigin !== allowedOrigin) {
+  document.getElementById('root').innerHTML = `
+    <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; font-family: system-ui; background: #0a0a0a; color: #fff;">
+      <h1 style="font-size: 3rem; margin-bottom: 1rem;">🚫 Access Denied</h1>
+      <p style="font-size: 1.2rem; color: #888;">This application is restricted to: <strong style="color: #fff;">${allowedOrigin}</strong></p>
+      <p style="font-size: 1rem; color: #666; margin-top: 0.5rem;">Current origin: ${currentOrigin}</p>
+    </div>
+  `;
+  throw new Error(`Access denied. App restricted to ${allowedOrigin}`);
+}
+
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <>

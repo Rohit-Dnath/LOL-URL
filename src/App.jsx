@@ -11,11 +11,14 @@ import RedirectLink from "./pages/redirect-link";
 import UrlProvider from "./context";
 import RequireAuth from "./components/require-auth";
 import { Analytics } from "@vercel/analytics/react";
-import RedirectHandler from "./components/redirect-handler"; // Import the updated component
+import RedirectHandler from "./components/redirect-handler";
+import ErrorBoundary from "./components/error-boundary";
+import RouteError from "./components/route-error";
 
 const router = createBrowserRouter([
   {
     element: <AppLayout />,
+    errorElement: <RouteError />,
     children: [
       {
         path: "/",
@@ -121,10 +124,12 @@ const router = createBrowserRouter([
 
 function App() {
   return (
-    <UrlProvider>
-      <RouterProvider router={router} />
-      <Analytics />
-    </UrlProvider>
+    <ErrorBoundary>
+      <UrlProvider>
+        <RouterProvider router={router} />
+        <Analytics />
+      </UrlProvider>
+    </ErrorBoundary>
   );
 }
 

@@ -28,6 +28,11 @@ const Header = () => {
   };
 
   const randomEmoji = user ? getEmojiForUser(user.id) : "👤";
+  
+  // Get profile picture from multiple sources (Google OAuth or manual upload)
+  const profilePicture = user?.user_metadata?.profile_pic || 
+                        user?.user_metadata?.avatar_url || 
+                        user?.user_metadata?.picture;
 
   return (
     <>
@@ -59,7 +64,7 @@ const Header = () => {
             <DropdownMenu >
               <DropdownMenuTrigger className="w-10 rounded-full overflow-hidden ">
                 <Avatar>
-                  <AvatarImage src={user?.user_metadata?.profile_pic} />
+                  <AvatarImage src={profilePicture} className="w-10 h-10 object-cover" />
                   <AvatarFallback className="text-3xl bg-gray-50 rounded-full w-10 h-10 flex items-center justify-center">
                     {randomEmoji}
                   </AvatarFallback>
@@ -67,7 +72,7 @@ const Header = () => {
               </DropdownMenuTrigger>
               <DropdownMenuContent>
                 <DropdownMenuLabel>
-                  {user?.user_metadata?.name}
+                  {user?.user_metadata?.name || user?.user_metadata?.full_name || user?.email}
                 </DropdownMenuLabel>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem >

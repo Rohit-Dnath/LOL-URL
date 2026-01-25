@@ -1,139 +1,54 @@
-import {useEffect, useState} from "react";
+import { useState } from "react";
 import Error from "./error";
-import {Input} from "./ui/input";
-import * as Yup from "yup";
 import {
   Card,
   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from "./ui/card";
-import {Button} from "./ui/button";
-import {useNavigate, useSearchParams} from "react-router-dom";
-import {signup} from "@/db/apiAuth";
-import {BeatLoader} from "react-spinners";
-import useFetch from "@/hooks/use-fetch";
-import defaultProfilePic from "@/assets/profile_img.jpg";
+import { Button } from "./ui/button";
+import { loginWithGoogle } from "@/db/apiAuth";
 
 const Signup = () => {
-  let [searchParams] = useSearchParams();
-  const longLink = searchParams.get("createNew");
-
-  const navigate = useNavigate();
-
   const [errors, setErrors] = useState({});
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    password: "",
-    profile_pic: defaultProfilePic,
-  });
 
-  const handleInputChange = (e) => {
-    const {name, value} = e.target;
-    setFormData((prevState) => ({
-      ...prevState,
-      [name]: value,
-    }));
-  };
-
-  const {loading, error, fn: fnSignup, data} = useFetch(signup);
-
-  useEffect(() => {
-    if (error === null && data) {
-      navigate(`/dashboard?${longLink ? `createNew=${longLink}` : ""}`);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [error, loading]);
-
-  const handleSignup = async () => {
-    setErrors([]);
+  const handleGoogleSignup = async () => {
     try {
-      const schema = Yup.object().shape({
-        name: Yup.string().required("Name is required"),
-        email: Yup.string()
-          .email("Invalid email")
-          .required("Email is required"),
-        password: Yup.string()
-          .min(6, "Password must be at least 6 characters")
-          .required("Password is required"),
-      });
-
-      await schema.validate(formData, {abortEarly: false});
-
-      // Always use default profile picture
-      const signupData = {
-        ...formData,
-        profile_pic: defaultProfilePic
-      };
-
-      await fnSignup(signupData);
+      await loginWithGoogle();
     } catch (error) {
-      const newErrors = {};
-      if (error?.inner) {
-        error.inner.forEach((err) => {
-          newErrors[err.path] = err.message;
-        });
-
-        setErrors(newErrors);
-      } else {
-        setErrors({api: error.message});
-      }
+      setErrors({google: error.message});
     }
   };
 
   return (
     <Card className="bg-background">
       <CardHeader>
-        <CardTitle>Signup</CardTitle>
+        <CardTitle>Sign Up</CardTitle>
         <CardDescription>
-          Create a new account if you haven&rsquo;t already
+          Create a new account with Google
         </CardDescription>
-        {error && <Error message={error?.message} />}
       </CardHeader>
-      <CardContent className="space-y-2">
-        <div className="space-y-1">
-          <Input
-            name="name"
-            type="text"
-            placeholder="Enter Name"
-            className="rounded"
-            onChange={handleInputChange}
-          />
-        </div>
-        {errors.name && <Error message={errors.name} />}
-        <div className="space-y-1">
-          <Input
-            name="email"
-            type="email"
-            placeholder="Enter Email"
-            className="rounded"
-            onChange={handleInputChange}
-          />
-        </div>
-        {errors.email && <Error message={errors.email} />}
-        <div className="space-y-1">
-          <Input
-            name="password"
-            type="password"
-            placeholder="Enter Password"
-            className="rounded"
-            onChange={handleInputChange}
-          />
-        </div>
-        {errors.password && <Error message={errors.password} />}
-      </CardContent>
-      <CardFooter>
-        <Button className="rounded" onClick={handleSignup}>
-          {loading ? (
-            <BeatLoader size={10} color="#8884d8" />
-          ) : (
-            "Create Account"
-          )}
+      <CardContent className="space-y-4 pt-6">
+        <Button 
+          variant="default" 
+          className="rounded-xl w-full flex items-center justify-center gap-3 py-6 shadow-lg hover:shadow-xl transition-all duration-300" 
+          onClick={handleGoogleSignup}
+        >
+          <svg className="w-6 h-6" viewBox="0 0 24 24">
+            <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+            <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+            <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
+            <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
+          </svg>
+          <span className="text-base font-medium">Sign up with Google</span>
         </Button>
-      </CardFooter>
+        {errors.google && <Error message={errors.google} />}
+        
+        <p className="text-center text-xs text-muted-foreground pt-4">
+          By continuing, you agree to our Terms of Service and Privacy Policy
+        </p>
+      </CardContent>
     </Card>
   );
 };

@@ -11,6 +11,23 @@ export async function login({ email, password }) {
   return data;
 }
 
+export async function loginWithGoogle() {
+  const { data, error } = await supabase.auth.signInWithOAuth({
+    provider: 'google',
+    options: {
+      redirectTo: `${window.location.origin}/auth`,
+      queryParams: {
+        access_type: 'offline',
+        prompt: 'consent',
+      }
+    }
+  });
+
+  if (error) throw new Error(error.message);
+
+  return data;
+}
+
 export async function signup({ name, email, password, profile_pic }) {
   const fileName = `dp-${name.split(" ").join("-")}-${Math.random()}`;
 
