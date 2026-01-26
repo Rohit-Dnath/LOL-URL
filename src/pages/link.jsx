@@ -133,17 +133,6 @@ const LinkPage = () => {
     toast.success("URL copied to clipboard!", toastConfig);
   };
 
-  const handleDelete = async () => {
-    const confirmDelete = window.confirm("Are you sure you want to delete this URL?");
-    if (!confirmDelete) return;
-    try {
-      await fnDelete();
-      navigate("/dashboard", { state: { showDeleteToast: true } });
-    } catch (error) {
-      toast.error("Failed to delete URL.", toastConfig);
-    }
-  };
-
   const navigate = useNavigate();
   const {user} = UrlState();
   const {id} = useParams();
@@ -154,23 +143,40 @@ const LinkPage = () => {
     data: url,
     fn,
     error,
-  } = useFetch(getUrl, {id, user_id: user?.id});
+  } = useFetch(getUrl);
 
   const {
     loading: loadingStats,
     data: stats,
     fn: fnStats,
-  } = useFetch(getClicksForUrl, id);
+  } = useFetch(getClicksForUrl);
 
-  const {loading: loadingDelete, fn: fnDelete} = useFetch(deleteUrl, id);
-
-  useEffect(() => {
-    fn();
-  }, []);
+  const {loading: loadingDelete, fn: fnDelete} = useFetch(deleteUrl);
 
   useEffect(() => {
-    if (!error && loading === false) fnStats();
-  }, [loading, error]);
+    if (id && user?.id) {
+      console.log("Fetching URL with id:", id, "user_id:", user.id);
+      fn({id, user_id: user.id});
+    }
+  }, [id, user?.id]);
+
+  useEffect(() => {
+    if (!error && loading === false && url) {
+      console.log("Fetching stats for URL:", url.id);
+      fnStats(url.id);
+    }
+  }, [loading, error, url]);
+
+  const handleDeleteClick = async () => {
+    const confirmDelete = window.confirm("Are you sure you want to delete this URL?");
+    if (!confirmDelete) return;
+    try {
+      await fnDelete(id);
+      navigate("/dashboard", { state: { showDeleteToast: true } });
+    } catch (error) {
+      toast.error("Failed to delete URL.", toastConfig);
+    }
+  };
 
   useEffect(() => {
     if (isNewLink) {
@@ -200,10 +206,6 @@ const LinkPage = () => {
       }());
     }
   }, [isNewLink, id, navigate]);
-
-  if (error) {
-    navigate("/dashboard");
-  }
 
   let link = "";
   if (url) {
@@ -284,6 +286,39 @@ const LinkPage = () => {
     .sort((a, b) => b.visits - a.visits)
     .slice(0, 10); // Show only top 10 countries
 
+  // Early returns - AFTER all hooks
+  if (loading) {
+    return (
+      <div className="flex flex-col gap-6 max-w-7xl mx-auto p-4">
+        <BarLoader className="mb-4" width={"100%"} color="hsl(var(--primary))" />
+        <p className="text-center text-muted-foreground">Loading link details...</p>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="flex flex-col items-center justify-center gap-4 max-w-md mx-auto p-8 mt-20">
+        <h2 className="text-xl font-semibold text-foreground">Link Not Found</h2>
+        <p className="text-muted-foreground text-center">
+          The link you're looking for doesn't exist or you don't have access to it.
+        </p>
+        <Button onClick={() => navigate("/dashboard")}>
+          Go to Dashboard
+        </Button>
+      </div>
+    );
+  }
+
+  if (!url) {
+    return (
+      <div className="flex flex-col gap-6 max-w-7xl mx-auto p-4">
+        <BarLoader className="mb-4" width={"100%"} color="hsl(var(--primary))" />
+        <p className="text-center text-muted-foreground">Loading...</p>
+      </div>
+    );
+  }
+
   return (
     <>
       <ToastContainer {...toastConfig} />
@@ -326,7 +361,7 @@ const LinkPage = () => {
                       <Button 
                         variant="destructive" 
                         size="sm" 
-                        onClick={handleDelete} 
+                        onClick={handleDeleteClick} 
                         disabled={loadingDelete}
                         className="hover:bg-destructive/90 transition-colors"
                       >

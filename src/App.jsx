@@ -8,6 +8,8 @@ import LandingPage from "./pages/landing";
 import Auth from "./pages/auth";
 import Link from "./pages/link";
 import RedirectLink from "./pages/redirect-link";
+import WorkspaceSettings from "./pages/workspace-settings";
+import AcceptInvite from "./pages/accept-invite";
 import UrlProvider from "./context";
 import RequireAuth from "./components/require-auth";
 import { Analytics } from "@vercel/analytics/react";
@@ -105,6 +107,32 @@ const router = createBrowserRouter([
             <RequireAuth>
               <Link />
             </RequireAuth>
+          </>
+        ),
+      },
+      {
+        path: "/workspace-settings",
+        element: (
+          <>
+            <head>
+              <title>LOL URL - Workspace Settings</title>
+              <meta name="description" content="Manage your workspace settings, members, and invitations." />
+            </head>
+            <RequireAuth>
+              <WorkspaceSettings />
+            </RequireAuth>
+          </>
+        ),
+      },
+      {
+        path: "/invite/:token",
+        element: (
+          <>
+            <head>
+              <title>LOL URL - Accept Workspace Invite</title>
+              <meta name="description" content="Join a workspace and collaborate with your team." />
+            </head>
+            <AcceptInvite />
           </>
         ),
       },

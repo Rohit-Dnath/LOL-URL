@@ -37,20 +37,25 @@ const Dashboard = () => {
   const [sortBy, setSortBy] = useState("created_at");
   const [sortOrder, setSortOrder] = useState("desc");
 
-  const { user } = UrlState();
-  const { loading, data: urls, fn: fnUrls } = useFetch(getUrls, user.id);
+  const { user, currentWorkspace } = UrlState();
+  const { loading, data: urls, fn: fnUrls } = useFetch(getUrls);
   const {
     loading: loadingClicks,
     data: clicks,
     fn: fnClicks,
-  } = useFetch(
-    getClicksForUrls,
-    urls?.map((url) => url.id)
-  );
+  } = useFetch(getClicksForUrls);
 
   useEffect(() => {
-    fnUrls();
-  }, []);
+    if (user?.id) {
+      fnUrls(user.id, currentWorkspace?.id);
+    }
+  }, [user?.id, currentWorkspace]); // Re-fetch when workspace changes
+
+  useEffect(() => {
+    if (urls?.length > 0) {
+      fnClicks(urls.map((url) => url.id));
+    }
+  }, [urls]);
 
   useEffect(() => {
     if (location.state?.showDeleteToast) {

@@ -9,11 +9,17 @@ const useFetch = (cb, options = {}) => {
     setLoading(true);
     setError(null);
     try {
-      const response = await cb(options, ...args);
+      // If args are provided, use them directly (ignores options)
+      // Otherwise, use options as the first argument
+      const response = args.length > 0 
+        ? await cb(...args)
+        : await cb(options);
       setData(response);
       setError(null);
+      return response;
     } catch (error) {
       setError(error);
+      return null;
     } finally {
       setLoading(false);
     }

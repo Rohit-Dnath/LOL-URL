@@ -1,19 +1,82 @@
-import {createContext, useContext, useEffect} from "react";
+import {createContext, useContext, useEffect, useState} from "react";
 import {getCurrentUser} from "./db/apiAuth";
 import useFetch from "./hooks/use-fetch";
 import supabase from "./db/supabase";
+import {getUserWorkspaces} from "./db/apiWorkspaces";
+import {subscribeToNotifications, unsubscribeFromNotifications, getUnreadCount} from "./db/apiNotifications";
 
 const UrlContext = createContext({
   user: null,
   loading: true,
   isAuthenticated: false,
-  fetchUser: () => {}
+  fetchUser: () => {},
+  workspaces: [],
+  currentWorkspace: null,
+  setCurrentWorkspace: () => {},
+  fetchWorkspaces: () => {},
+  notifications: [],
+  unreadCount: 0,
+  fetchNotifications: () => {}
 });
 
 const UrlProvider = ({children}) => {
   const {data: user, loading, fn: fetchUser} = useFetch(getCurrentUser);
+  const [workspaces, setWorkspaces] = useState([]);
+  const [currentWorkspace, setCurrentWorkspace] = useState(() => {
+    // Load from localStorage on initial mount
+    try {
+      const saved = localStorage.getItem('currentWorkspace');
+      return saved ? JSON.parse(saved) : null;
+    } catch {
+      return null;
+    }
+  });
+  const [notifications, setNotifications] = useState([]);
+  const [unreadCount, setUnreadCount] = useState(0);
 
   const isAuthenticated = user?.role === "authenticated";
+
+  // Persist workspace to localStorage
+  const handleSetCurrentWorkspace = (workspace) => {
+    setCurrentWorkspace(workspace);
+    if (workspace) {
+      localStorage.setItem('currentWorkspace', JSON.stringify(workspace));
+    } else {
+      localStorage.removeItem('currentWorkspace');
+    }
+  };
+
+  // Fetch workspaces
+  const fetchWorkspaces = async () => {
+    if (user?.id) {
+      try {
+        const data = await getUserWorkspaces(user.id);
+        setWorkspaces(data || []);
+        
+        // Validate saved workspace still exists
+        if (currentWorkspace) {
+          const stillExists = data?.find(w => w.id === currentWorkspace.id);
+          if (!stillExists) {
+            handleSetCurrentWorkspace(null);
+          }
+        }
+      } catch (error) {
+        console.error("Error fetching workspaces:", error);
+      }
+    }
+  };
+
+  // Fetch unread notification count
+  const fetchNotificationCount = async () => {
+    if (user?.id) {
+      try {
+        const count = await getUnreadCount(user.id);
+        setUnreadCount(count);
+      } catch (error) {
+        console.error("Error fetching notification count:", error);
+      }
+    }
+  };
 
   useEffect(() => {
     fetchUser();
@@ -49,8 +112,42 @@ const UrlProvider = ({children}) => {
     };
   }, []);
 
+  // Fetch workspaces when user logs in
+  useEffect(() => {
+    if (isAuthenticated) {
+      fetchWorkspaces();
+      fetchNotificationCount();
+    }
+  }, [isAuthenticated, user?.id]);
+
+  // Subscribe to real-time notifications
+  useEffect(() => {
+    if (user?.id) {
+      const subscription = subscribeToNotifications(user.id, (notification) => {
+        setNotifications(prev => [notification, ...prev]);
+        setUnreadCount(prev => prev + 1);
+      });
+
+      return () => {
+        unsubscribeFromNotifications(subscription);
+      };
+    }
+  }, [user?.id]);
+
   return (
-    <UrlContext.Provider value={{user, fetchUser, loading, isAuthenticated}}>
+    <UrlContext.Provider value={{
+      user, 
+      fetchUser, 
+      loading, 
+      isAuthenticated,
+      workspaces,
+      currentWorkspace,
+      setCurrentWorkspace: handleSetCurrentWorkspace,
+      fetchWorkspaces,
+      notifications,
+      unreadCount,
+      fetchNotifications: fetchNotificationCount
+    }}>
       {children}
     </UrlContext.Provider> 
   );

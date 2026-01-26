@@ -25,7 +25,7 @@ import { Slider } from "@/components/ui/slider";
 
 export function CreateLink() {
   const DOMAIN = window.location.origin;
-  const {user} = UrlState();
+  const {user, currentWorkspace} = UrlState();
 
   const navigate = useNavigate();
   const ref = useRef();
@@ -80,6 +80,10 @@ export function CreateLink() {
   });
 
   const handleChange = (e) => {
+    // Reset URL availability when customUrl changes
+    if (e.target.id === 'customUrl') {
+      setUrlAvailable(null);
+    }
     setFormValues({
       ...formValues,
       [e.target.id]: e.target.value,
@@ -91,7 +95,7 @@ export function CreateLink() {
     error,
     data,
     fn: fnCreateUrl,
-  } = useFetch(createUrl, {...formValues, user_id: user.id});
+  } = useFetch(createUrl);
 
   useEffect(() => {
     if (error === null && data) {
@@ -111,15 +115,20 @@ export function CreateLink() {
         return;
       }
 
-      const link = `${window.location.origin}/${formValues.customUrl}`;
-
       const canvas = ref.current.canvasRef.current;
       const blob = await new Promise((resolve) => canvas.toBlob(resolve));
 
-      const result = await fnCreateUrl(blob, link);
-      if (result) {
-        navigate(`/link/${result[0].id}?new=true`);
-      }
+      // Call with proper parameters
+      await fnCreateUrl(
+        {
+          title: formValues.title,
+          longUrl: formValues.longUrl,
+          customUrl: formValues.customUrl,
+          user_id: user.id,
+          workspace_id: currentWorkspace?.id || null
+        },
+        blob
+      );
     } catch (e) {
       const newErrors = {};
 
@@ -415,7 +424,7 @@ export function CreateLink() {
                     }`}
                   />
                 </div>
-                {formValues.customUrl && (
+                {formValues.customUrl && urlAvailable !== null && (
                   <div className={`flex items-center gap-2 text-sm font-medium transition-all duration-300 ${urlAvailable ? "text-green-600 dark:text-green-400" : "text-red-600 dark:text-red-400"}`}>
                     <div className={`w-2 h-2 rounded-full ${urlAvailable ? "bg-green-500" : "bg-red-500"}`}></div>
                     {urlAvailable ? "URL is available" : "URL is not available"}
