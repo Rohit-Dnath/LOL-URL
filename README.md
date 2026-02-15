@@ -4,7 +4,11 @@
 
 
 <p align="center">
+
+  <img src="/logo.png" alt="LOL URL Logo" width="120" />
+
   <img src="public/logo.png" alt="LOL URL Logo" width="150" />
+
 </p>
 
 <!-- <p align="center">
